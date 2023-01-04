@@ -18,8 +18,6 @@
         "php": ">=7.4"
     },
     "extra" : {
-        "branch-alias" : {
-            "dev-master" : "v1.0.0"
-        }
+        "branch-alias" : {"dev-master" : "v2.0.0-dev"}
     }
 }
