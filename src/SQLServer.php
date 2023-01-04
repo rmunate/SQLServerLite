@@ -7,6 +7,7 @@ namespace Rmunate\SqlServerLite;
  * --------------------------------------------
  * Desarrollado por: Raul Mauricio Uñate Castro
  * raulmauriciounate@gmail.com
+ * V 2.0.0
  */
 
 use PDO;

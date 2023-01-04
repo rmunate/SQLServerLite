@@ -9,19 +9,20 @@ Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de 
 
 ## Instalación
 
-Instalaciòn por Composer
+# Instalaciòn por Composer
 
 ```sh
 composer require rmunate/sql-server-lite
 ```
 
-Para llamado en los controladores, invoque el uso.
+# Para llamado en los controladores, invoque el uso.
 
 ```sh
 use Rmunate\SqlServerLite\SQLServer;
 ```
 
-# Cree un Helper que llame los valores de la conexion los cuales deben estar creados en el ENV del proyecto
+# Cree un Helper que llame los valores de la conexion los cuales deben estar creados en el ENV del proyecto 
+Valide en la documentacion de laravel como crear sus Helpers Personalizados.
 El valor "instance" solo debe ir en los casos donde la conexión requiere una instancia especifica, de lo contrario no incluirlo en el helper.
 
 # Variables en el ENV.
