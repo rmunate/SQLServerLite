@@ -1,0 +1,8 @@
+/vendor/
+/.fleet
+/.idea
+/.vscode
+vendor
+.fleet
+.idea
+.vscode
