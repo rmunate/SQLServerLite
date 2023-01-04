@@ -16,10 +16,5 @@
     ],
     "require": {
         "php": "^7.4"
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "V1.0"
-        }
     }
 }
