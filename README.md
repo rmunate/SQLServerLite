@@ -9,18 +9,16 @@ Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de 
 
 ## Instalación
 
-Descargue el contenido del repositorio a su equipo.
-Copie el contenido del paquete a la ruta _app\Services (Si la carpeta Services no existe, creela.)
+Instalaciòn por Composer
 
 ```sh
-//Ruta Del Archivo
-app/Services/SQLServer.php;
+composer require rmunate/sql-server-lite
 ```
 
 Para llamado en los controladores, invoque el uso.
 
 ```sh
-Use App\Services\SQLServer;
+use Rmunate\SqlServerLite\SQLServer;
 ```
 
 # Cree un Helper que llame los valores de la conexion los cuales deben estar creados en el ENV del proyecto
