@@ -1,6 +1,14 @@
 {
     "name": "rmunate/sql-server-lite",
     "description": "Conexión PDO SQLServer",
+    "keywords": [
+        "laravel",
+        "sqlserver",
+        "sql",
+        "altum",
+        "rmunate"
+    ],
+    "homepage": "https://github.com/rmunate/SQLServerLite",
     "type": "library",
     "license": "MIT",
     "autoload": {
@@ -16,6 +24,9 @@
     ],
     "require": {
         "php": ">=7.4"
+    },
+    "require-dev": {
+        
     },
     "extra" : {
         "branch-alias" : {
