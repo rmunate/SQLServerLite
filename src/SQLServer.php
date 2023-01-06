@@ -65,7 +65,7 @@ class SQLServer {
         } catch (PDOException $e) {
             $this->PDO = null;
             $this->status_connection = false;
-            $this->error = implode($e->errorInfo);
+            $this->error = implode(' - ',$e->errorInfo);
         }
     }
 
