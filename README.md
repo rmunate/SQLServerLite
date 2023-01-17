@@ -80,6 +80,8 @@ SQLServer::database(CREDENCIALES())
 | SQLServer::database(CREDENCIALES())->insert("INSERT INTO 'users' ('id', 'name') VALUES (1, 'Administrador')") | Inserte los datos que requiera en la base de datos, usando sentencias propias de SQL |
 | SQLServer::database(CREDENCIALES())->delete("DELETE FROM 'users' WHERE 'id'=1") | Inserte los datos que requiera en la base de datos, usando sentencias propias de SQL |
 | SQLServer::database(CREDENCIALES())->procedure("EXEC procedure", false) | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta True o False |
+| SQLServer::database(CREDENCIALES())->check(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1") | El metodo Check valida y ejecuta todas las restricciones de llaves foraneas de la o de las tablas engresadas en el metodo. |
+| SQLServer::database(CREDENCIALES())->nocheck(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1") | El metodo nocheck deshabilita las restricciones de llaves foraneas de la o de las tablas engresadas en el metodo. |
 
 
 ## Desarrollador

@@ -274,10 +274,6 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
-            /* Evitar Errores Con OpenQuery */
-            if ($this->nocount) {
-                $query = $this->nocount . $query;
-            }
             /* Deshabilitar Foraneas */
             if ($this->nocheck) {
                 $query = $this->nocheck . $query;
@@ -305,10 +301,6 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
-            /* Evitar Errores Con OpenQuery */
-            if ($this->nocount) {
-                $query = $this->nocount . $query;
-            }
             /* Deshabilitar Foraneas */
             if ($this->nocheck) {
                 $query = $this->nocheck . $query;
@@ -336,10 +328,6 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
-            /* Evitar Errores Con OpenQuery */
-            if ($this->nocount) {
-                $query = $this->nocount . $query;
-            }
             /* Deshabilitar Foraneas */
             if ($this->nocheck) {
                 $query = $this->nocheck . $query;
