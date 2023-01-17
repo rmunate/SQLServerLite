@@ -72,7 +72,7 @@ SQLServer::database(CREDENCIALES())
 | SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->reverse() | Retorna los valores de respuesta en Reversa |
 | SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->collect() | Retorna la respuesta como colección de Laravel |
 
-# Comandos con retorno Booleano true o false #
+# Comandos con retorno Booleano true o false (Rollback y Commit Implicito)#
 
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
