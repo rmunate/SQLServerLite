@@ -9,7 +9,7 @@ Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de 
 
 ## Instalación
 
-# Instalaciòn por Composer
+# Instalaciòn a través de Composer
 
 ```sh
 composer require rmunate/sql-server-lite

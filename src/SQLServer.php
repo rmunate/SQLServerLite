@@ -29,7 +29,9 @@ class SQLServer {
     protected $PDO;
     protected $error;
     private $response;
-    public $nocount = false;
+    private $nocount = false;
+    private $nocheck = false;
+    private $check = false;
 
     /* Datos al inicial la clase */
     private static $server;
@@ -65,7 +67,14 @@ class SQLServer {
         } catch (PDOException $e) {
             $this->PDO = null;
             $this->status_connection = false;
-            $this->error = implode(' - ',$e->errorInfo);
+            /* Retorno de Errores */
+            if(is_array($e->errorInfo)){
+                $erroresImplode =  implode(' | ',$e->errorInfo);
+                $erroresImplode .= "Garantice que se encuentre instalado el ODBC Driver Correctamente.";
+                $this->error = strtoupper($erroresImplode);
+            } else {
+                $this->error = $e->errorInfo;
+            }
         }
     }
 
@@ -116,6 +125,24 @@ class SQLServer {
         return $this;
     }
 
+    /* Deshabilitar llaves  */
+    public function nocheck(array $tablas){
+        $this->nocheck = '';
+        foreach ($tablas as $key => $tabla) {
+            $this->nocheck .= "ALTER TABLE $tabla NOCHECK CONSTRAINT ALL;";
+        }
+        return $this;
+    }
+
+    /* Habilitar Llaves */
+    public function check(string $tabla){
+        $this->check = '';
+        foreach ($tablas as $key => $tabla) {
+            $this->check .= "ALTER TABLE $tabla CHECK CONSTRAINT ALL;";
+        }
+        return $this;
+    }
+
     /* ▼ PROCEDURE ▼ */
     public function procedure(string $statement, $return = true){
         if ($return) {
@@ -125,6 +152,14 @@ class SQLServer {
                 /* Evitar Errores Con OpenQuery */
                 if ($this->nocount) {
                     $query = $this->nocount . $query;
+                }
+                /* Deshabilitar Foraneas */
+                if ($this->nocheck) {
+                    $query = $this->nocheck . $query;
+                }
+                /* Habilitar Foraneas */
+                if ($this->check) {
+                    $query = $this->check . $query;
                 }
                 $stmt = $conn->query($query);
                 $rows = [];
@@ -160,6 +195,10 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
+            /* Evitar Errores Con OpenQuery */
+            if ($this->nocount) {
+                $query = $this->nocount . $query;
+            }
             $stmt = $conn->query($query);
             $rows = [];
 
@@ -235,6 +274,18 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
+            /* Evitar Errores Con OpenQuery */
+            if ($this->nocount) {
+                $query = $this->nocount . $query;
+            }
+            /* Deshabilitar Foraneas */
+            if ($this->nocheck) {
+                $query = $this->nocheck . $query;
+            }
+            /* Habilitar Foraneas */
+            if ($this->check) {
+                $query = $this->check . $query;
+            }
             $conn->beginTransaction();
             try {
                 $stmt = $conn->exec($query);
@@ -254,6 +305,18 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
+            /* Evitar Errores Con OpenQuery */
+            if ($this->nocount) {
+                $query = $this->nocount . $query;
+            }
+            /* Deshabilitar Foraneas */
+            if ($this->nocheck) {
+                $query = $this->nocheck . $query;
+            }
+            /* Habilitar Foraneas */
+            if ($this->check) {
+                $query = $this->check . $query;
+            }
             $conn->beginTransaction();
             try {
                 $stmt = $conn->exec($query);
@@ -273,6 +336,18 @@ class SQLServer {
         if ($this->status_connection) {
             $conn = $this->PDO;
             $query = strval($statement);
+            /* Evitar Errores Con OpenQuery */
+            if ($this->nocount) {
+                $query = $this->nocount . $query;
+            }
+            /* Deshabilitar Foraneas */
+            if ($this->nocheck) {
+                $query = $this->nocheck . $query;
+            }
+            /* Habilitar Foraneas */
+            if ($this->check) {
+                $query = $this->check . $query;
+            }
             $conn->beginTransaction();
             try {
                 $stmt = $conn->exec($query);
