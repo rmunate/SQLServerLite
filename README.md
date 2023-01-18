@@ -1,4 +1,4 @@
-# SQL-Server-PHP-Laravel
+# SQLServer (Libreria para conexión con bases de datos SQLServer desde Laravel o PHP Estructurado.)
 Alternativa de Conexión a SQL Server desde Laravel PHP
 
 [![N|Solid](https://i.ibb.co/ZLzQTpm/Firma-Git-Hub.png)](#)
