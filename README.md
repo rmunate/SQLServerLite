@@ -72,31 +72,31 @@ SQLServer::database(CREDENCIALES())
 
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
-| SQLServer::database(CREDENCIALES())->select("SELECT * FROM 'usuarios'")->get() | Ejecute las consultas que requiera a la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->get() | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
-| SQLServer::database(CREDENCIALES())->noCount()->procedure("EXEC procedure")->get() | El metodo noCount puede ser necesario en consultas a procedimientos que contangan OpenQuerys o SubQuerys |
+| `SQLServer::database(CREDENCIALES())->select("SELECT * FROM 'usuarios'")->get()` | Ejecute las consultas que requiera a la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->get()` | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->noCount()->procedure("EXEC procedure")->get()` | El metodo noCount puede ser necesario en consultas a procedimientos que contangan OpenQuerys o SubQuerys |
 
 
 # Comandos Adicionales con retorno de Datos #
 
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->first() | Trae el primer valor del arreglo retornado en la Consulta. |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->last() | Trae el ultimo valor del arreglo retornado en la Consulta. |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->count() | Cuenta el total de los registros de Respuesta. |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->reverse() | Retorna los valores de respuesta en Reversa. |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->collect() | Retorna la respuesta como colección de Laravel. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->first()` | Trae el primer valor del arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->last()` | Trae el ultimo valor del arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->count()` | Cuenta el total de los registros de Respuesta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->reverse()` | Retorna los valores de respuesta en Reversa. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->collect()` | Retorna la respuesta como colección de Laravel. |
 
 # Comandos con retorno Booleano true o false (Rollback y Commit Implicito)#
 
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
-| SQLServer::database(CREDENCIALES())->update("UPDATE 'usuarios' SET 'nombre' = 'Raul' WHERE 'id' = 1") | Actualice los datos que requiera en la base de datos, usando sentencias propias de SQL |
-| SQLServer::database(CREDENCIALES())->insert("INSERT INTO 'users' ('id', 'name') VALUES (1, 'Administrador')") | Inserte los datos que requiera en la base de datos, usando sentencias propias de SQL |
-| SQLServer::database(CREDENCIALES())->delete("DELETE FROM 'users' WHERE 'id'=1") | Elimine los datos que requiera en la base de datos, usando sentencias propias de SQL |
-| SQLServer::database(CREDENCIALES())->procedure("EXEC procedure", false) | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta True o False (Procedimientos Sin Retorno De Datos.) |
-| SQLServer::database(CREDENCIALES())->check(["tabla1","tabla2",...])->delete("DELETE FROM 'users' WHERE 'id'=1") | El metodo `->check()` valida y ejecuta todas las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
-| SQLServer::database(CREDENCIALES())->nocheck(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1") | El metodo `->check()` deshabilita las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
+| `SQLServer::database(CREDENCIALES())->update("UPDATE 'usuarios' SET 'nombre' = 'Raul' WHERE 'id' = 1")` | Actualice los datos que requiera en la base de datos, usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->insert("INSERT INTO 'users' ('id', 'name') VALUES (1, 'Administrador')")` | Inserte los datos que requiera en la base de datos, usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->delete("DELETE FROM 'users' WHERE 'id'=1")` | Elimine los datos que requiera en la base de datos, usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure", false)` | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta True o False (Procedimientos Sin Retorno De Datos.) |
+| `SQLServer::database(CREDENCIALES())->check(["tabla1","tabla2",...])->delete("DELETE FROM 'users' WHERE 'id'=1")` | El metodo `->check()` valida y ejecuta todas las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
+| `SQLServer::database(CREDENCIALES())->nocheck(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1")` | El metodo `->check()` deshabilita las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
 
 ## Desarrollador
 - Ingeniero, Raúl Mauricio Uñate Castro
