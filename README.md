@@ -27,7 +27,7 @@ use Rmunate\SqlServerLite\SQLServer;
 Valide en la documentacion de laravel como crear sus Helpers Personalizados, y garantice que dentro del Composer.json, se encuentre para iniciar el archivo con el Autoload.
 ```sh
 
-#En este caso se usarà un archivo llamado Helpers.php que estará en la ubicacion app/Http
+#En este caso se usará un archivo llamado Helpers.php que estará en la ubicacion app/Http, y dentro del archivo coposer.json se aplicará la siguiente configuración.
 "autoload-dev": {
     "psr-4": {
         "Tests\\": "tests/"
