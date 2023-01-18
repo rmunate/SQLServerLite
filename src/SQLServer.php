@@ -135,7 +135,7 @@ class SQLServer {
     }
 
     /* Deshabilitar llaves  */
-    public function nocheck(array $tablas){
+    public function noCheck(array $tablas){
         if (is_array($tablas) && count($tablas) > 0) {
             $this->nocheck = '';
             foreach ($tablas as $key => $tabla) {

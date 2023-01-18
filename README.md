@@ -96,7 +96,7 @@ SQLServer::database(CREDENCIALES())
 | `SQLServer::database(CREDENCIALES())->delete("DELETE FROM 'users' WHERE 'id'=1")` | Elimine los datos que requiera en la base de datos, usando sentencias propias de SQL |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure", false)` | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta True o False (Procedimientos Sin Retorno De Datos.) |
 | `SQLServer::database(CREDENCIALES())->check(["tabla1","tabla2",...])->delete("DELETE FROM 'users' WHERE 'id'=1")` | El metodo `->check()` valida y ejecuta todas las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
-| `SQLServer::database(CREDENCIALES())->nocheck(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1")` | El metodo `->check()` deshabilita las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
+| `SQLServer::database(CREDENCIALES())->noCheck(["tabla1","tabla2"])->delete("DELETE FROM 'users' WHERE 'id'=1")` | El metodo `->noCheck()` deshabilita las restricciones de llaves foraneas de la tabla o de las tablas ingresadas en el metodo, estas deben ir siempre dentro de un arreglo como se muestra en el ejemplo. |
 
 ## Desarrollador
 - Ingeniero, Raúl Mauricio Uñate Castro
