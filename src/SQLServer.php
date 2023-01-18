@@ -17,10 +17,11 @@ use PDOException;
 
 class SQLServer {
 
-#--------------------------╔═════════════════════════════════╗--------------------------#
-#--------------------------║      ATRIBUTOS DEL OBJETO       ║--------------------------#
-#--------------------------╚═════════════════════════════════╝--------------------------#
+    #--------------------------╔═════════════════════════════════╗--------------------------#
+    #--------------------------║      ATRIBUTOS DEL OBJETO       ║--------------------------#
+    #--------------------------╚═════════════════════════════════╝--------------------------#
 
+    /* Atributos Para Heredar */
     protected $status_connection;
     protected $server_name;
     protected $user_database;
@@ -28,6 +29,8 @@ class SQLServer {
     protected $sqlsrv_attr_query_timeout;
     protected $PDO;
     protected $error;
+
+    /* Atributos Privados */
     private $response;
     private $nocount = false;
     private $nocheck = false;
@@ -42,11 +45,12 @@ class SQLServer {
     private static $timeout;
     private static $use_expecific_instance = true;
 
-#--------------------------╔═════════════════════════════════╗--------------------------#
-#--------------------------║      CONSTRUCTOR DE LA CLASE    ║--------------------------#
-#--------------------------╚═════════════════════════════════╝--------------------------#
+    #--------------------------╔═════════════════════════════════╗--------------------------#
+    #--------------------------║      CONSTRUCTOR DE LA CLASE    ║--------------------------#
+    #--------------------------╚═════════════════════════════════╝--------------------------#
 
     public function __construct(){
+
         /* Valores de Conexion a la Base de Datos */
         if(Self::$use_expecific_instance){
             $this->server_name = Self::$server . chr(92) . Self::$instance . chr(59) . Self::$database;
@@ -55,18 +59,23 @@ class SQLServer {
         }
         $this->user_database = Self::$user;
         $this->password_database = Self::$password;
-        $this->sqlsrv_attr_query_timeout = Self::$timeout ?? 0;
+        $this->sqlsrv_attr_query_timeout = !empty(Self::$timeout) ? Self::$timeout :0;
+
         /* Creacion de la Conexion */
         try {
+
             $conn = new PDO($this->server_name, $this->user_database, $this->password_database);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $conn->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT,$this->sqlsrv_attr_query_timeout);
+            $conn->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $this->sqlsrv_attr_query_timeout);
             $this->PDO = $conn;
             $this->status_connection = true;
             $this->error = null;
+
         } catch (PDOException $e) {
+
             $this->PDO = null;
             $this->status_connection = false;
+
             /* Retorno de Errores */
             if(is_array($e->errorInfo)){
                 $erroresImplode =  implode(' | ',$e->errorInfo);
@@ -75,24 +84,25 @@ class SQLServer {
             } else {
                 $this->error = $e->errorInfo;
             }
+
         }
     }
 
-#--------------------------╔═════════════════════════════════╗--------------------------#
-#--------------------------║         INICIALIZACION          ║--------------------------#
-#--------------------------╚═════════════════════════════════╝--------------------------#
+    #--------------------------╔═════════════════════════════════╗--------------------------#
+    #--------------------------║         INICIALIZACION          ║--------------------------#
+    #--------------------------╚═════════════════════════════════╝--------------------------#
 
     public static function database(array $arrayCredentials){
+
         /* Validar que todos los datos vengan en la clase */
         if (!isset($arrayCredentials['server'])) {
-            /* Valor Obligatorio */
-            throw new Exception('No se encuentra el index [server] en el arreglo ingresado en el metodo database');
+            throw new Exception('No se encuentra el index [server] en el arreglo ingresado en el metodo ::database');
         } else if (!isset($arrayCredentials['database'])){
-            throw new Exception('No se encuentra el index [database] en el arreglo ingresado en el metodo database');
+            throw new Exception('No se encuentra el index [database] en el arreglo ingresado en el metodo ::database');
         } else if (!isset($arrayCredentials['user'])){
-            throw new Exception('No se encuentra el index [user] en el arreglo ingresado en el metodo database');
+            throw new Exception('No se encuentra el index [user] en el arreglo ingresado en el metodo ::database');
         } else if (!isset($arrayCredentials['password'])){
-            throw new Exception('No se encuentra el index [password] en el arreglo ingresado en el metodo database');
+            throw new Exception('No se encuentra el index [password] en el arreglo ingresado en el metodo ::database');
         } else {
             /* Creacion de Datos en Valores Estaticos */
             Self::$server = 'sqlsrv:Server=' . trim($arrayCredentials['server']);
@@ -110,14 +120,13 @@ class SQLServer {
                 Self::$use_expecific_instance = false;
                 Self::$instance = '';
             }
-
             return new static();
         }
     }
 
-#--------------------------╔═════════════════════════════════╗--------------------------#
-#--------------------------║            CONSULTAS            ║--------------------------#
-#--------------------------╚═════════════════════════════════╝--------------------------#
+    #--------------------------╔═════════════════════════════════╗--------------------------#
+    #--------------------------║            CONSULTAS            ║--------------------------#
+    #--------------------------╚═════════════════════════════════╝--------------------------#
 
     /* ▼ SET NOCOUNT ON ▼ */
     public function noCount(){
@@ -127,18 +136,22 @@ class SQLServer {
 
     /* Deshabilitar llaves  */
     public function nocheck(array $tablas){
-        $this->nocheck = '';
-        foreach ($tablas as $key => $tabla) {
-            $this->nocheck .= "ALTER TABLE $tabla NOCHECK CONSTRAINT ALL;";
+        if (is_array($tablas) && count($tablas) > 0) {
+            $this->nocheck = '';
+            foreach ($tablas as $key => $tabla) {
+                $this->nocheck .= "ALTER TABLE $tabla NOCHECK CONSTRAINT ALL;";
+            }
         }
         return $this;
     }
 
     /* Habilitar Llaves */
     public function check(string $tabla){
-        $this->check = '';
-        foreach ($tablas as $key => $tabla) {
-            $this->check .= "ALTER TABLE $tabla CHECK CONSTRAINT ALL;";
+        if (is_array($tablas) && count($tablas) > 0) {
+            $this->check = '';
+            foreach ($tablas as $key => $tabla) {
+                $this->check .= "ALTER TABLE $tabla CHECK CONSTRAINT ALL;";
+            }
         }
         return $this;
     }
@@ -175,13 +188,10 @@ class SQLServer {
             if ($this->status_connection) {
                 $conn = $this->PDO;
                 $query = strval($statement);
-                //$conn->beginTransaction();
                 try {
                     $stmt = $conn->exec($query);
-                    //$conn->commit();
                     return true;
                 } catch (\Throwable $th) {
-                    //$conn->rollback();
                     return $th->getMessage();
                 }
             } else {
@@ -213,7 +223,7 @@ class SQLServer {
         }
     }
 
-    /* ▼ RETORNO DE RESULTADO ▼ */
+    /*----- ▼ RETORNO DE RESULTADO ▼ -----*/
 
     /* Retorno de todas las respuestas en array */
     public function get(){
