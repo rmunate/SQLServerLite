@@ -9,7 +9,7 @@ Puedo Implementarse en PHP Estructurado, el unico metodo que no se podria usar s
 Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de datos.
 
 ## Instalación
-# Instalaciòn a través de Composer
+# Instalación a través de Composer
 
 ```sh
 composer require rmunate/sql-server-lite
