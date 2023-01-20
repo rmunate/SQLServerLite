@@ -73,6 +73,7 @@ SQLServer::database(CREDENCIALES())
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->select("SELECT * FROM 'usuarios'")->get()` | Ejecute las consultas que requiera a la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
+| `SQLServer::database(CREDENCIALES())->select("SELECT * FROM 'usuarios'")->getObjects()` | Ejecute las consultas que requiera a la base de datos y genere la respuesta con el metodo ->getObjects() para retornar un arreglo de Objetos |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->get()` | Ejecute los procedimientos almacenados en la base de datos y genere la respuesta con el metodo ->get(), usando sentencias propias de SQL |
 | `SQLServer::database(CREDENCIALES())->noCount()->procedure("EXEC procedure")->get()` | El metodo noCount puede ser necesario en consultas a procedimientos que contangan OpenQuerys o SubQuerys |
 
@@ -82,7 +83,9 @@ SQLServer::database(CREDENCIALES())
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->first()` | Trae el primer valor del arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->firstObject()` | Trae el primer valor del arreglo como Objeto retornado en la Consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->last()` | Trae el ultimo valor del arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->lastObject()` | Trae el ultimo valor del arreglo como Objeto retornado en la Consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->count()` | Cuenta el total de los registros de Respuesta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->reverse()` | Retorna los valores de respuesta en Reversa. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->collect()` | Retorna la respuesta como colección de Laravel. |

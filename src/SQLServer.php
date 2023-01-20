@@ -234,6 +234,19 @@ class SQLServer {
         }
     }
 
+    /* Retorno de todas las respuestas en array de Objetos */
+    public function getObjects(){
+        if (count($this->response) >= 1) {
+            $objects = [];
+            foreach ($this->response as $key => $value) {
+                array_push($objects, (object)$value);
+            }
+            return $objects;
+        } else {
+            return $response = [];
+        }
+    }
+
     /* Retornar la primer llave */
     public function first(){
         if (count($this->response) >= 1) {
@@ -243,10 +256,28 @@ class SQLServer {
         }
     }
 
+    /* Retornar la primer llave como objeto */
+    public function firstObject(){
+        if (count($this->response) >= 1) {
+            return (object) $this->response[array_key_first($this->response)];
+        } else {
+            return $response = [];
+        }
+    }
+
     /* Retornar la ultima llave */
     public function last(){
         if (count($this->response) >= 1) {
             return $this->response[array_key_last($this->response)];
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Retornar la ultima llave como objeto */
+    public function lastObject(){
+        if (count($this->response) >= 1) {
+            return (object) $this->response[array_key_last($this->response)];
         } else {
             return $response = [];
         }
