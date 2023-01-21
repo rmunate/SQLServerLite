@@ -22,7 +22,7 @@ class SQLServer {
     #--------------------------╚═════════════════════════════════╝--------------------------#
 
     /* Atributos Para Heredar */
-    protected $status_connection;
+    protected $status_connection = false;
     protected $server_name;
     protected $user_database;
     protected $password_database;
@@ -57,32 +57,41 @@ class SQLServer {
         } else {
             $this->server_name = Self::$server . chr(59) . Self::$database;
         }
+
+        /* Usuario de la base de datos */
         $this->user_database = Self::$user;
+
+        /* Contraseña a la base de datos */
         $this->password_database = Self::$password;
+
+        /* TimeOut seteado o 0 */
         $this->sqlsrv_attr_query_timeout = !empty(Self::$timeout) ? Self::$timeout :0;
 
         /* Creacion de la Conexion */
         try {
 
+            /* Creacion de Objeto PDO conexion SQLServer */
             $conn = new PDO($this->server_name, $this->user_database, $this->password_database);
             $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             $conn->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $this->sqlsrv_attr_query_timeout);
+            $conn->setAttribute(PDO::SQLSRV_ATTR_ENCODING, PDO::SQLSRV_ENCODING_UTF8);
             $this->PDO = $conn;
             $this->status_connection = true;
             $this->error = null;
 
         } catch (PDOException $e) {
 
+            /* Anulacion Atributos de Conexiñon */
             $this->PDO = null;
             $this->status_connection = false;
 
             /* Retorno de Errores */
             if(is_array($e->errorInfo)){
-                $erroresImplode =  implode(' | ',$e->errorInfo);
-                $erroresImplode .= "Garantice que se encuentre instalado el ODBC Driver Correctamente.";
+                $erroresImplode =  implode(' | ', $e->errorInfo);
+                $erroresImplode .= " | Garantice que se encuentre instalado el ODBC Driver Correctamente.";
                 $this->error = strtoupper($erroresImplode);
             } else {
-                $this->error = $e->errorInfo;
+                $this->error = $e->errorInfo . " | Garantice que se encuentre instalado el ODBC Driver Correctamente.";
             }
 
         }
@@ -92,36 +101,83 @@ class SQLServer {
     #--------------------------║         INICIALIZACION          ║--------------------------#
     #--------------------------╚═════════════════════════════════╝--------------------------#
 
+    /* Metodo para PHP Estructurado o sin Laravel (Laravel y PHP Estrcuturado ) */
     public static function database(array $arrayCredentials){
 
         /* Validar que todos los datos vengan en la clase */
         if (!isset($arrayCredentials['server'])) {
-            throw new Exception('No se encuentra el index [server] en el arreglo ingresado en el metodo ::database');
-        } else if (!isset($arrayCredentials['database'])){
-            throw new Exception('No se encuentra el index [database] en el arreglo ingresado en el metodo ::database');
-        } else if (!isset($arrayCredentials['user'])){
-            throw new Exception('No se encuentra el index [user] en el arreglo ingresado en el metodo ::database');
-        } else if (!isset($arrayCredentials['password'])){
-            throw new Exception('No se encuentra el index [password] en el arreglo ingresado en el metodo ::database');
-        } else {
-            /* Creacion de Datos en Valores Estaticos */
-            Self::$server = 'sqlsrv:Server=' . trim($arrayCredentials['server']);
-            Self::$database = 'Database=' . trim($arrayCredentials['database']);
-            Self::$user = trim($arrayCredentials['user']);
-            Self::$password = trim($arrayCredentials['password']);
-            Self::$timeout = 0; /* Sin Tiempo Definido Para Detener El Script*/
-
-            /* Definir Uso de Instancia Especifica */
-            if(isset($arrayCredentials['instance']) && $arrayCredentials['instance'] != ''){
-                Self::$use_expecific_instance = true;
-                Self::$instance = trim($arrayCredentials['instance']);
-
-            } else {
-                Self::$use_expecific_instance = false;
-                Self::$instance = '';
-            }
-            return new static();
+            throw new Exception('No se encuentra la llave [server] en el arreglo ingresado en el metodo ::database');
         }
+        if (!isset($arrayCredentials['database'])){
+            throw new Exception('No se encuentra la llave [database] en el arreglo ingresado en el metodo ::database');
+        }
+        if (!isset($arrayCredentials['user'])){
+            throw new Exception('No se encuentra la llave [user] en el arreglo ingresado en el metodo ::database');
+        }
+        if (!isset($arrayCredentials['password'])){
+            throw new Exception('No se encuentra la llave [password] en el arreglo ingresado en el metodo ::database');
+        } 
+
+        /* Creacion de Datos en Valores Estaticos */
+        Self::$server = 'sqlsrv:Server=' . trim($arrayCredentials['server']);
+        Self::$database = 'Database=' . trim($arrayCredentials['database']);
+        Self::$user = trim($arrayCredentials['user']);
+        Self::$password = trim($arrayCredentials['password']);
+        Self::$timeout = 0; /* Sin Tiempo Definido Para Detener El Script*/
+
+        /* Definir Uso de Instancia Especifica */
+        if(isset($arrayCredentials['instance']) && $arrayCredentials['instance'] != ''){
+            Self::$use_expecific_instance = true;
+            Self::$instance = trim($arrayCredentials['instance']);
+        } else {
+            Self::$use_expecific_instance = false;
+            Self::$instance = '';
+        }
+
+        return new static();
+    }
+
+    /* Metodo para conexion leyendo directame el ENV (Solo Laravel) */
+    public static function env(string $prefijo){
+
+        /* Lectura de Variables */
+        $server = env($prefijo.'_SQLSVR_NAME', null);
+        $instance = env($prefijo.'_SQLSVR_INSTANCE', null);
+        $database = env($prefijo.'_SQLSVR_DATABASE', null);
+        $user = env($prefijo.'_SQLSVR_USER', null);
+        $password = env($prefijo.'_SQLSVR_PASS', null);
+
+        /* Validar que todos los datos vengan en la clase */
+        if (empty($server)) {
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_NAME] en el metodo ::env');
+        }
+        if (empty($database)){
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_DATABASE] en el metodo ::env');
+        }
+        if (empty($user)){
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_USER] en el metodo ::env');
+        }
+        if (empty($password)){
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_PASS] en el metodo ::env');
+        }
+        
+        /* Creacion de Datos en Valores Estaticos */
+        Self::$server = 'sqlsrv:Server=' . trim($server);
+        Self::$database = 'Database=' . trim($database);
+        Self::$user = trim($user);
+        Self::$password = trim($password);
+        Self::$timeout = 0; /* Sin Tiempo Definido Para Detener El Script*/
+
+        /* Definir Uso de Instancia Especifica */
+        if(!empty($instance) && $instance != ''){
+            Self::$use_expecific_instance = true;
+            Self::$instance = trim($instance);
+        } else {
+            Self::$use_expecific_instance = false;
+            Self::$instance = '';
+        }
+
+        return new static();
     }
 
     #--------------------------╔═════════════════════════════════╗--------------------------#
@@ -131,6 +187,14 @@ class SQLServer {
     /* ▼ SET NOCOUNT ON ▼ */
     public function noCount(){
         $this->nocount = "SET NOCOUNT ON;";
+        return $this;
+    }
+
+    /* Establecer Tiempo Maximo de Espera */
+    public function setTimeOut(int $num){
+        if ($num >= 0) {
+            $this->PDO->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $num);
+        }
         return $this;
     }
 
@@ -156,7 +220,7 @@ class SQLServer {
         return $this;
     }
 
-    /* ▼ PROCEDURE ▼ */
+    /* ▼ PROCEDURE CON Y SIN RETORNO DE DATOS ▼ */
     public function procedure(string $statement, $return = true){
         if ($return) {
             if ($this->status_connection) {
@@ -259,7 +323,7 @@ class SQLServer {
     /* Retornar la primer llave como objeto */
     public function firstObject(){
         if (count($this->response) >= 1) {
-            return (object) $this->response[array_key_first($this->response)];
+            return (object)$this->response[array_key_first($this->response)];
         } else {
             return $response = [];
         }
@@ -277,7 +341,7 @@ class SQLServer {
     /* Retornar la ultima llave como objeto */
     public function lastObject(){
         if (count($this->response) >= 1) {
-            return (object) $this->response[array_key_last($this->response)];
+            return (object)$this->response[array_key_last($this->response)];
         } else {
             return $response = [];
         }
@@ -292,6 +356,68 @@ class SQLServer {
     public function reverse(){
         if (count($this->response) >= 1) {
             return array_reverse($this->response);
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Retornar la consulta de forma inversa en objetos */
+    public function reverseObjects(){
+        if (count($this->response) >= 1) {
+            $objects = [];
+            foreach ($this->response as $key => $value) {
+                array_push($objects, (object)$value);
+            }
+            return array_reverse($objects);
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Devolver la respuesta de solo una columna */
+    public function getColumn($column){
+        if (count($this->response) >= 1) {
+            return array_column($this->response, $column);
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Devolver la respuesta invirtiendo valor por llaves */
+    public function getFlip(){
+        if (count($this->response) >= 1) {
+            $array = [];
+            foreach ($this->response as $key => $value) {
+                array_push($array, array_flip($value));
+            }
+            return $array;
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Devolver el nombre de columnas */
+    public function getNamesColumn(){
+        if (count($this->response) >= 1) {
+            return array_keys($this->response[0]);
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Devolver registros aleatorios de la respuesta */
+    public function getRand($num){
+        if (count($this->response) >= 1) {
+            return array_rand($this->response, $num);
+        } else {
+            return $response = [];
+        }
+    }
+
+    /* Devulve una parte del arreflo */
+    public function getSlice(int $offset, $length = null, bool $preserve_keys = false){
+        if (count($this->response) >= 1) {
+            return array_slice($this->response, $offset, $length, $preserve_keys);
         } else {
             return $response = [];
         }
