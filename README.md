@@ -122,7 +122,8 @@ SQLServer::env('MYDATA')->...
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getSlice(2, 1, true)` | Alias del metodo array_slice de PHP. <https://www.php.net/manual/en/function.array-slice.php> |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getColumn('name')` | Retorna la respuesta de una sola columna de la respuesta de la base de datos. |
 
-# Comandos con retorno Booleano true o false (Rollback y Commit Implicito)#
+# Comandos con retorno Booleano true o false
+## Rollback y Commit Implicito.
 
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
