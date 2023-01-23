@@ -397,7 +397,7 @@ class SQLServer {
     }
 
     /* Devolver el nombre de columnas */
-    public function getNamesColumn(){
+    public function getNamesColumns(){
         if (count($this->response) >= 1) {
             return array_keys($this->response[0]);
         } else {

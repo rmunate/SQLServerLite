@@ -1,11 +1,11 @@
 # SQLServer (Libreria para conexión con bases de datos SQLServer desde Laravel o PHP Estructurado.)
-Alternativa de Conexión a SQL Server desde Laravel PHP
+Una alternativa de Conexión a SQL Server desde Laravel y una excelente forma para conectar desde PHP Estructurado.
 
 [![N|Solid](https://i.ibb.co/ZLzQTpm/Firma-Git-Hub.png)](#)
 
 Clase para conexión a servidores SQL Server, con uso de métodos claros y fáciles de conexión.
 Esta clase es una alternativa a la conexión por medio de las clases predeterminadas de Laravel.
-Puedo Implementarse en PHP Estructurado, el unico metodo que no se podria usar seria `->collect()`
+Puede Implementarse en PHP Estructurado, el metodo que no se podria usar seria `->collect()` el cual es exclusivo para Laravel.
 Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de datos.
 
 ## Instalación
@@ -16,6 +16,7 @@ composer require rmunate/sql-server-lite
 ```
 Importante: El Driver ODBC >= 17 debe Estar Instalado en la Maquina.
 https://learn.microsoft.com/es-es/sql/connect/odbc/download-odbc-driver-for-sql-server
+De igual manera deben estar activas las extenciones en el PHP.ini
 
 # Para llamado en los controladores, invoque el uso.
 
@@ -26,7 +27,7 @@ use Rmunate\SqlServerLite\SQLServer;
 # METODOS DE CONEXIÓN
 ## METODO #1 (RECOMENDADO)
 - CONEXIÓN A TRAVÉS DE HELPER QUE LEE LAS VARIABLES DE ENTORNO (LARAVEL), O QUE CONTENDRÁ LAS CREDENCIALES DE CONEXIÓN (PHP ESTRCUTURADO)
-LARAVEL: Valide en la documentaciñon de laravel como crear sus Helpers Personalizados, y garantice que dentro del Composer.json, se encuentre para iniciar el archivo con el Autoload. (A continuaciñon un Ejemplo.)
+LARAVEL: Valide en la documentación de laravel como crear sus Helpers Personalizados, y garantice que dentro del Composer.json, se encuentre para iniciar el archivo con el Autoload. (A continuación un Ejemplo.)
 
 ```sh
 #En este caso se usará un archivo llamado Helpers.php que estará en la ubicacion app/Http, y dentro del archivo composer.json se aplicará la siguiente configuración.
@@ -66,7 +67,8 @@ DB_SQLSVR_PASS="contraseña"
 
 #Instance la clase de la siguiente forma, donde se ingrese en el metodo `database` la funciñon creada en el Helper
 #Esta funcion será la que leera las variables des el ENV, se aconseja de esta forma para evitar exponer las credenciales.
-#Tambien puede ingresar directamente el arreglo en el metodo (No Aconsejable.)
+#Tambien puede ingresar directamente el arreglo en el metodo (No Aconsejable)
+
 SQLServer::database(CREDENCIALES())->...
 
 ```
@@ -89,6 +91,7 @@ MYDATA_SQLSVR_PASS="contraseña"
 ```sh
 
 #Instance la clase de la siguiente forma, donde se ingrese en el metodo `env` el prefijo usado para las variables de entorno en el ENV
+
 SQLServer::env('MYDATA')->...
 
 ```
@@ -109,6 +112,8 @@ SQLServer::env('MYDATA')->...
 | COMANDO | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->first()` | Trae el primer valor del arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->get()` | Trae todos los valores como arreglo retornado en la Consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getObjects()` | Trae todos los valores como objetos dentro de un arreglo. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->firstObject()` | Trae el primer valor como Objeto retornado en la Consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->last()` | Trae el ultimo valor del arreglo retornado en la Consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->lastObject()` | Trae el ultimo valor como Objeto retornado en la Consulta. |
@@ -117,7 +122,7 @@ SQLServer::env('MYDATA')->...
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->reverseObjects()` | Retorna los valores de respuesta como objetos en Reversa. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->collect()` | Retorna la respuesta como colección de Laravel. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getFlip()` | Retorna la respuesta invirtiendo la columna con el valor obtenido. |
-| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getNamesColumn()` | Retorna el nombre de las columnas de la consulta. |
+| `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getNamesColumns()` | Retorna el nombre de las columnas de la consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getRand(2)` | Retorna de forma aleatora la cantidad de registros solicitados en el metodo. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getSlice(2, 1, true)` | Alias del metodo array_slice de PHP. <https://www.php.net/manual/en/function.array-slice.php> |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->getColumn('name')` | Retorna la respuesta de una sola columna de la respuesta de la base de datos. |
