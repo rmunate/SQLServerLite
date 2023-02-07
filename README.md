@@ -11,7 +11,7 @@ Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de 
 ## Instalación
 # Instalación a través de Composer
 
-```sh
+```php
 composer require rmunate/sql-server-lite
 ```
 Importante: El Driver ODBC >= 17 debe Estar Instalado en la Maquina.
@@ -20,7 +20,7 @@ De igual manera deben estar activas las extenciones en el PHP.ini
 
 # Para llamado en los controladores, invoque el uso.
 
-```sh
+```php
 use Rmunate\SqlServerLite\SQLServer;
 ```
 
@@ -29,7 +29,7 @@ use Rmunate\SqlServerLite\SQLServer;
 - CONEXIÓN A TRAVÉS DE HELPER QUE LEE LAS VARIABLES DE ENTORNO (LARAVEL), O QUE CONTENDRÁ LAS CREDENCIALES DE CONEXIÓN (PHP ESTRCUTURADO)
 LARAVEL: Valide en la documentación de laravel como crear sus Helpers Personalizados, y garantice que dentro del Composer.json, se encuentre para iniciar el archivo con el Autoload. (A continuación un Ejemplo.)
 
-```sh
+```php
 #En este caso se usará un archivo llamado Helpers.php que estará en la ubicacion app/Http, y dentro del archivo composer.json se aplicará la siguiente configuración.
 "autoload-dev": {
     ...,
@@ -40,7 +40,7 @@ LARAVEL: Valide en la documentación de laravel como crear sus Helpers Personali
 El valor "instance" solo debe ir en los casos donde la conexión requiere una instancia especifica, de lo contrario no incluirlo en el helper.
 
 - FUNCIÓN EN LOS HELPERS
-```sh
+```php
 function CREDENCIALES(){
     $credenciales = array(
         'server'   => env('DB_SQLSVR_NAME'),
@@ -54,7 +54,7 @@ function CREDENCIALES(){
 ```
 
 - VARIABLES EN EL ENV LARAVEL.
-```sh
+```php
 DB_SQLSVR_NAME="10.25.21.170" #Use siempre una IP evite usar nombres canonicos.
 DB_SQLSVR_INSTANCE="PROD" #Solo usarla en caso donde se debe conectar a una instancia especifica. Donde no se use, no crear la variable de entorno.
 DB_SQLSVR_DATABASE="basededatos"
@@ -63,7 +63,7 @@ DB_SQLSVR_PASS="contraseña"
 ```
 
 - GENERE LA CONEXION A LA BASE DE DATOS DE LA SIGUIENTE FORMA.
-```sh
+```php
 
 #Instance la clase de la siguiente forma, donde se ingrese en el metodo `database` la funciñon creada en el Helper
 #Esta funcion será la que leera las variables des el ENV, se aconseja de esta forma para evitar exponer las credenciales.
@@ -78,7 +78,7 @@ SQLServer::database(CREDENCIALES())->...
 - VARIABLES EN EL ENV LARAVEL.
 Cree en el .ENV de laravel las variables de conexion con un prefijo unico, conservando la sintaxis a continuación mostrada.
 
-```sh
+```php
 #Nuestro prefijo unico será `MYDATA`
 MYDATA_SQLSVR_NAME="10.25.21.170" #Use siempre una IP evite usar nombres canonicos.
 MYDATA_SQLSVR_INSTANCE="PROD" #Solo usarla en caso donde se debe conectar a una instancia especifica. Donde no se use, no crear la variable de entorno.
@@ -88,13 +88,29 @@ MYDATA_SQLSVR_PASS="contraseña"
 ```
 
 - GENERE LA CONEXION A LA BASE DE DATOS DE LA SIGUIENTE FORMA.
-```sh
+```php
 
 #Instance la clase de la siguiente forma, donde se ingrese en el metodo `env` el prefijo usado para las variables de entorno en el ENV
 
 SQLServer::env('MYDATA')->...
 
 ```
+
+# Consulta Con Previa Confirmacion de Conexión #
+
+```php
+
+$connection = SQLServer::database(SRVDB02_REQ_REQUERIMIENTOS())->status();
+if($connection->status){
+    //Hacer consulta ya que existe conexión con la base de datos
+    $data = $connection->query->select("...............")->get();
+} else {
+    //No hubo conexion a la base de datos...
+}
+
+
+```
+
 
 # Comandos con retorno de Datos #
 
