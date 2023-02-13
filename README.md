@@ -11,9 +11,10 @@ Clase liviana y precisa para ejecutar cualquier tipo de sentencia en la base de 
 ## Instalación
 # Instalación a través de Composer
 
-```php
-composer require rmunate/sql-server-lite
+```console
+composer require rmunate/sql-server-lite v2.0.x-dev
 ```
+
 Importante: El Driver ODBC >= 17 debe Estar Instalado en la Maquina.
 https://learn.microsoft.com/es-es/sql/connect/odbc/download-odbc-driver-for-sql-server
 De igual manera deben estar activas las extenciones en el PHP.ini
@@ -29,8 +30,8 @@ use Rmunate\SqlServerLite\SQLServer;
 - CONEXIÓN A TRAVÉS DE HELPER QUE LEE LAS VARIABLES DE ENTORNO (LARAVEL), O QUE CONTENDRÁ LAS CREDENCIALES DE CONEXIÓN (PHP ESTRCUTURADO)
 LARAVEL: Valide en la documentación de laravel como crear sus Helpers Personalizados, y garantice que dentro del Composer.json, se encuentre para iniciar el archivo con el Autoload. (A continuación un Ejemplo.)
 
-```php
-#En este caso se usará un archivo llamado Helpers.php que estará en la ubicacion app/Http, y dentro del archivo composer.json se aplicará la siguiente configuración.
+```javascript
+// En este caso se usará un archivo llamado Helpers.php que estará en la ubicacion app/Http, y dentro del archivo composer.json se aplicará la siguiente configuración.
 "autoload-dev": {
     ...,
     "files":["app/Http/Helpers.php"]

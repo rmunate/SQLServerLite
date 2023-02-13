@@ -1,6 +1,6 @@
 {
     "name": "rmunate/sql-server-lite",
-    "description": "Conexión PDO SQLServer",
+    "description": "Conexión PDO a SQLServer desde PHP estructurado o Laravel",
     "keywords": [
         "laravel",
         "sqlserver",

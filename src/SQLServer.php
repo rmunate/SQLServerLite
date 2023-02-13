@@ -15,7 +15,8 @@ use Exception;
 use Throwable;
 use PDOException;
 
-class SQLServer {
+class SQLServer
+{
 
     #--------------------------╔═════════════════════════════════╗--------------------------#
     #--------------------------║      ATRIBUTOS DEL OBJETO       ║--------------------------#
