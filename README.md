@@ -16,8 +16,8 @@ composer require rmunate/sql-server-lite v2.0.x-dev
 ```
 
 Importante: El Driver ODBC >= 17 debe Estar Instalado en la Maquina.
-https://learn.microsoft.com/es-es/sql/connect/odbc/download-odbc-driver-for-sql-server
-De igual manera deben estar activas las extenciones en el PHP.ini
+Seguir el siguiente manual:
+https://github.com/rmunate/SQLServerLite/blob/main/InstalacionSQLServer.md
 
 # Para llamado en los controladores, invoque el uso.
 
