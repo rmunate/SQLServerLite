@@ -90,6 +90,8 @@ service php8.1-fpm restart
 systemctl restart apache2
 ```
 
+------------------------------------------------------------
+
 Si despues de ejecutar los anteriores pasos, no funciona la conexión o salen las alertas de la siguiente imagen, corra los comandos del siguiente bloque:
 
 ![Error al cargar la biblioteca dinamica](https://i.ibb.co/3yPxFrz/Captura-de-pantalla-2023-02-23-a-la-s-8-12-42-a-m.png)
@@ -108,9 +110,8 @@ sudo phpenmod -v 8.1 sqlsrv pdo_sqlsrv
 
 Ahora volveremos a correr todos los pasos previos hasta reiniciar el servidor Apache2.
 
-Listo!, Ya podemos conectarnos a SQLServer desde Linux.
+¡Listo!, Ya podemos conectarnos a SQLServer desde Linux.
 
-## Datos Manual
+## Mantenedores Manual
 
-- Data actualizada al 23 de Febrero de 2023.
-- Ing. Raul Mauricio Uñate Castro (raulmauriciounate@gmail.com)
+- Ingeniero, Raúl Mauricio Uñate Castro (raulmauriciounate@gmail.com)

@@ -141,24 +141,24 @@ class SQLServer
     public static function env(string $prefijo){
 
         /* Lectura de Variables */
-        $server = env($prefijo.'_SQLSVR_NAME', null);
-        $instance = env($prefijo.'_SQLSVR_INSTANCE', null);
-        $database = env($prefijo.'_SQLSVR_DATABASE', null);
-        $user = env($prefijo.'_SQLSVR_USER', null);
-        $password = env($prefijo.'_SQLSVR_PASS', null);
+        $server = env($prefijo.'_SQLSRV_NAME', null);
+        $instance = env($prefijo.'_SQLSRV_INSTANCE', null);
+        $database = env($prefijo.'_SQLSRV_DATABASE', null);
+        $user = env($prefijo.'_SQLSRV_USER', null);
+        $password = env($prefijo.'_SQLSRV_PASS', null);
 
         /* Validar que todos los datos vengan en la clase */
         if (empty($server)) {
-            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_NAME] en el metodo ::env');
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSRV_NAME] en el metodo ::env');
         }
         if (empty($database)){
-            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_DATABASE] en el metodo ::env');
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSRV_DATABASE] en el metodo ::env');
         }
         if (empty($user)){
-            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_USER] en el metodo ::env');
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSRV_USER] en el metodo ::env');
         }
         if (empty($password)){
-            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSVR_PASS] en el metodo ::env');
+            throw new Exception('No se encuentra la variable de entorno ['.$prefijo.'_SQLSRV_PASS] en el metodo ::env');
         }
         
         /* Creacion de Datos en Valores Estaticos */
