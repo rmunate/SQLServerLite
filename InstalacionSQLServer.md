@@ -47,6 +47,7 @@ sudo apt-get install -y unixodbc-dev
 ```
 
 Asegúrese de instalar también el `unixodbc-dev` paquete. Es utilizado por el peclcomando para instalar los controladores de PHP.
+
 Tambien garantice tener CURL instalada en su PHP 
 Para validar si tiene la extensión:
 
