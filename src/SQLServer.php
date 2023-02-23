@@ -89,10 +89,9 @@ class SQLServer
             /* Retorno de Errores */
             if(is_array($e->errorInfo)){
                 $erroresImplode =  implode(' | ', $e->errorInfo);
-                $erroresImplode .= " | Garantice que se encuentre instalado el ODBC Driver Correctamente.";
                 $this->error = strtoupper($erroresImplode);
             } else {
-                $this->error = $e->errorInfo . " | Garantice que se encuentre instalado el ODBC Driver Correctamente.";
+                $this->error = $e->errorInfo . " | Garantice que se encuentre instalado el ODBC Driver y el SQLServer Correctamente. Manual: (https://github.com/rmunate/SQLServerLite/blob/main/InstalacionSQLServer.md)";
             }
 
         }

@@ -47,7 +47,19 @@ sudo apt-get install -y unixodbc-dev
 ```
 
 Asegúrese de instalar también el `unixodbc-dev` paquete. Es utilizado por el peclcomando para instalar los controladores de PHP.
-Ahora instalaremos los controladores de PHP para Microsoft SQL Server (Ubuntu con PHP-FPM)
+Tambien garantice tener CURL instalada en su PHP 
+Para validar si tiene la extensión:
+
+```bash
+dpkg -l | grep 'php8.1-curl'
+```
+
+De no tenerla instalada:
+```bash
+apt-get install php8.1-curl
+```
+
+Ahora instalaremos los controladores de PHP para Microsoft SQL Server (Ubuntu con PHP-FPM), 
 
 ```bash
 sudo pecl config-set php_ini /etc/php/8.1/fpm/php.ini
@@ -100,4 +112,4 @@ Listo!, Ya podemos conectarnos a SQLServer desde Linux.
 ## Datos Manual
 
 - Data actualizada al 23 de Febrero de 2023.
-- Ing. Raul Mauricio Uñate Castri (raulmauriciounate@gmail.com)
+- Ing. Raul Mauricio Uñate Castro (raulmauriciounate@gmail.com)
