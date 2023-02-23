@@ -1,5 +1,5 @@
 # SQLServerLite (PHP | LARAVEL) 
-## _Libreria para conexión con bases de datos SQLServer desde Laravel o PHP Estructurado.)_
+## _Libreria para conexión con bases de datos SQLServer desde Laravel o PHP Estructurado._
 Una alternativa de Conexión a SQL Server desde Laravel y una excelente forma para conectar desde PHP Estructurado.
 
 [![Raul Mauricio Uñate Castro](https://i.ibb.co/KKpDXD9/Logo.png)](#)
