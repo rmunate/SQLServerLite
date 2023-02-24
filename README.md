@@ -161,6 +161,6 @@ Todos los metodos que no sean de consulta, cuantan con el Rollback y el Commit I
 
 ## Mantenedores
 - Ingeniero, Raúl Mauricio Uñate Castro (raulmauriciounate@gmail.com)
-- Ingeniero, Jorge Hernan Castañeda (judini84@hotmail.com)
+- Ingeniero, Jorge Hernan Castañeda (ds.jorgecastaneda@gmail.com)
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
