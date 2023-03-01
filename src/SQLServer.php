@@ -91,7 +91,7 @@ class SQLServer
                 $erroresImplode =  implode(' | ', $e->errorInfo);
                 $this->error = strtoupper($erroresImplode);
             } else {
-                $this->error = $e->errorInfo . " | Garantice que se encuentre instalado el ODBC Driver y el SQLServer Correctamente. Manual: (https://github.com/rmunate/SQLServerLite/blob/main/InstalacionSQLServer.md)";
+                $this->error = $e->errorInfo . " | Garantice que se encuentre instalado el ODBC Driver y el SQLServer Correctamente. Readme: (https://github.com/rmunate/SQLServerLite)";
             }
 
         }

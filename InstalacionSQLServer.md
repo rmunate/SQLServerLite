@@ -5,14 +5,47 @@
 A continuación el manual de Instalación de SQLServer en Linux Ubuntu 20.04
 
 ## Documentacion Oficial Microsoft
-
-[![DRIVER ODBC](https://i.ibb.co/x1NxJR8/ODBC.png)](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=alpine18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline)
-
-[![Instalar SQLServer](https://i.ibb.co/80132v4/SQLServer.png)](https://learn.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-ver16)
+- https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=alpine18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline
+- https://learn.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-ver16
 
 ## Instalación
 
-Primero revisaremos que nuestra version de PHP con FPM este corriendo correctamente en el servidor.
+PRE-REQUISITOS:
+Garantice tener CURL instalada en su PHP 
+
+Para validar si tiene la extensión:
+```bash
+dpkg -l | grep 'php8.1-curl'
+```
+
+De no tenerla instalada, podrá instalarla con el siguiente comando:
+```bash
+apt-get install php8.1-curl
+```
+
+Debe contar con OpenSSL instalado en su servidor Linux:
+- https://www.openssl.org/source/
+
+Adicional debe configurar el archivo `/etc/ssl/openssl.cnf`
+
+Agregando:
+```bash
+openssl_conf = openssl_init 
+# Lo anterior debe estar en la primera linea del archivo.
+
+# Lo siguiente debe estar al final del archivo.
+[openssl_init]
+ssl_conf = ssl_sect
+
+[ssl_sect]
+system_default = system_default_sect
+
+[system_default_sect]
+CipherString = DEFAULT@SECLEVEL=1 
+#Si llega a generar problemas de SSL la conexion, cambiar a DEFAULT@SECLEVEL=0
+```
+
+Ahora revisaremos que nuestra version de PHP con FPM este corriendo correctamente en el servidor.
 Cambie la versión de PHP en los comandos por las posibles a usar con este manual (7.4 - 8.0 - 8.1)
 
 ```bash
@@ -48,19 +81,7 @@ sudo apt-get install -y unixodbc-dev
 
 Asegúrese de instalar también el `unixodbc-dev` paquete. Es utilizado por el peclcomando para instalar los controladores de PHP.
 
-Tambien garantice tener CURL instalada en su PHP 
-Para validar si tiene la extensión:
-
-```bash
-dpkg -l | grep 'php8.1-curl'
-```
-
-De no tenerla instalada:
-```bash
-apt-get install php8.1-curl
-```
-
-Ahora instalaremos los controladores de PHP para Microsoft SQL Server (Ubuntu con PHP-FPM), 
+Luego, instalaremos los controladores de PHP para Microsoft SQL Server (Ubuntu con PHP-FPM), 
 
 ```bash
 sudo pecl config-set php_ini /etc/php/8.1/fpm/php.ini
@@ -80,7 +101,7 @@ ls /etc/php/8.1/fpm/conf.d/*sqlsrv.ini
 ```
 
 Con estos pasos el servicio deberia quedan en funcionamiento.
-Ahora procedemos a Reiniciar el PHP y el APACHE.
+Luego procedemos a Reiniciar el PHP y el APACHE.
 
 ```bash
 service php8.1-fpm restart
@@ -108,10 +129,9 @@ sudo pecl install -f pdo_sqlsrv
 sudo phpenmod -v 8.1 sqlsrv pdo_sqlsrv
 ```
 
-Ahora volveremos a correr todos los pasos previos hasta reiniciar el servidor Apache2.
+Ahora volveremos a correr todos los pasos previos desde revisar que PHP esta corriendo correctamente hasta reiniciar el servidor Apache2.
 
 ¡Listo!, Ya podemos conectarnos a SQLServer desde Linux.
 
 ## Mantenedores Manual
-
 - Ingeniero, Raúl Mauricio Uñate Castro (raulmauriciounate@gmail.com)

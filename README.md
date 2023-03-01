@@ -102,21 +102,25 @@ SQLServer::env('MYDATA')->...
 ```
 
 # _Metodo Para Confirmacion de Conexión_
+Se puede usar con los dos metodos de conexión.
 
 ```php
-$connection = SQLServer::database(CREDENCIALES())->status();
+$connection = SQLServer::database(CREDENCIALES())->status(); 
+//Retornar un objeto con el detalle de la conexión.
+
 if($connection->status){
     //Hacer consulta ya que existe conexión con la base de datos
     $data = $connection->query->select("...............")->get();
 } else {
     //No hubo conexion a la base de datos...
+    //Retornar Error 500 o ejecutar un proceso específico.
 }
 ```
 
 
 # Metodos con retorno de Datos
 
-| COMANDO | DESCRIPCIÓN |
+| SINTAXIS | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->select("SELECT * FROM 'usuarios'")->get()` | Ejecute las consultas que requiera a la base de datos y genere la respuesta con el metodo `->get()`, usando sentencias propias de SQL. **Los datos retornados serán un arreglo.** |
 | `SQLServer::database(CREDENCIALES())->setTimeOut(10)->select("SELECT * FROM 'usuarios'")->get()` | El metodo `->setTimeOut(10)` recibe un número entero no negativo que representa el período de tiempo de espera, en segundos. El valor **predeterminado es 0** y significa que no hay tiempo de espera. |
@@ -127,7 +131,7 @@ if($connection->status){
 
 # Metodos Adicionales Con Retorno De Datos
 
-| COMANDO | DESCRIPCIÓN |
+| SINTAXIS | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->first()` | Trae el primer valor del arreglo retornado en la Consulta. |
 | `SQLServer::database(CREDENCIALES())->procedure("EXEC procedure")->get()` | Trae todos los valores retornados en la Consulta como arreglo. |
@@ -150,7 +154,7 @@ if($connection->status){
 
 Todos los metodos que no sean de consulta, cuantan con el Rollback y el Commit Implicitó en la clase, para nó crear registros basura en la base de datos, en los casos donde hayan errores.
 
-| COMANDO | DESCRIPCIÓN |
+| SINTAXIS | DESCRIPCIÓN |
 | ----------- | ----------- |
 | `SQLServer::database(CREDENCIALES())->update("UPDATE 'usuarios' SET 'nombre' = 'Raul' WHERE 'id' = 1")` | Actualice los datos que requiera en la base de datos, usando sentencias propias de SQL |
 | `SQLServer::database(CREDENCIALES())->insert("INSERT INTO 'users' ('id', 'name') VALUES (1, 'Administrador')")` | Inserte los datos que requiera en la base de datos, usando sentencias propias de SQL |
