@@ -61,6 +61,7 @@ abstract class BaseSQLServer
      * Create a new instance of the configuration using a database configuration.
      *
      * @param array $database The database configuration array.
+     *
      * @return static The new configuration instance.
      */
     public static function database(array $database)
@@ -72,6 +73,7 @@ abstract class BaseSQLServer
      * Create a new instance of the configuration using an environment variable prefix.
      *
      * @param array $envPrefix The environment variable prefix array.
+     *
      * @return static The new configuration instance.
      */
     public static function env(array $envPrefix)
@@ -83,6 +85,7 @@ abstract class BaseSQLServer
      * Create a new instance of the configuration using a connection configuration.
      *
      * @param array $connection The connection configuration array.
+     *
      * @return static The new configuration instance.
      */
     public static function connection(array $connection)

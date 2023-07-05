@@ -177,7 +177,7 @@ final class SetCredentials extends BaseSetCredentials
      *
      * @return object Returns an object containing the DSN, user, and password.
      */
-    public function getCredentials() : object
+    public function getCredentials(): object
     {
         return (object) [
             'dsn'      => $this->dsn,

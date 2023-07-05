@@ -144,11 +144,10 @@ class SQLServer extends BaseSQLServer
         if ($this->isSelectQuery($statement)) {
             throw new \Exception(Messages::notIsSelectQueryException());
         }
-        
+
         try {
-            
             $this->connectionPDO();
-            
+
             // Prepare the statement
             $stmt = $this->PDO->prepare($statement);
 

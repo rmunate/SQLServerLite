@@ -68,7 +68,7 @@ trait CommonFunctions
      *
      * @return object The converted stdClass object.
      */
-    public function toObject($data) 
+    public function toObject($data)
     {
         return json_decode(json_encode($data), false);
     }
@@ -150,7 +150,6 @@ trait CommonFunctions
      */
     public function hasValidPDOConnection(): bool
     {
-        return (!is_null($this->PDO));
+        return !is_null($this->PDO);
     }
-
 }
