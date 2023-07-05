@@ -31,10 +31,11 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
  * CONNECTION WITH THE LIBRARY OR THE USE OR OTHER DEALINGS IN THE LIBRARY.
  */
+
 namespace Rmunate\SqlServerLite\Traits;
 
-use PDO;
 use Exception;
+use PDO;
 use Rmunate\SqlServerLite\Exceptions\Messages;
 
 trait Constraints
@@ -43,8 +44,10 @@ trait Constraints
      * Disable foreign key constraints for all tables or specified tables.
      *
      * @param array $tables The array of table names.
-     * @return $this The current instance of the object.
+     *
      * @throws Exception If there is an error disabling foreign keys.
+     *
+     * @return $this The current instance of the object.
      */
     public function disableForeignKeys(array $tables = [])
     {
@@ -86,7 +89,7 @@ trait Constraints
             }
         } catch (Exception $e) {
             // Throw the exception
-            throw new Exception(Messages::disableForeignKeysException("Error disabling foreign keys: " . $e->getMessage()));
+            throw new Exception(Messages::disableForeignKeysException('Error disabling foreign keys: '.$e->getMessage()));
         }
 
         return $this;
@@ -96,8 +99,10 @@ trait Constraints
      * Enable foreign key constraints for all tables or specified tables.
      *
      * @param array $tables The array of table names.
-     * @return $this The current instance of the object.
+     *
      * @throws Exception If there is an error enabling foreign keys.
+     *
+     * @return $this The current instance of the object.
      */
     public function enableForeignKeys(array $tables = [])
     {
@@ -139,7 +144,7 @@ trait Constraints
             }
         } catch (Exception $e) {
             // Throw the exception
-            throw new Exception(Messages::enableForeignKeysException("Error enabling foreign keys: " . $e->getMessage()));
+            throw new Exception(Messages::enableForeignKeysException('Error enabling foreign keys: '.$e->getMessage()));
         }
 
         return $this;
@@ -150,8 +155,11 @@ trait Constraints
      * Use disableForeignKeys() method instead.
      *
      * @param array $tables The array of table names.
-     * @return $this The current instance of the object.
+     *
      * @throws Exception If there is an error disabling foreign keys.
+     *
+     * @return $this The current instance of the object.
+     *
      * @deprecated This method is deprecated and will be removed in the next major version.
      */
     public function noCheck(array $tables = [])
@@ -160,7 +168,7 @@ trait Constraints
             return $this->disableForeignKeys($tables);
         } catch (Exception $e) {
             // Throw the exception
-            throw new Exception(Messages::disableForeignKeysException("Error disabling foreign keys: " . $e->getMessage()));
+            throw new Exception(Messages::disableForeignKeysException('Error disabling foreign keys: '.$e->getMessage()));
         }
     }
 
@@ -169,8 +177,11 @@ trait Constraints
      * Use enableForeignKeys() method instead.
      *
      * @param array $tables The array of table names.
-     * @return $this The current instance of the object.
+     *
      * @throws Exception If there is an error enabling foreign keys.
+     *
+     * @return $this The current instance of the object.
+     *
      * @deprecated This method is deprecated and will be removed in the next major version.
      */
     public function check(array $tables = [])
@@ -179,7 +190,7 @@ trait Constraints
             return $this->enableForeignKeys($tables);
         } catch (Exception $e) {
             // Throw the exception
-            throw new Exception(Messages::enableForeignKeysException("Error enabling foreign keys: " . $e->getMessage()));
+            throw new Exception(Messages::enableForeignKeysException('Error enabling foreign keys: '.$e->getMessage()));
         }
     }
 }

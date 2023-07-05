@@ -34,23 +34,22 @@
 
 namespace Rmunate\SqlServerLite\Exceptions;
 
-use Rmunate\SqlServerLite\SQLServer;
-
 class Messages
 {
-    const MANUAL_URL = "https://github.com/rmunate/SQLServerLite";
+    const MANUAL_URL = 'https://github.com/rmunate/SQLServerLite';
     const LIBRARY_NAME = 'SQLServerLite';
 
     /**
      * Returns the exception message for a non-existent key in an array.
      *
      * @param string $key The key that is not present or empty in the array.
+     *
      * @return string The formatted exception message.
      */
     public static function nonExistentKeyException($key): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::database()",
+            'SQLServer::database()',
             "The key [$key] is not present or empty in the array passed."
         );
     }
@@ -63,8 +62,8 @@ class Messages
     public static function undefinedEnvironmentVariableException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::env()",
-            "The environment variables do not exist or are poorly defined, they must have {PREFIX}_SQLSRV_IDENTIFIER."
+            'SQLServer::env()',
+            'The environment variables do not exist or are poorly defined, they must have {PREFIX}_SQLSRV_IDENTIFIER.'
         );
     }
 
@@ -76,8 +75,8 @@ class Messages
     public static function outsideOfLaravel(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::connection()",
-            "You are not working on a Laravel application. This method is only functional in that framework."
+            'SQLServer::connection()',
+            'You are not working on a Laravel application. This method is only functional in that framework.'
         );
     }
 
@@ -85,12 +84,13 @@ class Messages
      * Returns the exception message for a non-existent key in Laravel configuration.
      *
      * @param string $key The key that is not present or empty in the Laravel configuration.
+     *
      * @return string The formatted exception message.
      */
     public static function nonExistentKeyLaravelException($key): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::connection()",
+            'SQLServer::connection()',
             "The key [$key] is not present or empty in [config/database.php]."
         );
     }
@@ -99,13 +99,14 @@ class Messages
      * Returns the exception message for an error disabling foreign keys.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function disableForeignKeysException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::disableForeignKeys()",
-            $message ?? "Error disabling foreign keys"
+            'SQLServer::disableForeignKeys()',
+            $message ?? 'Error disabling foreign keys'
         );
     }
 
@@ -113,13 +114,14 @@ class Messages
      * Returns the exception message for an error enabling foreign keys.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function enableForeignKeysException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::enableForeignKeys()",
-            $message ?? "Error enabling foreign keys"
+            'SQLServer::enableForeignKeys()',
+            $message ?? 'Error enabling foreign keys'
         );
     }
 
@@ -131,8 +133,8 @@ class Messages
     public static function notIsSelectQueryException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::select()",
-            "The string sent does not start with SELECT, this is required."
+            'SQLServer::select()',
+            'The string sent does not start with SELECT, this is required.'
         );
     }
 
@@ -144,8 +146,8 @@ class Messages
     public static function notIsUpdateQueryException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::update()",
-            "The string sent does not start with UPDATE, this is required."
+            'SQLServer::update()',
+            'The string sent does not start with UPDATE, this is required.'
         );
     }
 
@@ -157,8 +159,8 @@ class Messages
     public static function notIsInsertQueryException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::insert()",
-            "The string sent does not start with INSERT, this is required."
+            'SQLServer::insert()',
+            'The string sent does not start with INSERT, this is required.'
         );
     }
 
@@ -170,8 +172,8 @@ class Messages
     public static function notIsDeleteQueryException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::delete()",
-            "The string sent does not start with DELETE, this is required."
+            'SQLServer::delete()',
+            'The string sent does not start with DELETE, this is required.'
         );
     }
 
@@ -183,8 +185,8 @@ class Messages
     public static function notIsProcedureException(): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::executeProcedure/executeTransactionalProcedure()",
-            "The string sent does not start with EXEC, this is required."
+            'SQLServer::executeProcedure/executeTransactionalProcedure()',
+            'The string sent does not start with EXEC, this is required.'
         );
     }
 
@@ -192,13 +194,14 @@ class Messages
      * Returns the exception message for a SELECT query error.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function selectException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::select()",
-            $message ?? "Error Select Query"
+            'SQLServer::select()',
+            $message ?? 'Error Select Query'
         );
     }
 
@@ -206,13 +209,14 @@ class Messages
      * Returns the exception message for an UPDATE query error.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function updateException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::update()",
-            $message ?? "Error Update Sentence"
+            'SQLServer::update()',
+            $message ?? 'Error Update Sentence'
         );
     }
 
@@ -220,13 +224,14 @@ class Messages
      * Returns the exception message for an INSERT query error.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function insertException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::insert()",
-            $message ?? "Error Insert Sentence"
+            'SQLServer::insert()',
+            $message ?? 'Error Insert Sentence'
         );
     }
 
@@ -234,13 +239,14 @@ class Messages
      * Returns the exception message for a DELETE query error.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function deleteException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::delete()",
-            $message ?? "Error Delete Sentence"
+            'SQLServer::delete()',
+            $message ?? 'Error Delete Sentence'
         );
     }
 
@@ -248,21 +254,23 @@ class Messages
      * Returns the exception message for a stored procedure execution error.
      *
      * @param string|null $message Additional error message (optional).
+     *
      * @return string The formatted exception message.
      */
     public static function executeProcedureException($message = null): string
     {
         return self::formatExceptionMessage(
-            "SQLServer::executeProcedure/executeTransactionalProcedure()",
-            $message ?? "Error Store Procedure Sentence"
+            'SQLServer::executeProcedure/executeTransactionalProcedure()',
+            $message ?? 'Error Store Procedure Sentence'
         );
     }
 
     /**
      * Formats the exception message.
      *
-     * @param string $method The method that triggered the exception.
+     * @param string $method  The method that triggered the exception.
      * @param string $message The exception message.
+     *
      * @return string The formatted exception message.
      */
     public static function formatExceptionMessage(string $method = '', $message): string
