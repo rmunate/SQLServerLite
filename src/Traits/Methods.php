@@ -37,8 +37,8 @@ namespace Rmunate\SqlServerLite\Traits;
 trait Methods
 {
     /**
-     * Return the reversed response array
-     * 
+     * Return the reversed response array.
+     *
      * @return $this The current instance of the object
      */
     public function reverse()
@@ -47,12 +47,13 @@ trait Methods
             $data = array_reverse($this->response);
             $this->response = $data;
         }
+
         return $this;
     }
 
     /**
-     * Return Unique Data
-     * 
+     * Return Unique Data.
+     *
      * @return $this The current instance of the object
      */
     public function unique()
@@ -61,6 +62,7 @@ trait Methods
             $data = array_unique($this->response);
             $this->response = $data;
         }
+
         return $this;
     }
 
@@ -68,6 +70,7 @@ trait Methods
      * Sorts the elements of the array in ascending order.
      *
      * @param int $sort_flags [optional] The sorting flags.
+     *
      * @return $this The current instance of the object
      */
     public function sort(int $sort_flags = SORT_REGULAR)
@@ -78,13 +81,13 @@ trait Methods
             sort($sortedArray, $sort_flags);
             $this->response = $sortedArray;
         }
-        
+
         return $this;
     }
 
     /**
-     * Get the flipped version of each array in the response
-     * 
+     * Get the flipped version of each array in the response.
+     *
      * @return $this The current instance of the object
      */
     public function flip()
@@ -93,15 +96,17 @@ trait Methods
             $flipArray = array_map('array_flip', $this->response);
             $this->response = $flipArray;
         }
+
         return $this;
     }
 
     /**
-     * Get a slice of elements from the response
-     * 
-     * @param int $offset The starting offset of the slice
-     * @param int|null $length The length of the slice
-     * @param bool $preserve_keys Whether to preserve the original keys in the slice
+     * Get a slice of elements from the response.
+     *
+     * @param int      $offset        The starting offset of the slice
+     * @param int|null $length        The length of the slice
+     * @param bool     $preserve_keys Whether to preserve the original keys in the slice
+     *
      * @return $this The current instance of the object
      */
     public function slice(int $offset, ?int $length = null, bool $preserve_keys = false)
@@ -110,13 +115,15 @@ trait Methods
             $sliceArray = array_slice($this->response, $offset, $length, $preserve_keys);
             $this->response = $sliceArray;
         }
+
         return $this;
     }
 
     /**
-     * Get a specific column from the response array
-     * 
+     * Get a specific column from the response array.
+     *
      * @param string $column The name of the column to retrieve
+     *
      * @return $this The current instance of the object
      */
     public function column($column)
@@ -125,6 +132,7 @@ trait Methods
             $sliceColumn = array_column($this->response, $column);
             $this->response = $sliceColumn;
         }
+
         return $this;
     }
 
@@ -132,6 +140,7 @@ trait Methods
      * Merge multiple arrays into one.
      *
      * @param array ...$arrays The arrays to merge.
+     *
      * @return $this The current instance of the object
      */
     public function merge(array ...$arrays)
@@ -141,13 +150,15 @@ trait Methods
             $mergedArray = array_merge_recursive(...$arraysToMerge);
             $this->response = $mergedArray;
         }
+
         return $this;
     }
 
     /**
-     * Get random elements from the response
-     * 
+     * Get random elements from the response.
+     *
      * @param int $num The number of random elements to retrieve
+     *
      * @return $this The current instance of the object
      */
     public function rand($num)
@@ -156,6 +167,7 @@ trait Methods
             $arrayRand = array_rand($this->response, $num);
             $this->response = $arrayRand;
         }
+
         return $this;
     }
 
@@ -163,6 +175,7 @@ trait Methods
      * Calculates the difference between multiple arrays.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function diff(array ...$arrays)
@@ -171,6 +184,7 @@ trait Methods
             $arraysToDiff = array_merge([$this->response], ...$arrays);
             $this->response = array_diff(...$arraysToDiff);
         }
+
         return $this;
     }
 
@@ -178,6 +192,7 @@ trait Methods
      * Calculates the intersection between multiple arrays.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function intersect(array ...$arrays)
@@ -186,13 +201,15 @@ trait Methods
             $arraysToIntersect = array_merge([$this->response], ...$arrays);
             $this->response = array_intersect(...$arraysToIntersect);
         }
+
         return $this;
     }
 
-     /**
+    /**
      * Changes the case of all keys in an array.
      *
      * @param int $case [optional] The case to which the keys will be changed.
+     *
      * @return $this The current instance of the object
      */
     public function keyCase($case = CASE_LOWER)
@@ -200,6 +217,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             $this->response = array_change_key_case($this->response, $case);
         }
+
         return $this;
     }
 
@@ -207,7 +225,8 @@ trait Methods
      * Filters the elements of the array using a callback function.
      *
      * @param callable|null $callback The callback function to use for filtering.
-     * @param int $flag [optional] The flag to control the behavior of the filter.
+     * @param int           $flag     [optional] The flag to control the behavior of the filter.
+     *
      * @return $this The current instance of the object
      */
     public function filter(callable $callback = null, int $flag = 0): array
@@ -215,6 +234,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             $this->response = array_filter($this->response, $callback, $flag);
         }
+
         return $this;
     }
 
@@ -222,6 +242,7 @@ trait Methods
      * Applies a callback function to each element of the array.
      *
      * @param callable $callback The callback function to apply.
+     *
      * @return $this The current instance of the object
      */
     public function map(callable $callback): array
@@ -229,6 +250,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             $this->response = array_map($callback, $this->response);
         }
+
         return $this;
     }
 
@@ -236,7 +258,8 @@ trait Methods
      * Applies a callback function to the elements of the array, reducing them to a single value.
      *
      * @param callable $callback The callback function to apply.
-     * @param mixed $initial [optional] The initial value for the reduction.
+     * @param mixed    $initial  [optional] The initial value for the reduction.
+     *
      * @return $this The current instance of the object
      */
     public function reduce(callable $callback, $initial = null)
@@ -244,6 +267,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             $this->response = array_reduce($this->response, $callback, $initial);
         }
+
         return $this;
     }
 
@@ -251,6 +275,7 @@ trait Methods
      * Computes the difference of arrays with additional index check.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function diffAssoc(array ...$arrays)
@@ -259,6 +284,7 @@ trait Methods
             $arraysToDiff = array_merge([$this->response], ...$arrays);
             $this->response = array_diff_assoc(...$arraysToDiff);
         }
+
         return $this;
     }
 
@@ -266,6 +292,7 @@ trait Methods
      * Computes the difference of arrays using keys for comparison.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function diffKey(array ...$arrays)
@@ -274,6 +301,7 @@ trait Methods
             $arraysToDiff = array_merge([$this->response], ...$arrays);
             $this->response = array_diff_key(...$arraysToDiff);
         }
+
         return $this;
     }
 
@@ -281,7 +309,8 @@ trait Methods
      * Computes the difference of arrays with additional index check, using a callback function.
      *
      * @param callable $key_compare_func The callback function to use for key comparison.
-     * @param array ...$arrays The arrays to compare.
+     * @param array    ...$arrays        The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function diffUassoc(callable $key_compare_func, array ...$arrays)
@@ -290,6 +319,7 @@ trait Methods
             $arraysToDiff = array_merge([$this->response], ...$arrays);
             $this->response = call_user_func_array('array_diff_uassoc', $arraysToDiff, $key_compare_func);
         }
+
         return $this;
     }
 
@@ -297,7 +327,8 @@ trait Methods
      * Computes the difference of arrays using keys for comparison, using a callback function.
      *
      * @param callable $key_compare_func The callback function to use for key comparison.
-     * @param array ...$arrays The arrays to compare.
+     * @param array    ...$arrays        The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function diffUkey(callable $key_compare_func, array ...$arrays)
@@ -306,6 +337,7 @@ trait Methods
             $arraysToDiff = array_merge([$this->response], ...$arrays);
             $this->response = call_user_func_array('array_diff_ukey', $arraysToDiff, $key_compare_func);
         }
+
         return $this;
     }
 
@@ -313,6 +345,7 @@ trait Methods
      * Computes the intersection of arrays with additional index check.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function intersectAssoc(array ...$arrays)
@@ -321,6 +354,7 @@ trait Methods
             $arraysToIntersect = array_merge([$this->response], ...$arrays);
             $this->response = array_intersect_assoc(...$arraysToIntersect);
         }
+
         return $this;
     }
 
@@ -328,6 +362,7 @@ trait Methods
      * Computes the intersection of arrays using keys for comparison.
      *
      * @param array ...$arrays The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function intersectKey(array ...$arrays)
@@ -336,6 +371,7 @@ trait Methods
             $arraysToIntersect = array_merge([$this->response], ...$arrays);
             $this->response = array_intersect_key(...$arraysToIntersect);
         }
+
         return $this;
     }
 
@@ -343,7 +379,8 @@ trait Methods
      * Computes the intersection of arrays with additional index check, using a callback function.
      *
      * @param callable $key_compare_func The callback function to use for key comparison.
-     * @param array ...$arrays The arrays to compare.
+     * @param array    ...$arrays        The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function intersectUassoc(callable $key_compare_func, array ...$arrays)
@@ -352,6 +389,7 @@ trait Methods
             $arraysToIntersect = array_merge([$this->response], ...$arrays);
             $this->response = call_user_func_array('array_intersect_uassoc', $arraysToIntersect, $key_compare_func);
         }
+
         return $this;
     }
 
@@ -359,7 +397,8 @@ trait Methods
      * Computes the intersection of arrays using keys for comparison, using a callback function.
      *
      * @param callable $key_compare_func The callback function to use for key comparison.
-     * @param array ...$arrays The arrays to compare.
+     * @param array    ...$arrays        The arrays to compare.
+     *
      * @return $this The current instance of the object
      */
     public function intersectUkey(callable $key_compare_func, array ...$arrays)
@@ -368,6 +407,7 @@ trait Methods
             $arraysToIntersect = array_merge([$this->response], ...$arrays);
             $this->response = call_user_func_array('array_intersect_ukey', $arraysToIntersect, $key_compare_func);
         }
+
         return $this;
     }
 
@@ -375,6 +415,7 @@ trait Methods
      * Merge one or more arrays recursively.
      *
      * @param array ...$arrays The arrays to merge.
+     *
      * @return $this The current instance of the object
      */
     public function mergeRecursive(array ...$arrays)
@@ -384,20 +425,23 @@ trait Methods
             $mergedArray = array_merge_recursive(...$arraysToMerge);
             $this->response = $mergedArray;
         }
+
         return $this;
     }
 
     /**
      * Pad an array to a specified length with a value.
      *
-     * @param int $size The new size of the array.
+     * @param int   $size  The new size of the array.
      * @param mixed $value The value to pad if the array is smaller.
+     *
      * @return $this The current instance of the object
      */
     public function pad(int $size, $value)
     {
         $paddedArray = array_pad($this->response, $size, $value);
         $this->response = $paddedArray;
+
         return $this;
     }
 
@@ -411,6 +455,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             return array_pop($this->response);
         }
+
         return null;
     }
 
@@ -418,6 +463,7 @@ trait Methods
      * Push one or more elements onto the end of array.
      *
      * @param mixed ...$values The values to push.
+     *
      * @return $this The current instance of the object
      */
     public function push(...$values)
@@ -425,6 +471,7 @@ trait Methods
         foreach ($values as $value) {
             array_push($this->response, $value);
         }
+
         return $this;
     }
 
@@ -432,6 +479,7 @@ trait Methods
      * Replace recursive values in an array.
      *
      * @param array ...$arrays The arrays from which to replace values.
+     *
      * @return $this The current instance of the object
      */
     public function replaceRecursive(array ...$arrays)
@@ -441,6 +489,7 @@ trait Methods
             $replacedArray = array_replace_recursive(...$arraysToReplace);
             $this->response = $replacedArray;
         }
+
         return $this;
     }
 
@@ -454,6 +503,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             return array_shift($this->response);
         }
+
         return null;
     }
 
@@ -461,6 +511,7 @@ trait Methods
      * Prepend one or more elements to the beginning of array.
      *
      * @param mixed ...$values The values to prepend.
+     *
      * @return $this The current instance of the object
      */
     public function unshift(...$values)
@@ -468,6 +519,7 @@ trait Methods
         foreach ($values as $value) {
             array_unshift($this->response, $value);
         }
+
         return $this;
     }
 
@@ -482,6 +534,7 @@ trait Methods
             $valuesArray = array_values($this->response);
             $this->response = $valuesArray;
         }
+
         return $this;
     }
 
@@ -495,21 +548,24 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             natcasesort($this->response);
         }
+
         return $this;
     }
 
     /**
      * Create an array containing a range of elements.
      *
-     * @param mixed $start The first value of the sequence.
-     * @param mixed $end The final value of the sequence.
-     * @param number $step The step between each value in the sequence.
+     * @param mixed  $start The first value of the sequence.
+     * @param mixed  $end   The final value of the sequence.
+     * @param number $step  The step between each value in the sequence.
+     *
      * @return $this The current instance of the object
      */
     public function range($start, $end, $step = 1)
     {
         $rangeArray = range($start, $end, $step);
         $this->response = $rangeArray;
+
         return $this;
     }
 
@@ -517,6 +573,7 @@ trait Methods
      * Sort an array by keys using a user-defined comparison function.
      *
      * @param callable $callback The comparison function.
+     *
      * @return $this The current instance of the object
      */
     public function uksort(callable $callback)
@@ -524,6 +581,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             uksort($this->response, $callback);
         }
+
         return $this;
     }
 
@@ -531,6 +589,7 @@ trait Methods
      * Sort an array using a user-defined comparison function.
      *
      * @param callable $callback The comparison function.
+     *
      * @return $this The current instance of the object
      */
     public function usort(callable $callback)
@@ -538,8 +597,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             usort($this->response, $callback);
         }
+
         return $this;
     }
-        
-
 }

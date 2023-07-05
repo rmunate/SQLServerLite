@@ -36,9 +36,9 @@ namespace Rmunate\SqlServerLite;
 
 use Exception;
 use InvalidArgumentException;
+use Rmunate\SqlServerLite\Bases\BaseSetCredentials;
 use Rmunate\SqlServerLite\Exceptions\Messages;
 use Rmunate\SqlServerLite\Traits\CommonFunctions;
-use Rmunate\SqlServerLite\Bases\BaseSetCredentials;
 
 final class SetCredentials extends BaseSetCredentials
 {
@@ -52,8 +52,10 @@ final class SetCredentials extends BaseSetCredentials
      * Set the database credentials from an array.
      *
      * @param array $credentials The array containing the database credentials.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required keys are missing or empty.
+     *
+     * @return static Returns the current instance of the class.
      */
     final public function setCredentialsFromArray(array $credentials): static
     {
@@ -76,18 +78,20 @@ final class SetCredentials extends BaseSetCredentials
      * Set the database credentials from environment variables.
      *
      * @param string $prefix The prefix used for the environment variables.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required environment variables are missing or poorly defined.
+     *
+     * @return static Returns the current instance of the class.
      */
     final public function setCredentialsFromEnvironment(string $prefix): static
     {
         $database = [
-            'server' => env($prefix . '_SQLSRV_NAME', null),
-            'instance' => env($prefix . '_SQLSRV_INSTANCE', null),
-            'port' => env($prefix . '_SQLSRV_PORT', null),
-            'database' => env($prefix . '_SQLSRV_DATABASE', null),
-            'user' => env($prefix . '_SQLSRV_USER', null),
-            'password' => env($prefix . '_SQLSRV_PASS', null)
+            'server'   => env($prefix.'_SQLSRV_NAME', null),
+            'instance' => env($prefix.'_SQLSRV_INSTANCE', null),
+            'port'     => env($prefix.'_SQLSRV_PORT', null),
+            'database' => env($prefix.'_SQLSRV_DATABASE', null),
+            'user'     => env($prefix.'_SQLSRV_USER', null),
+            'password' => env($prefix.'_SQLSRV_PASS', null),
         ];
 
         $requiredKeys = ['server', 'database', 'user', 'password'];
@@ -109,9 +113,11 @@ final class SetCredentials extends BaseSetCredentials
      * Set the database credentials from database connections.
      *
      * @param string $connectName The name of the database connection.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required keys are missing or empty.
-     * @throws Exception Throws an exception if outside of Laravel.
+     * @throws Exception                Throws an exception if outside of Laravel.
+     *
+     * @return static Returns the current instance of the class.
      */
     final public function setCredentialsFromConnections(string $connectName): static
     {
@@ -119,14 +125,14 @@ final class SetCredentials extends BaseSetCredentials
             throw new Exception(Messages::outsideOfLaravel());
         }
 
-        $config = config('database.connections.' . $connectName);
+        $config = config('database.connections.'.$connectName);
 
         $database = [
-            'server' => $config['host'] ?? $config['server'] ?? null,
+            'server'   => $config['host'] ?? $config['server'] ?? null,
             'instance' => $config['instance'] ?? null,
-            'port' => $config['port'] ?? null,
+            'port'     => $config['port'] ?? null,
             'database' => $config['database'] ?? null,
-            'user' => $config['username'] ?? $config['user'] ?? null,
+            'user'     => $config['username'] ?? $config['user'] ?? null,
             'password' => $config['password'] ?? null,
         ];
 
@@ -149,18 +155,19 @@ final class SetCredentials extends BaseSetCredentials
      * Build the DSN (Data Source Name) from the database credentials.
      *
      * @param array $credentials The database credentials.
+     *
      * @return string The built DSN.
      */
     private function buildDsn(array $credentials): string
     {
-        $dsn = 'sqlsrv:Server=' . trim($credentials['server'])
-            . (isset($credentials['port']) && !empty($credentials['port']) && is_numeric($credentials['port'])
-                ? ',' . intval($credentials['port'])
+        $dsn = 'sqlsrv:Server='.trim($credentials['server'])
+            .(isset($credentials['port']) && !empty($credentials['port']) && is_numeric($credentials['port'])
+                ? ','.intval($credentials['port'])
                 : '')
-            . (isset($credentials['instance']) && !empty($credentials['instance'])
-                ? '\\' . $credentials['instance']
+            .(isset($credentials['instance']) && !empty($credentials['instance'])
+                ? '\\'.$credentials['instance']
                 : '')
-            . ';Database=' . trim($credentials['database']);
+            .';Database='.trim($credentials['database']);
 
         return $dsn;
     }
@@ -173,9 +180,9 @@ final class SetCredentials extends BaseSetCredentials
     final public function getCredentials(): object
     {
         return (object) [
-            'dsn' => $this->dsn,
-            'user' => $this->user,
-            'password' => $this->password
+            'dsn'      => $this->dsn,
+            'user'     => $this->user,
+            'password' => $this->password,
         ];
     }
 }

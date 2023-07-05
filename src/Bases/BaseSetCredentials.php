@@ -64,12 +64,14 @@ abstract class BaseSetCredentials
      * Create a new instance of the class from array credentials.
      *
      * @param array $credentials The credentials used for establishing the connection.
+     *
      * @return static Returns a new instance of the class with the connection established.
      */
     public static function fromArrayCredentials(array $credentials): static
     {
         $class = new static();
         $class->setCredentialsFromArray($credentials);
+
         return $class->establishConnection();
     }
 
@@ -77,12 +79,14 @@ abstract class BaseSetCredentials
      * Create a new instance of the class from environment variables.
      *
      * @param string $prefix The prefix used for the environment variables.
+     *
      * @return static Returns a new instance of the class with the connection established.
      */
     public static function fromEnvironment(string $prefix): static
     {
         $class = new static();
         $class->setCredentialsFromEnvironment($prefix);
+
         return $class->establishConnection();
     }
 
@@ -90,12 +94,14 @@ abstract class BaseSetCredentials
      * Create a new instance of the class from database connections.
      *
      * @param string $prefix The prefix used for the database connections.
+     *
      * @return static Returns a new instance of the class with the connection established.
      */
     public static function fromDatabaseConnections(string $prefix): static
     {
         $class = new static();
         $class->setCredentialsFromConnections($prefix);
+
         return $class->establishConnection();
     }
 
@@ -103,8 +109,10 @@ abstract class BaseSetCredentials
      * Set the database credentials from an array.
      *
      * @param array $database The array containing the database credentials.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required keys are missing or empty.
+     *
+     * @return static Returns the current instance of the class.
      */
     abstract public function setCredentialsFromArray(array $database): static;
 
@@ -112,8 +120,10 @@ abstract class BaseSetCredentials
      * Set the database credentials from environment variables.
      *
      * @param string $prefix The prefix used for the environment variables.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required environment variables are missing or poorly defined.
+     *
+     * @return static Returns the current instance of the class.
      */
     abstract public function setCredentialsFromEnvironment(string $prefix): static;
 
@@ -121,8 +131,10 @@ abstract class BaseSetCredentials
      * Set the database credentials from database connections.
      *
      * @param string $connectName The name of the database connection.
-     * @return static Returns the current instance of the class.
+     *
      * @throws InvalidArgumentException Throws an exception if required keys are missing or empty.
+     *
+     * @return static Returns the current instance of the class.
      */
     abstract public function setCredentialsFromConnections(string $connectName): static;
 }

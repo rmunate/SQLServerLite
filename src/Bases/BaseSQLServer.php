@@ -42,20 +42,24 @@ abstract class BaseSQLServer
      * Handle calls to missing methods on the helper.
      *
      * @param string $method
-     * @param array $parameters
-     * @return mixed
+     * @param array  $parameters
+     *
      * @throws BadMethodCallException
+     *
+     * @return mixed
      */
     public function __call($method, $parameters)
     {
         throw new BadMethodCallException(sprintf(
-            'Method %s::%s does not exist.', static::class, $method
+            'Method %s::%s does not exist.',
+            static::class,
+            $method
         ));
     }
 
     /**
      * Return the connection status.
-     * 
+     *
      * @return object
      */
     abstract public function status(): object;
@@ -64,9 +68,11 @@ abstract class BaseSQLServer
      * Executes a SELECT query and returns the result set.
      *
      * @param string $statement The SELECT query statement.
-     * @param array $params The optional parameters for prepared statements.
-     * @return array The result set as an array of associative arrays.
+     * @param array  $params    The optional parameters for prepared statements.
+     *
      * @throws \Exception If the query is not a SELECT query or if there is an error executing the query.
+     *
+     * @return array The result set as an array of associative arrays.
      */
     abstract public function select(string $statement, array $params = []): static;
 
@@ -74,9 +80,11 @@ abstract class BaseSQLServer
      * Execute an UPDATE query.
      *
      * @param string $statement The UPDATE query statement.
-     * @param array $params The array of parameters for the prepared statement.
-     * @return bool Returns true if the query is executed successfully, false otherwise.
+     * @param array  $params    The array of parameters for the prepared statement.
+     *
      * @throws Exception If there is an error executing the SQL query.
+     *
+     * @return bool Returns true if the query is executed successfully, false otherwise.
      */
     abstract public function update(string $statement, array $params = []): bool;
 
@@ -84,9 +92,11 @@ abstract class BaseSQLServer
      * Execute an INSERT query.
      *
      * @param string $statement The INSERT query statement.
-     * @param array $params The array of parameters for the prepared statement.
-     * @return bool Returns true if the INSERT query was successful, false otherwise.
+     * @param array  $params    The array of parameters for the prepared statement.
+     *
      * @throws \Exception If there is an error executing the SQL query.
+     *
+     * @return bool Returns true if the INSERT query was successful, false otherwise.
      */
     abstract public function insert(string $statement, array $params = []): bool;
 
@@ -94,9 +104,11 @@ abstract class BaseSQLServer
      * Execute a DELETE query.
      *
      * @param string $statement The DELETE query statement.
-     * @param array $params The array of parameters for the prepared statement.
-     * @return bool Returns true if the DELETE query was successful, false otherwise.
+     * @param array  $params    The array of parameters for the prepared statement.
+     *
      * @throws \Exception If there is an error executing the SQL query.
+     *
+     * @return bool Returns true if the DELETE query was successful, false otherwise.
      */
     abstract public function delete(string $statement, array $params = []): bool;
 
@@ -104,9 +116,11 @@ abstract class BaseSQLServer
      * Ejecuta un procedimiento almacenado y devuelve el resultado.
      *
      * @param string $procedure El nombre del procedimiento almacenado.
-     * @param array $params Los parámetros para el procedimiento almacenado (opcional).
-     * @return array El resultado del procedimiento almacenado como un arreglo asociativo.
+     * @param array  $params    Los parámetros para el procedimiento almacenado (opcional).
+     *
      * @throws \Exception Si hay un error al ejecutar el procedimiento almacenado.
+     *
+     * @return array El resultado del procedimiento almacenado como un arreglo asociativo.
      */
     abstract public function executeProcedure(string $procedure): static;
 
@@ -114,47 +128,54 @@ abstract class BaseSQLServer
      * Ejecuta un procedimiento almacenado para transacciones y devuelve un valor booleano.
      *
      * @param string $procedure El nombre del procedimiento almacenado.
-     * @param array $params Los parámetros para el procedimiento almacenado (opcional).
-     * @return bool True si el procedimiento almacenado se ejecutó correctamente, false en caso contrario.
+     * @param array  $params    Los parámetros para el procedimiento almacenado (opcional).
+     *
      * @throws \Exception Si hay un error al ejecutar el procedimiento almacenado.
+     *
+     * @return bool True si el procedimiento almacenado se ejecutó correctamente, false en caso contrario.
      */
     abstract public function executeTransactionalProcedure(string $procedure): bool;
 
     /**
-     * Return the first element of the response
+     * Return the first element of the response.
      *
      * @param string $type The type of data to return ("object" or "array")
+     *
      * @return mixed|null The first element of the response or null if the response is empty
      */
-    abstract public function first(string $type = "object"): mixed;
+    abstract public function first(string $type = 'object'): mixed;
 
     /**
-     * Return the last element of the response as an object
+     * Return the last element of the response as an object.
      *
      * @param string $type The type of data to return ("object" or "array")
+     *
      * @return mixed|null The last element of the response as an object or null if the response is empty or not an array
      */
-    abstract public function last(string $type = "object"): mixed;
+    abstract public function last(string $type = 'object'): mixed;
 
     /**
-     * Return instance collect
+     * Return instance collect.
      *
      * @param string $type The type of data to return ("object" or "array")
-     * @return mixed
+     *
      * @throws \Exception If called outside of Laravel
-     */
-    abstract public function collect(string $type = "object"): mixed;
-
-    /**
-     * Return final query
      *
-     * @param string $type The type of data to return ("object" or "array")
      * @return mixed
      */
-    abstract public function get(string $type = "object"): mixed;
+    abstract public function collect(string $type = 'object'): mixed;
 
     /**
-     * Return the count of elements in the response
+     * Return final query.
+     *
+     * @param string $type The type of data to return ("object" or "array")
+     *
+     * @return mixed
+     */
+    abstract public function get(string $type = 'object'): mixed;
+
+    /**
+     * Return the count of elements in the response.
      *
      * @return int The count of elements in the response
      */
