@@ -34,6 +34,8 @@
 
 namespace Rmunate\SqlServerLite\Exceptions;
 
+use Rmunate\SqlServerLite\SQLServer;
+
 class Messages
 {
     const MANUAL_URL = "https://github.com/rmunate/SQLServerLite";

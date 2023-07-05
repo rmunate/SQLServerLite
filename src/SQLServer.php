@@ -39,12 +39,18 @@ use Exception;
 use Throwable;
 use PDOException;
 use Rmunate\SqlServerLite\SetCredentials;
+use Rmunate\SqlServerLite\Traits\Methods;
+use Rmunate\SqlServerLite\Traits\Attributes;
+use Rmunate\SqlServerLite\Traits\Constraints;
+use Rmunate\SqlServerLite\Traits\Transaction;
 use Rmunate\SqlServerLite\Bases\BaseSQLServer;
 use Rmunate\SqlServerLite\Exceptions\Messages;
+use Rmunate\SqlServerLite\Traits\CommonFunctions;
+use Rmunate\SqlServerLite\Traits\AvailableDrivers;
 
 class SQLServer extends BaseSQLServer
 {
-    use Attributes,AvailableDrivers,Transaction,Methods,Constraints;
+    use Attributes,AvailableDrivers,CommonFunctions,Transaction,Methods,Constraints;
 
     private $PDO;
     private $credentials;

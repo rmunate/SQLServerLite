@@ -34,6 +34,8 @@
 
 namespace Rmunate\SqlServerLite\Bases;
 
+use BadMethodCallException;
+
 abstract class BaseSQLServer
 {
     /**
