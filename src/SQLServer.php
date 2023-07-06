@@ -154,7 +154,7 @@ class SQLServer extends BaseSQLServer
             // Bind the parameters if provided
             if (!empty($params)) {
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $value);
+                    $stmt->bindParam($key, $params[$key]);
                 }
             }
 
