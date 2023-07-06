@@ -13,8 +13,8 @@ trait Transaction
      */
     public function beginTransaction()
     {
+        $this->connectionPDO();
         $this->PDO->beginTransaction();
-
         return $this;
     }
 
@@ -26,7 +26,6 @@ trait Transaction
     public function commit()
     {
         $this->PDO->commit();
-
         return $this;
     }
 
@@ -38,21 +37,8 @@ trait Transaction
     public function rollback()
     {
         $this->PDO->rollback();
-
         return $this;
     }
 
-    /**
-     * Auto Commit in the transaction.
-     *
-     * @param bool $status
-     *
-     * @return $this
-     */
-    public function autoCommit(bool $status = true)
-    {
-        $this->PDO->setAttribute(PDO::ATTR_AUTOCOMMIT, $status);
 
-        return $this;
-    }
 }

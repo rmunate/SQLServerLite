@@ -127,11 +127,9 @@ trait Methods
     {
         if ($this->isNonEmptyArray()) {
             $mergedArray = $this->response;
-
             foreach ($arrays as $array) {
                 $mergedArray = $this->recursiveMerge($mergedArray, $array);
             }
-
             $this->response = $mergedArray;
         }
 
