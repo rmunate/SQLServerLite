@@ -64,7 +64,6 @@ class SQLServer extends BaseSQLServer
         }
 
         try {
-
             //Crear Conexion PDO
             $this->PDO = new PDO($this->credentials->dsn, $this->credentials->user, $this->credentials->password, [
                 PDO::ATTR_ERRMODE              => PDO::ERRMODE_EXCEPTION,
@@ -77,7 +76,6 @@ class SQLServer extends BaseSQLServer
 
             //Suprimir las credenciales
             unset($this->credentials);
-
         } catch (PDOException $e) {
             $error = is_array($e->errorInfo) ? strtoupper(implode(' - ', $e->errorInfo)) : $e->errorInfo.' - Ensure that the ODBC Driver and SQLServer are installed correctly.';
 
@@ -533,5 +531,4 @@ class SQLServer extends BaseSQLServer
             return array_reduce($this->response, $callback, $initial);
         }
     }
-
 }
