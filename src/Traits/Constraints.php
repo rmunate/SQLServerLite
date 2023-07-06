@@ -56,7 +56,6 @@ trait Constraints
                 }
             }
         } catch (Exception $e) {
-            
             throw new Exception(Messages::disableForeignKeysException('Error disabling foreign keys: '.$e->getMessage()));
         }
 
@@ -111,7 +110,6 @@ trait Constraints
                 }
             }
         } catch (Exception $e) {
-            
             throw new Exception(Messages::enableForeignKeysException('Error enabling foreign keys: '.$e->getMessage()));
         }
 

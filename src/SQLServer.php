@@ -2,19 +2,19 @@
 
 namespace Rmunate\SqlServerLite;
 
-use PDO;
 use Exception;
-use Throwable;
+use PDO;
 use PDOException;
-use Rmunate\SqlServerLite\Traits\Methods;
-use Rmunate\SqlServerLite\Traits\Attributes;
-use Rmunate\SqlServerLite\Support\Deprecated;
-use Rmunate\SqlServerLite\Traits\Constraints;
-use Rmunate\SqlServerLite\Traits\Transaction;
 use Rmunate\SqlServerLite\Bases\BaseSQLServer;
 use Rmunate\SqlServerLite\Exceptions\Messages;
-use Rmunate\SqlServerLite\Traits\CommonFunctions;
+use Rmunate\SqlServerLite\Support\Deprecated;
+use Rmunate\SqlServerLite\Traits\Attributes;
 use Rmunate\SqlServerLite\Traits\AvailableDrivers;
+use Rmunate\SqlServerLite\Traits\CommonFunctions;
+use Rmunate\SqlServerLite\Traits\Constraints;
+use Rmunate\SqlServerLite\Traits\Methods;
+use Rmunate\SqlServerLite\Traits\Transaction;
+use Throwable;
 
 class SQLServer extends BaseSQLServer
 {
@@ -59,7 +59,9 @@ class SQLServer extends BaseSQLServer
      */
     private function connectionPDO()
     {
-        if ($this->hasValidPDOConnection()) return;
+        if ($this->hasValidPDOConnection()) {
+            return;
+        }
 
         try {
             $this->PDO = new PDO($this->credentials->dsn, $this->credentials->user, $this->credentials->password, [
@@ -84,6 +86,7 @@ class SQLServer extends BaseSQLServer
     {
         try {
             $this->connectionPDO();
+
             return (object) [
                 'status'  => true,
                 'message' => 'Connection Successful',
@@ -349,6 +352,7 @@ class SQLServer extends BaseSQLServer
     final public function first(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? reset($this->response) : null;
+
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -362,6 +366,7 @@ class SQLServer extends BaseSQLServer
     final public function last(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? end($this->response) : null;
+
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -382,7 +387,7 @@ class SQLServer extends BaseSQLServer
 
         if ($type === 'object') {
             return ($this->isNonEmptyArray()) ? collect($this->toObject($this->response)) : collect([]);
-        }        
+        }
 
         return ($this->isNonEmptyArray()) ? collect($this->response) : collect([]);
     }
@@ -397,6 +402,7 @@ class SQLServer extends BaseSQLServer
     final public function get(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? $this->response : [];
+
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -432,8 +438,10 @@ class SQLServer extends BaseSQLServer
     {
         if ($this->isNonEmptyArray()) {
             $chunkedArray = array_chunk($this->response, $size, $preserve_keys);
+
             return $chunkedArray;
         }
+
         return null;
     }
 
@@ -449,6 +457,7 @@ class SQLServer extends BaseSQLServer
     final public function fill(int $start_index, int $num, $value)
     {
         $filledArray = array_fill($start_index, $num, $value);
+
         return $filledArray;
     }
 
@@ -463,7 +472,7 @@ class SQLServer extends BaseSQLServer
     final public function fillKeys(array $keys, $value)
     {
         $filledArray = array_fill_keys($keys, $value);
+
         return $filledArray;
     }
-    
 }

@@ -2,10 +2,8 @@
 
 namespace Rmunate\SqlServerLite\Support;
 
-
 trait Deprecated
 {
-
     // ------------------ Attributes Trait ------------------ //
 
     /**
@@ -81,8 +79,10 @@ trait Deprecated
     {
         if ($this->isNonEmptyArray()) {
             $firstElement = reset($this->response);
+
             return $this->toObject($firstElement);
         }
+
         return null;
     }
 
@@ -98,8 +98,10 @@ trait Deprecated
     {
         if ($this->isNonEmptyArray()) {
             $lastElement = end($this->response);
+
             return $this->toObject($lastElement);
         }
+
         return null;
     }
 
@@ -148,5 +150,4 @@ trait Deprecated
             return $this->executeTransactionalProcedure($statement);
         }
     }
-
 }
