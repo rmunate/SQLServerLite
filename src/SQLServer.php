@@ -120,7 +120,7 @@ class SQLServer extends BaseSQLServer
     final public function select(string $statement, array $params = [])
     {
         // Check if the query is a SELECT query
-        if ($this->isSelectQuery($statement)) {
+        if (!$this->isSelectQuery($statement)) {
             throw new \Exception(Messages::notIsSelectQueryException());
         }
 
@@ -246,7 +246,7 @@ class SQLServer extends BaseSQLServer
     final public function insertGetId(string $statement, array $params = []): bool|int
     {
         // Check if the query is not an INSERT query
-        if ($this->isInsertQuery($statement)) {
+        if (!$this->isInsertQuery($statement)) {
             throw new \Exception(Messages::notIsInsertQueryException());
         }
 
@@ -344,7 +344,7 @@ class SQLServer extends BaseSQLServer
     final public function executeProcedure(string $procedure, array $params = [])
     {
         // Check if the query is not an DELETE query
-        if ($this->isStoredProcedure($procedure)) {
+        if (!$this->isStoredProcedure($procedure)) {
             throw new \Exception(Messages::notIsProcedureException());
         }
 
@@ -389,7 +389,7 @@ class SQLServer extends BaseSQLServer
     final public function executeTransactionalProcedure(string $procedure, array $params = []): bool
     {
         // Check if the query is not an DELETE query
-        if ($this->isStoredProcedure($procedure)) {
+        if (!$this->isStoredProcedure($procedure)) {
             throw new \Exception(Messages::notIsProcedureException());
         }
 
