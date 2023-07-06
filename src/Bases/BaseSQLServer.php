@@ -76,7 +76,7 @@ abstract class BaseSQLServer
      *
      * @return static The new configuration instance.
      */
-    public static function env(array $envPrefix)
+    public static function env(string $envPrefix)
     {
         return new static(null, $envPrefix, null);
     }
