@@ -8,6 +8,19 @@ class Messages
     public const LIBRARY_NAME = 'SQLServerLite';
 
     /**
+     * Generate an exception message for the `methodFlip` method.
+     *
+     * @return string The exception message.
+     */
+    public static function methodFlipException(): string
+    {
+        return self::formatExceptionMessage(
+            'SQLServer::flip()',
+            "It is not possible to apply a ::flip to a multidimensional array. This method is intended to be used after the ::colum() method."
+        );
+    }
+
+    /**
      * Returns the exception message for a non-existent key in an array.
      *
      * @param string $key The key that is not present or empty in the array.

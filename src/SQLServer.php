@@ -64,12 +64,20 @@ class SQLServer extends BaseSQLServer
         }
 
         try {
+
+            //Crear Conexion PDO
             $this->PDO = new PDO($this->credentials->dsn, $this->credentials->user, $this->credentials->password, [
                 PDO::ATTR_ERRMODE              => PDO::ERRMODE_EXCEPTION,
                 PDO::SQLSRV_ATTR_QUERY_TIMEOUT => 0,
                 PDO::SQLSRV_ATTR_ENCODING      => PDO::SQLSRV_ENCODING_UTF8,
             ]);
+
+            //Asignar Codificacion Cargada O Por Defecto
             $this->setEncoding($this->charset);
+
+            //Suprimir las credenciales
+            unset($this->credentials);
+
         } catch (PDOException $e) {
             $error = is_array($e->errorInfo) ? strtoupper(implode(' - ', $e->errorInfo)) : $e->errorInfo.' - Ensure that the ODBC Driver and SQLServer are installed correctly.';
 
@@ -512,33 +520,18 @@ class SQLServer extends BaseSQLServer
     }
 
     /**
-     * Fill an array with values.
+     * Applies a callback function to the elements of the array, reducing them to a single value.
      *
-     * @param int   $start_index The first index to fill.
-     * @param int   $num         The number of elements to fill.
-     * @param mixed $value       The value to fill.
-     *
-     * @return $this The current instance of the object
-     */
-    final public function fill(int $start_index, int $num, $value)
-    {
-        $filledArray = array_fill($start_index, $num, $value);
-
-        return $filledArray;
-    }
-
-    /**
-     * Fill an array with values, specifying keys.
-     *
-     * @param array $keys  The keys to use for filling.
-     * @param mixed $value The value to fill.
+     * @param callable $callback The callback function to apply.
+     * @param mixed    $initial  [optional] The initial value for the reduction.
      *
      * @return $this The current instance of the object
      */
-    final public function fillKeys(array $keys, $value)
+    public function reduce(callable $callback, $initial = null)
     {
-        $filledArray = array_fill_keys($keys, $value);
-
-        return $filledArray;
+        if ($this->isNonEmptyArray()) {
+            return array_reduce($this->response, $callback, $initial);
+        }
     }
+
 }
