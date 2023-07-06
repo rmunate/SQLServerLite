@@ -9,7 +9,7 @@ abstract class BaseSQLServer
     /**
      * Handle calls to missing methods on the helper.
      *
-     * @param string $method The name of the method being called.
+     * @param string $method     The name of the method being called.
      * @param array  $parameters The parameters passed to the method.
      *
      * @throws BadMethodCallException When the method does not exist.
@@ -160,7 +160,7 @@ abstract class BaseSQLServer
      * @return mixed|null The first element of the response or null if the response is empty.
      */
     abstract public function first(string $type = 'array'): mixed;
-    
+
     /**
      * Return the last element of the response as an object.
      *
@@ -196,5 +196,4 @@ abstract class BaseSQLServer
      * @return int The count of elements in the response.
      */
     abstract public function count(): int;
-
 }
