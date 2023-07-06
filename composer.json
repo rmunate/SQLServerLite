@@ -19,15 +19,27 @@
     "authors": [
         {
             "name": "Raul Mauricio Uñate Castro",
-            "email": "raulmauriciounate@gmail.com"
+            "email": "raulmauriciounate@gmail.com",
+            "role": "owner",
+            "homepage": "https://github.com/rmunate"
+        },
+        {
+            "name": "Wirmer A. Sanchez Saez",
+            "email": "wilmersaz@hotmail.com",
+            "role": "Developer"
+        },
+        {
+            "name": "John Alejandro Diaz Pinilla",
+            "email": "diazjohn83@gmail.com",
+            "role": "Developer",
+            "homepage": "https://github.com/alejandrodiazpinilla"
         }
     ],
     "require": {
-        "php": ">=7.4"
+        "ext-pdo": "*",
+        "php": "^7.4|^8.0"
     },
-    "require-dev": {
-        
-    },
+    "require-dev": {},
     "extra" : {
         "branch-alias" : {
             "dev-main": "v2.0.x-dev"

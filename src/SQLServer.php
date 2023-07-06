@@ -1,51 +1,20 @@
 <?php
 
-/*
- * Copyright (c) [2023] [RAUL MAURICIO UÑATE CASTRO]
- *
- * This library is open source software licensed under the MIT license.
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this library and associated
- * documentation files (the "Software"), to deal in the library without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the library,
- * and to permit persons to whom the library is furnished to do so, subject to the following conditions:
- *
- * - Use the library for commercial or non-commercial purposes.
- * - Modify the library and adapt it to your own needs.
- * - Distribute copies of the library.
- * - Sublicense the library.
- *
- * When using or distributing this library, it is required to include the following attribution in all copies or
- * substantial portions of the library:
- *
- * "[RAUL MAURICIO UÑATE CASTRO], the copyright holder of this library, must
- * be acknowledged and mentioned in all copies or derivatives of the library."
- *
- * In addition, if modifications are made to the library, it is requested to include an additional note in the
- * documentation or in any other means of notifying the changes made, stating:
- *
- * "This library has been modified from the original library developed by [RAUL MAURICIO UÑATE CASTRO]."
- *
- * THE LIBRARY IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE LIBRARY OR THE USE OR OTHER DEALINGS IN THE LIBRARY.
- */
-
 namespace Rmunate\SqlServerLite;
 
-use Exception;
 use PDO;
+use Exception;
+use Throwable;
 use PDOException;
+use Rmunate\SqlServerLite\Traits\Methods;
+use Rmunate\SqlServerLite\Traits\Attributes;
+use Rmunate\SqlServerLite\Support\Deprecated;
+use Rmunate\SqlServerLite\Traits\Constraints;
+use Rmunate\SqlServerLite\Traits\Transaction;
 use Rmunate\SqlServerLite\Bases\BaseSQLServer;
 use Rmunate\SqlServerLite\Exceptions\Messages;
-use Rmunate\SqlServerLite\Traits\Attributes;
-use Rmunate\SqlServerLite\Traits\AvailableDrivers;
 use Rmunate\SqlServerLite\Traits\CommonFunctions;
-use Rmunate\SqlServerLite\Traits\Constraints;
-use Rmunate\SqlServerLite\Traits\Methods;
-use Rmunate\SqlServerLite\Traits\Transaction;
-use Throwable;
+use Rmunate\SqlServerLite\Traits\AvailableDrivers;
 
 class SQLServer extends BaseSQLServer
 {
@@ -55,10 +24,12 @@ class SQLServer extends BaseSQLServer
     use Transaction;
     use Methods;
     use Constraints;
+    use Deprecated;
 
     private $PDO;
     private $credentials;
     private $response = [];
+    private $charset;
 
     /**
      * Constructor de la Clase de SQLServer.
@@ -76,6 +47,7 @@ class SQLServer extends BaseSQLServer
         } elseif (!empty($connection)) {
             $this->credentials = SetCredentials::fromDatabaseConnections($connection);
         }
+        $this->charset = $this->credentials->charset ?? 'utf8';
     }
 
     /**
@@ -87,9 +59,7 @@ class SQLServer extends BaseSQLServer
      */
     private function connectionPDO()
     {
-        if ($this->hasValidPDOConnection()) {
-            return;
-        }
+        if ($this->hasValidPDOConnection()) return;
 
         try {
             $this->PDO = new PDO($this->credentials->dsn, $this->credentials->user, $this->credentials->password, [
@@ -97,6 +67,7 @@ class SQLServer extends BaseSQLServer
                 PDO::SQLSRV_ATTR_QUERY_TIMEOUT => 0,
                 PDO::SQLSRV_ATTR_ENCODING      => PDO::SQLSRV_ENCODING_UTF8,
             ]);
+            $this->setEncoding($this->charset);
         } catch (PDOException $e) {
             $error = is_array($e->errorInfo) ? strtoupper(implode(' - ', $e->errorInfo)) : $e->errorInfo.' - Ensure that the ODBC Driver and SQLServer are installed correctly.';
 
@@ -113,7 +84,6 @@ class SQLServer extends BaseSQLServer
     {
         try {
             $this->connectionPDO();
-
             return (object) [
                 'status'  => true,
                 'message' => 'Connection Successful',
@@ -138,7 +108,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return array The result set as an array of associative arrays.
      */
-    final public function select(string $statement, array $params = []): static
+    final public function select(string $statement, array $params = [])
     {
         // Check if the query is a SELECT query
         if ($this->isSelectQuery($statement)) {
@@ -198,8 +168,8 @@ class SQLServer extends BaseSQLServer
 
             // Bind the parameters if provided
             if (!empty($params)) {
-                foreach ($params as $key => &$value) {
-                    $stmt->bindParam($key, $value);
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
                 }
             }
 
@@ -237,8 +207,8 @@ class SQLServer extends BaseSQLServer
             if (!empty($params)) {
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
-                foreach ($params as $key => &$value) {
-                    $stmt->bindParam($key, $value);
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
                 }
                 $response = $stmt->execute();
 
@@ -279,8 +249,8 @@ class SQLServer extends BaseSQLServer
             if (!empty($params)) {
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
-                foreach ($params as $key => &$value) {
-                    $stmt->bindParam($key, $value);
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
                 }
                 $stmt->execute($params);
 
@@ -306,7 +276,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return array El resultado del procedimiento almacenado como un arreglo asociativo.
      */
-    final public function executeProcedure(string $procedure): static
+    final public function executeProcedure(string $procedure)
     {
         // Check if the query is not an DELETE query
         if ($this->isStoredProcedure($procedure)) {
@@ -379,7 +349,6 @@ class SQLServer extends BaseSQLServer
     final public function first(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? reset($this->response) : null;
-
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -393,7 +362,6 @@ class SQLServer extends BaseSQLServer
     final public function last(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? end($this->response) : null;
-
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -414,9 +382,9 @@ class SQLServer extends BaseSQLServer
 
         if ($type === 'object') {
             return ($this->isNonEmptyArray()) ? collect($this->toObject($this->response)) : collect([]);
-        } else {
-            return ($this->isNonEmptyArray()) ? collect($this->response) : collect([]);
-        }
+        }        
+
+        return ($this->isNonEmptyArray()) ? collect($this->response) : collect([]);
     }
 
     /**
@@ -429,7 +397,6 @@ class SQLServer extends BaseSQLServer
     final public function get(string $type = 'array'): mixed
     {
         $data = ($this->isNonEmptyArray()) ? $this->response : [];
-
         return ($type === 'object') ? $this->toObject($data) : $data;
     }
 
@@ -465,10 +432,8 @@ class SQLServer extends BaseSQLServer
     {
         if ($this->isNonEmptyArray()) {
             $chunkedArray = array_chunk($this->response, $size, $preserve_keys);
-
             return $chunkedArray;
         }
-
         return null;
     }
 
@@ -484,7 +449,6 @@ class SQLServer extends BaseSQLServer
     final public function fill(int $start_index, int $num, $value)
     {
         $filledArray = array_fill($start_index, $num, $value);
-
         return $filledArray;
     }
 
@@ -499,80 +463,7 @@ class SQLServer extends BaseSQLServer
     final public function fillKeys(array $keys, $value)
     {
         $filledArray = array_fill_keys($keys, $value);
-
         return $filledArray;
     }
-
-    /**---------------------------------------------------------------- */
-
-    /**
-     * Deprecated method
-     * Executes a stored procedure and returns the result.
-     *
-     * @param string $statement The stored procedure statement.
-     * @param bool   $return    Determines whether to return the result or not.
-     *
-     * @return mixed The result of the stored procedure.
-     *
-     * @deprecated Use appropriate methods for executing stored procedures.
-     */
-    public function procedure(string $statement, $return = true)
-    {
-        if ($return) {
-            return $this->executeProcedure($statement);
-        } else {
-            return $this->executeTransactionalProcedure($statement);
-        }
-    }
-
-    /**
-     * Deprecated method
-     * Return the first element of the response as an object.
-     *
-     * @return mixed|null The first element of the response as an object or null if the response is empty or not an array
-     *
-     * @deprecated Use the `first` method instead.
-     */
-    public function firstObject(): mixed
-    {
-        if ($this->isNonEmptyArray()) {
-            $firstElement = reset($this->response);
-
-            return $this->toObject($firstElement);
-        }
-
-        return null;
-    }
-
-    /**
-     * Deprecated method
-     * Return the last element of the response as an object.
-     *
-     * @return mixed|null The last element of the response as an object or null if the response is empty or not an array
-     *
-     * @deprecated Use the `last` method instead.
-     */
-    public function lastObject(): mixed
-    {
-        if ($this->isNonEmptyArray()) {
-            $lastElement = end($this->response);
-
-            return $this->toObject($lastElement);
-        }
-
-        return null;
-    }
-
-    /**
-     * Deprecated method
-     * Return final query.
-     *
-     * @return mixed
-     *
-     * @deprecated Use the `get` method instead.
-     */
-    public function getObjects(): mixed
-    {
-        return ($this->isNonEmptyArray()) ? $this->toObject($this->response) : null;
-    }
+    
 }

@@ -1,37 +1,5 @@
 <?php
 
-/*
- * Copyright (c) [2023] [RAUL MAURICIO UÑATE CASTRO]
- *
- * This library is open source software licensed under the MIT license.
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this library and associated
- * documentation files (the "Software"), to deal in the library without restriction, including without limitation
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the library,
- * and to permit persons to whom the library is furnished to do so, subject to the following conditions:
- *
- * - Use the library for commercial or non-commercial purposes.
- * - Modify the library and adapt it to your own needs.
- * - Distribute copies of the library.
- * - Sublicense the library.
- *
- * When using or distributing this library, it is required to include the following attribution in all copies or
- * substantial portions of the library:
- *
- * "[RAUL MAURICIO UÑATE CASTRO], the copyright holder of this library, must
- * be acknowledged and mentioned in all copies or derivatives of the library."
- *
- * In addition, if modifications are made to the library, it is requested to include an additional note in the
- * documentation or in any other means of notifying the changes made, stating:
- *
- * "This library has been modified from the original library developed by [RAUL MAURICIO UÑATE CASTRO]."
- *
- * THE LIBRARY IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
- * LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
- * IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
- * CONNECTION WITH THE LIBRARY OR THE USE OR OTHER DEALINGS IN THE LIBRARY.
- */
-
 namespace Rmunate\SqlServerLite\Bases;
 
 use BadMethodCallException;
@@ -41,12 +9,12 @@ abstract class BaseSQLServer
     /**
      * Handle calls to missing methods on the helper.
      *
-     * @param string $method
-     * @param array  $parameters
+     * @param string $method The name of the method being called.
+     * @param array  $parameters The parameters passed to the method.
      *
-     * @throws BadMethodCallException
+     * @throws BadMethodCallException When the method does not exist.
      *
-     * @return mixed
+     * @return mixed The return type is not specified and can be any type.
      */
     public function __call($method, $parameters)
     {
@@ -72,7 +40,7 @@ abstract class BaseSQLServer
     /**
      * Create a new instance of the configuration using an environment variable prefix.
      *
-     * @param array $envPrefix The environment variable prefix array.
+     * @param string $envPrefix The environment variable prefix.
      *
      * @return static The new configuration instance.
      */
@@ -88,7 +56,7 @@ abstract class BaseSQLServer
      *
      * @return static The new configuration instance.
      */
-    public static function connection(array $connection)
+    public static function connection(string $connection)
     {
         return new static(null, null, $connection);
     }
@@ -96,7 +64,7 @@ abstract class BaseSQLServer
     /**
      * Return the connection status.
      *
-     * @return object
+     * @return object The connection status object.
      */
     abstract public function status(): object;
 
@@ -110,7 +78,7 @@ abstract class BaseSQLServer
      *
      * @return array The result set as an array of associative arrays.
      */
-    abstract public function select(string $statement, array $params = []): static;
+    abstract public function select(string $statement, array $params = []);
 
     /**
      * Execute an UPDATE query.
@@ -137,6 +105,18 @@ abstract class BaseSQLServer
     abstract public function insert(string $statement, array $params = []): bool;
 
     /**
+     * Execute an INSERT query and return the last inserted ID.
+     *
+     * @param string $statement The INSERT query statement.
+     * @param array  $params    The array of parameters for the prepared statement.
+     *
+     * @throws \Exception If there is an error executing the SQL query.
+     *
+     * @return mixed The last inserted ID.
+     */
+    abstract public function insertGetId(string $statement, array $params = []);
+
+    /**
      * Execute a DELETE query.
      *
      * @param string $statement The DELETE query statement.
@@ -149,71 +129,72 @@ abstract class BaseSQLServer
     abstract public function delete(string $statement, array $params = []): bool;
 
     /**
-     * Ejecuta un procedimiento almacenado y devuelve el resultado.
+     * Execute a stored procedure and return the result.
      *
-     * @param string $procedure El nombre del procedimiento almacenado.
-     * @param array  $params    Los parámetros para el procedimiento almacenado (opcional).
+     * @param string $procedure The name of the stored procedure.
+     * @param array  $params    The parameters for the stored procedure (optional).
      *
-     * @throws \Exception Si hay un error al ejecutar el procedimiento almacenado.
+     * @throws \Exception If there is an error executing the stored procedure.
      *
-     * @return array El resultado del procedimiento almacenado como un arreglo asociativo.
+     * @return array The result of the stored procedure as an associative array.
      */
-    abstract public function executeProcedure(string $procedure): static;
+    abstract public function executeProcedure(string $procedure, array $params = []): array;
 
     /**
-     * Ejecuta un procedimiento almacenado para transacciones y devuelve un valor booleano.
+     * Execute a stored procedure for transactions and return a boolean value.
      *
-     * @param string $procedure El nombre del procedimiento almacenado.
-     * @param array  $params    Los parámetros para el procedimiento almacenado (opcional).
+     * @param string $procedure The name of the stored procedure.
+     * @param array  $params    The parameters for the stored procedure (optional).
      *
-     * @throws \Exception Si hay un error al ejecutar el procedimiento almacenado.
+     * @throws \Exception If there is an error executing the stored procedure.
      *
-     * @return bool True si el procedimiento almacenado se ejecutó correctamente, false en caso contrario.
+     * @return bool True if the stored procedure was executed successfully, false otherwise.
      */
-    abstract public function executeTransactionalProcedure(string $procedure): bool;
+    abstract public function executeTransactionalProcedure(string $procedure, array $params = []): bool;
 
     /**
      * Return the first element of the response.
      *
-     * @param string $type The type of data to return ("object" or "array")
+     * @param string $type The type of data to return ("object" or "array").
      *
-     * @return mixed|null The first element of the response or null if the response is empty
+     * @return mixed|null The first element of the response or null if the response is empty.
      */
     abstract public function first(string $type = 'array'): mixed;
-
+    
     /**
      * Return the last element of the response as an object.
      *
-     * @param string $type The type of data to return ("object" or "array")
+     * @param string $type The type of data to return ("object" or "array").
      *
-     * @return mixed|null The last element of the response as an object or null if the response is empty or not an array
+     * @return mixed|null The last element of the response as an object or null if the response is empty or not an array.
      */
     abstract public function last(string $type = 'array'): mixed;
 
     /**
-     * Return instance collect.
+     * Return a collection instance.
      *
-     * @param string $type The type of data to return ("object" or "array")
+     * @param string $type The type of data to return ("object" or "array").
      *
-     * @throws \Exception If called outside of Laravel
+     * @throws \Exception If called outside of Laravel.
      *
-     * @return mixed
+     * @return mixed The collection instance.
      */
     abstract public function collect(string $type = 'array'): mixed;
 
     /**
-     * Return final query.
+     * Return the final query.
      *
-     * @param string $type The type of data to return ("object" or "array")
+     * @param string $type The type of data to return ("object" or "array").
      *
-     * @return mixed
+     * @return mixed The final query result.
      */
     abstract public function get(string $type = 'array'): mixed;
 
     /**
      * Return the count of elements in the response.
      *
-     * @return int The count of elements in the response
+     * @return int The count of elements in the response.
      */
     abstract public function count(): int;
+
 }
