@@ -248,38 +248,42 @@ class SQLServer extends BaseSQLServer
     final public function insertGetId(string $statement, array $params = []): bool|int
     {
         // Check if the query is not an INSERT query
-        if (!$this->isInsertQuery($statement)) {
+        if ($this->isInsertQuery($statement)) {
             throw new \Exception(Messages::notIsInsertQueryException());
         }
 
         try {
+
             // Create Connection
             $this->connectionPDO();
 
             /* Validate Type of Query */
             if (!empty($params)) {
+
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
+
                 foreach ($params as $key => $value) {
                     $stmt->bindParam($key, $params[$key]);
                 }
                 $response = $stmt->execute();
 
-                if ($response && $stmt->rowCount() > 0) {
-                    // Return the last inserted ID
-                    return $this->PDO->lastInsertId();
-                } else {
-                    return false;
-                }
+                //Retorna El Ultimo ID
+                return ($response && $stmt->rowCount() > 0) ? $this->PDO->lastInsertId() : false;
+
             } else {
+
                 // Execute the query
                 $response = $this->PDO->exec($statement);
 
                 if ($response !== false) {
-                    // Return the last inserted ID
+                    
                     return $this->PDO->lastInsertId();
+
                 } else {
+
                     return false;
+
                 }
             }
         } catch (\Exception $e) {
