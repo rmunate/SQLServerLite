@@ -6,6 +6,7 @@ use PDO;
 
 trait Attributes
 {
+
     /**
      * Set the query timeout for the PDO connection.
      *
@@ -15,8 +16,14 @@ trait Attributes
      */
     public function setTimeOut(int $seconds = 0)
     {
+
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+
+        // Set Atribute
         $this->PDO->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $seconds);
 
+        // Return Self
         return $this;
     }
 
@@ -27,8 +34,13 @@ trait Attributes
      *
      * @return $this Returns the current instance of the object.
      */
-    public function setErrorMode(string $mode)
+    public function setErrorMode(string $mode = 'exception')
     {
+
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+
+        // Process Arguments
         $validModes = ['silent', 'warning', 'exception'];
         $mode = strtolower($mode);
 
@@ -36,8 +48,10 @@ trait Attributes
             $mode = 'exception';
         }
 
+        // Set Atribute
         $this->PDO->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.strtoupper($mode)));
 
+        // Return Self
         return $this;
     }
 
@@ -48,8 +62,12 @@ trait Attributes
      *
      * @return $this Returns the current instance of the object.
      */
-    public function setEncoding(string $case)
+    public function setEncoding(string $case = 'utf8')
     {
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+
+        // Process Arguments
         $validCases = ['binary', 'utf8', 'system', 'default'];
         $case = strtolower($case);
 
@@ -57,8 +75,10 @@ trait Attributes
             $case = 'utf8';
         }
 
+        // Set Atribute
         $this->PDO->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.strtoupper($case)));
 
+        // Return Self
         return $this;
     }
 
@@ -69,8 +89,13 @@ trait Attributes
      */
     public function setDirectQuery()
     {
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+
+        // Set Atribute
         $this->PDO->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY, true);
 
+        // Return Self
         return $this;
     }
 
@@ -83,12 +108,17 @@ trait Attributes
      */
     public function setAnsiNulls(string $value = 'ON')
     {
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+        
+        // Set Atribute
         $value = strtoupper($value);
 
         if ($value === 'ON' || $value === 'OFF') {
             $this->PDO->exec("SET ANSI_NULLS $value");
         }
 
+        // Return Self
         return $this;
     }
 
@@ -101,12 +131,17 @@ trait Attributes
      */
     public function setAnsiPadding(string $value = 'ON')
     {
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
+
+        // Set Atribute
         $value = strtoupper($value);
 
         if ($value === 'ON' || $value === 'OFF') {
             $this->PDO->exec("SET ANSI_PADDING $value");
         }
 
+        // Return Self
         return $this;
     }
 
@@ -119,12 +154,16 @@ trait Attributes
      */
     public function setAnsiWarnings(string $value = 'ON')
     {
-        $value = strtoupper($value);
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
 
+        // Set Atribute
+        $value = strtoupper($value);
         if ($value === 'ON' || $value === 'OFF') {
             $this->PDO->exec("SET ANSI_WARNINGS $value");
         }
 
+        // Return Self
         return $this;
     }
 
@@ -137,12 +176,16 @@ trait Attributes
      */
     public function setArithAbort(string $value = 'ON')
     {
-        $value = strtoupper($value);
+        // Ensure the connection is established before executing the trait method
+        $this->connectionPDO();
 
+        // Set Atribute
+        $value = strtoupper($value);
         if ($value === 'ON' || $value === 'OFF') {
             $this->PDO->exec("SET ARITHABORT $value");
         }
 
+        // Return Self
         return $this;
     }
 }

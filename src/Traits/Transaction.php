@@ -42,17 +42,5 @@ trait Transaction
         return $this;
     }
 
-    /**
-     * Auto Commit in the transaction.
-     *
-     * @param bool $status
-     *
-     * @return $this
-     */
-    public function autoCommit(bool $status = true)
-    {
-        $this->PDO->setAttribute(PDO::ATTR_AUTOCOMMIT, $status);
 
-        return $this;
-    }
 }

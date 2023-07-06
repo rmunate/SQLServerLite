@@ -125,11 +125,9 @@ trait Methods
     {
         if ($this->isNonEmptyArray()) {
             $mergedArray = $this->response;
-
             foreach ($arrays as $array) {
                 $mergedArray = $this->recursiveMerge($mergedArray, $array);
             }
-
             $this->response = $mergedArray;
         }
 
@@ -247,7 +245,6 @@ trait Methods
     public function pop()
     {
         if ($this->isNonEmptyArray()) {
-
             if (is_array(end($this->response))) {
                 array_pop($this->response);
             } else {

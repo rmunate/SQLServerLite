@@ -49,7 +49,7 @@ trait CommonFunctions
     {
         // Use the stripos function to check if the query statement starts with "SELECT".
         // Returns true if it is a SELECT query, and false otherwise.
-        return stripos($statement, 'SELECT') !== 0;
+        return stripos($statement, 'SELECT') === 0;
     }
 
     /**
@@ -63,7 +63,7 @@ trait CommonFunctions
     {
         // Use the stripos function to check if the query statement starts with "UPDATE".
         // Returns true if it is a UPDATE query, and false otherwise.
-        return stripos($statement, 'UPDATE') !== 0;
+        return stripos($statement, 'UPDATE') === 0;
     }
 
     /**
