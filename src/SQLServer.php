@@ -251,13 +251,11 @@ class SQLServer extends BaseSQLServer
         }
 
         try {
-
             // Create Connection
             $this->connectionPDO();
 
             /* Validate Type of Query */
             if (!empty($params)) {
-
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
 
@@ -268,20 +266,14 @@ class SQLServer extends BaseSQLServer
 
                 //Retorna El Ultimo ID
                 return ($response && $stmt->rowCount() > 0) ? $this->PDO->lastInsertId() : false;
-
             } else {
-
                 // Execute the query
                 $response = $this->PDO->exec($statement);
 
                 if ($response !== false) {
-                    
                     return $this->PDO->lastInsertId();
-
                 } else {
-
                     return false;
-
                 }
             }
         } catch (\Exception $e) {
