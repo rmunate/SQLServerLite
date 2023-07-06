@@ -138,7 +138,7 @@ abstract class BaseSQLServer
      *
      * @return array The result of the stored procedure as an associative array.
      */
-    abstract public function executeProcedure(string $procedure, array $params = []): array;
+    abstract public function executeProcedure(string $procedure, array $params = []);
 
     /**
      * Execute a stored procedure for transactions and return a boolean value.
