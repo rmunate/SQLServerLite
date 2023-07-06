@@ -228,6 +228,58 @@ class SQLServer extends BaseSQLServer
     }
 
     /**
+     * Execute an INSERT query.
+     *
+     * @param string $statement The INSERT query statement.
+     * @param array  $params    The array of parameters for the prepared statement.
+     *
+     * @throws \Exception If there is an error executing the SQL query.
+     *
+     * @return bool|int Returns the ID of the last inserted row if the INSERT query was successful, false otherwise.
+     */
+    final public function insertGetId(string $statement, array $params = []): bool|int
+    {
+        // Check if the query is not an INSERT query
+        if (!$this->isInsertQuery($statement)) {
+            throw new \Exception(Messages::notIsInsertQueryException());
+        }
+
+        try {
+            // Create Connection
+            $this->connectionPDO();
+
+            /* Validate Type of Query */
+            if (!empty($params)) {
+                // Prepare the statement with parameters
+                $stmt = $this->PDO->prepare($statement);
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
+                }
+                $response = $stmt->execute();
+
+                if ($response && $stmt->rowCount() > 0) {
+                    // Return the last inserted ID
+                    return $this->PDO->lastInsertId();
+                } else {
+                    return false;
+                }
+            } else {
+                // Execute the query
+                $response = $this->PDO->exec($statement);
+
+                if ($response !== false) {
+                    // Return the last inserted ID
+                    return $this->PDO->lastInsertId();
+                } else {
+                    return false;
+                }
+            }
+        } catch (\Exception $e) {
+            throw new \Exception(Messages::insertException('Error executing SQL query: '.$e->getMessage()));
+        }
+    }
+
+    /**
      * Execute a DELETE query.
      *
      * @param string $statement The DELETE query statement.
@@ -279,7 +331,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return array El resultado del procedimiento almacenado como un arreglo asociativo.
      */
-    final public function executeProcedure(string $procedure)
+    final public function executeProcedure(string $procedure, array $params = [])
     {
         // Check if the query is not an DELETE query
         if ($this->isStoredProcedure($procedure)) {
@@ -291,7 +343,14 @@ class SQLServer extends BaseSQLServer
             $this->connectionPDO();
 
             // Preparar la sentencia
-            $stmt = $this->PDO->prepare($statement);
+            $stmt = $this->PDO->prepare($procedure);
+
+            // Bind the parameters if provided
+            if (!empty($params)) {
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
+                }
+            }
 
             // Ejecutar la consulta
             $stmt->execute();
@@ -317,7 +376,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return bool True si el procedimiento almacenado se ejecutó correctamente, false en caso contrario.
      */
-    final public function executeTransactionalProcedure(string $procedure): bool
+    final public function executeTransactionalProcedure(string $procedure, array $params = []): bool
     {
         // Check if the query is not an DELETE query
         if ($this->isStoredProcedure($procedure)) {
@@ -330,6 +389,13 @@ class SQLServer extends BaseSQLServer
 
             // Preparar la sentencia
             $stmt = $this->PDO->prepare($procedure);
+
+            // Bind the parameters if provided
+            if (!empty($params)) {
+                foreach ($params as $key => $value) {
+                    $stmt->bindParam($key, $params[$key]);
+                }
+            }
 
             // Ejecutar la consulta
             $result = $stmt->execute();
