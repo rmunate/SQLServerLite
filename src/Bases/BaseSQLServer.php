@@ -159,7 +159,7 @@ abstract class BaseSQLServer
      *
      * @return mixed|null The first element of the response or null if the response is empty.
      */
-    abstract public function first(string $type = 'array'): mixed;
+    abstract public function first(string $type = 'array');
 
     /**
      * Return the last element of the response as an object.
@@ -168,7 +168,7 @@ abstract class BaseSQLServer
      *
      * @return mixed|null The last element of the response as an object or null if the response is empty or not an array.
      */
-    abstract public function last(string $type = 'array'): mixed;
+    abstract public function last(string $type = 'array');
 
     /**
      * Return a collection instance.
@@ -179,7 +179,7 @@ abstract class BaseSQLServer
      *
      * @return mixed The collection instance.
      */
-    abstract public function collect(string $type = 'array'): mixed;
+    abstract public function collect(string $type = 'array');
 
     /**
      * Return the final query.
@@ -188,7 +188,7 @@ abstract class BaseSQLServer
      *
      * @return mixed The final query result.
      */
-    abstract public function get(string $type = 'array'): mixed;
+    abstract public function get(string $type = 'array');
 
     /**
      * Return the count of elements in the response.

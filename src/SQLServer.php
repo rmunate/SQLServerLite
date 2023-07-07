@@ -427,7 +427,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return mixed|null The first element of the response or null if the response is empty
      */
-    final public function first(string $type = 'array'): mixed
+    final public function first(string $type = 'array')
     {
         $data = ($this->isNonEmptyArray()) ? reset($this->response) : null;
 
@@ -441,7 +441,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return mixed|null The last element of the response as an object or null if the response is empty or not an array
      */
-    final public function last(string $type = 'array'): mixed
+    final public function last(string $type = 'array')
     {
         $data = ($this->isNonEmptyArray()) ? end($this->response) : null;
 
@@ -457,7 +457,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return mixed
      */
-    final public function collect(string $type = 'array'): mixed
+    final public function collect(string $type = 'array')
     {
         if (!$this->inLaravel()) {
             throw new \Exception(Messages::outsideOfLaravel());
@@ -477,7 +477,7 @@ class SQLServer extends BaseSQLServer
      *
      * @return mixed
      */
-    final public function get(string $type = 'array'): mixed
+    final public function get(string $type = 'array')
     {
         $data = ($this->isNonEmptyArray()) ? $this->response : [];
 

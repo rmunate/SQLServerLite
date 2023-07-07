@@ -75,7 +75,7 @@ trait Deprecated
      *
      * @deprecated Use the `first` method instead.
      */
-    public function firstObject(): mixed
+    public function firstObject()
     {
         if ($this->isNonEmptyArray()) {
             $firstElement = reset($this->response);
@@ -94,7 +94,7 @@ trait Deprecated
      *
      * @deprecated Use the `last` method instead.
      */
-    public function lastObject(): mixed
+    public function lastObject()
     {
         if ($this->isNonEmptyArray()) {
             $lastElement = end($this->response);
@@ -113,7 +113,7 @@ trait Deprecated
      *
      * @deprecated Use the `get` method instead.
      */
-    public function getObjects(): mixed
+    public function getObjects()
     {
         return ($this->isNonEmptyArray()) ? $this->toObject($this->response) : null;
     }
@@ -126,7 +126,7 @@ trait Deprecated
      *
      * @deprecated Use the `get` method instead.
      */
-    public function getObject(): mixed
+    public function getObject()
     {
         return ($this->isNonEmptyArray()) ? $this->toObject($this->response) : null;
     }
