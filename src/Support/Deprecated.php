@@ -163,7 +163,11 @@ trait Deprecated
      */
     public function getColumn(string $column)
     {
-        return $this->column($column);
+        if ($this->isNonEmptyArray()) {
+            return array_column($this->response, $column);
+        }
+
+        return [];
     }
 
 }
