@@ -243,9 +243,9 @@ class SQLServer extends BaseSQLServer
      *
      * @throws \Exception If there is an error executing the SQL query.
      *
-     * @return bool|int Returns the ID of the last inserted row if the INSERT query was successful, false otherwise.
+     * @return mixed The last inserted ID.
      */
-    final public function insertGetId(string $statement, array $params = []): bool|int
+    final public function insertGetId(string $statement, array $params = [])
     {
         // Check if the query is not an INSERT query
         if (!$this->isInsertQuery($statement)) {
