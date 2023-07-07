@@ -150,4 +150,20 @@ trait Deprecated
             return $this->executeTransactionalProcedure($statement);
         }
     }
+
+    /**
+     * Deprecated method
+     * Rewturn Data Column
+     *
+     * @param string $statement The stored procedure statement.
+     *
+     * @return mixed The result of the stored procedure.
+     *
+     * @deprecated Use appropriate methods for executing stored procedures.
+     */
+    public function getColumn(string $column)
+    {
+        return $this->column($column);
+    }
+
 }
