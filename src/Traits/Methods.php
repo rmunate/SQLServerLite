@@ -34,6 +34,7 @@ trait Methods
                 if (!in_array($item, $carry, true)) {
                     $carry[] = $item;
                 }
+
                 return $carry;
             }, []));
             $this->response = $data;
@@ -41,6 +42,7 @@ trait Methods
 
         return $this;
     }
+
     /**
      * Sorts the elements of the array in ascending order.
      *
@@ -165,11 +167,12 @@ trait Methods
     public function rand($num)
     {
         if ($this->isNonEmptyArray()) {
-            $num = ($num <= count($this->response))  ? $num : count($this->response);
+            $num = ($num <= count($this->response)) ? $num : count($this->response);
             shuffle($this->response);
             $selectedItems = array_slice($this->response, 0, $num);
             $this->response = $selectedItems;
         }
+
         return $this;
     }
 
@@ -202,6 +205,7 @@ trait Methods
         if ($this->isNonEmptyArray()) {
             $this->response = array_filter($this->response, $callback, $flag);
         }
+
         return $this;
     }
 
@@ -252,6 +256,7 @@ trait Methods
                 unset($this->response[$lastKey]);
             }
         }
+
         return $this;
     }
 
@@ -271,7 +276,6 @@ trait Methods
         return $this;
     }
 
-
     /**
      * Shift an element off the beginning of array.
      *
@@ -287,6 +291,7 @@ trait Methods
                 unset($this->response[key($this->response)]);
             }
         }
+
         return $this;
     }
 
@@ -320,5 +325,4 @@ trait Methods
 
         return $this;
     }
-
 }

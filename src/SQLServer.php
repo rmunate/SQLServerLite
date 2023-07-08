@@ -64,7 +64,6 @@ class SQLServer extends BaseSQLServer
         }
 
         try {
-
             //Crear Conexion PDO
             $this->PDO = new PDO($this->credentials->dsn, $this->credentials->user, $this->credentials->password, [
                 PDO::ATTR_ERRMODE              => PDO::ERRMODE_EXCEPTION,
@@ -77,7 +76,6 @@ class SQLServer extends BaseSQLServer
 
             //Suprimir las credenciales
             unset($this->credentials);
-
         } catch (PDOException $e) {
             $error = is_array($e->errorInfo) ? strtoupper(implode(' - ', $e->errorInfo)) : $e->errorInfo.' - Ensure that the ODBC Driver and SQLServer are installed correctly.';
 
@@ -253,13 +251,11 @@ class SQLServer extends BaseSQLServer
         }
 
         try {
-
             // Create Connection
             $this->connectionPDO();
 
             /* Validate Type of Query */
             if (!empty($params)) {
-
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
 
@@ -270,20 +266,14 @@ class SQLServer extends BaseSQLServer
 
                 //Retorna El Ultimo ID
                 return ($response && $stmt->rowCount() > 0) ? $this->PDO->lastInsertId() : false;
-
             } else {
-
                 // Execute the query
                 $response = $this->PDO->exec($statement);
 
                 if ($response !== false) {
-                    
                     return $this->PDO->lastInsertId();
-
                 } else {
-
                     return false;
-
                 }
             }
         } catch (\Exception $e) {
@@ -537,5 +527,4 @@ class SQLServer extends BaseSQLServer
             return array_reduce($this->response, $callback, $initial);
         }
     }
-
 }
