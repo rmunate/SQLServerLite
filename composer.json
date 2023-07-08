@@ -33,6 +33,11 @@
             "email": "diazjohn83@gmail.com",
             "role": "Developer",
             "homepage": "https://github.com/alejandrodiazpinilla"
+        },
+        {
+            "name": "Jorge Hernan Castañeda",
+            "email": "ds.jorgecastaneda@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
