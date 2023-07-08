@@ -11,7 +11,7 @@ trait AvailableDrivers
      *
      * @return array Returns an array of available PDO drivers.
      */
-    public static function getAvailableDrivers() : array
+    public static function getAvailableDrivers(): array
     {
         return PDO::getAvailableDrivers();
     }

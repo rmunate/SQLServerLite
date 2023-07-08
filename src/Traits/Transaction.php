@@ -2,8 +2,6 @@
 
 namespace Rmunate\SqlServerLite\Traits;
 
-use PDO;
-
 trait Transaction
 {
     /**
@@ -15,6 +13,7 @@ trait Transaction
     {
         $this->connectionPDO();
         $this->PDO->beginTransaction();
+
         return $this;
     }
 
@@ -26,6 +25,7 @@ trait Transaction
     public function commit()
     {
         $this->PDO->commit();
+
         return $this;
     }
 
@@ -37,8 +37,7 @@ trait Transaction
     public function rollback()
     {
         $this->PDO->rollback();
+
         return $this;
     }
-
-
 }

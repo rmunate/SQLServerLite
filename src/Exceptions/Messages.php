@@ -16,7 +16,7 @@ class Messages
     {
         return self::formatExceptionMessage(
             'SQLServer::flip()',
-            "It is not possible to apply a ::flip to a multidimensional array. This method is intended to be used after the ::colum() method."
+            'It is not possible to apply a ::flip to a multidimensional array. This method is intended to be used after the ::colum() method.'
         );
     }
 

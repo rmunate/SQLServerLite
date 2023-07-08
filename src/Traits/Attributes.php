@@ -6,7 +6,6 @@ use PDO;
 
 trait Attributes
 {
-
     /**
      * Set the query timeout for the PDO connection.
      *
@@ -16,7 +15,6 @@ trait Attributes
      */
     public function setTimeOut(int $seconds = 0)
     {
-
         // Ensure the connection is established before executing the trait method
         $this->connectionPDO();
 
@@ -36,7 +34,6 @@ trait Attributes
      */
     public function setErrorMode(string $mode = 'exception')
     {
-
         // Ensure the connection is established before executing the trait method
         $this->connectionPDO();
 
@@ -110,7 +107,7 @@ trait Attributes
     {
         // Ensure the connection is established before executing the trait method
         $this->connectionPDO();
-        
+
         // Set Atribute
         $value = strtoupper($value);
 

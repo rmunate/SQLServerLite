@@ -153,7 +153,7 @@ trait Deprecated
 
     /**
      * Deprecated method
-     * Rewturn Data Column
+     * Rewturn Data Column.
      *
      * @param string $statement The stored procedure statement.
      *
@@ -169,5 +169,4 @@ trait Deprecated
 
         return [];
     }
-
 }
