@@ -46,7 +46,7 @@ trait Attributes
         }
 
         // Set Atribute
-        $this->PDO->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.strtoupper($mode)));
+        $this->PDO->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_' . strtoupper($mode)));
 
         // Return Self
         return $this;
@@ -73,7 +73,7 @@ trait Attributes
         }
 
         // Set Atribute
-        $this->PDO->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.strtoupper($case)));
+        $this->PDO->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_' . strtoupper($case)));
 
         // Return Self
         return $this;
