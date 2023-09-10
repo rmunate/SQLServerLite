@@ -1,5 +1,7 @@
 <?php
 
+declare (strict_types = 1);
+
 namespace Rmunate\SqlServerLite;
 
 use Exception;
@@ -18,7 +20,18 @@ use Throwable;
 
 class SQLServer extends BaseSQLServer
 {
+    /* Dejar abierto el Tiempo de consulta hacia SQL Server */
+    public const TIMEOUT_FREE = 0;
+
+    /* Constantes para excepciones */
+    public const ERRMODE_SILENT = PDO::ERRMODE_SILENT;
+    public const ERRMODE_WARNING = PDO::ERRMODE_WARNING;
+    public const ERRMODE_EXCEPTION = PDO::ERRMODE_EXCEPTION;
+
     use Attributes;
+
+
+
     use AvailableDrivers;
     use CommonFunctions;
     use Transaction;

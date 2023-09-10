@@ -4,8 +4,6 @@ namespace Rmunate\SqlServerLite\Support;
 
 trait Deprecated
 {
-    // ------------------ Attributes Trait ------------------ //
-
     /**
      * Enable NOCOUNT mode for the PDO connection.
      *

@@ -90,7 +90,7 @@ abstract class BaseSQLServer
      *
      * @return bool Returns true if the query is executed successfully, false otherwise.
      */
-    abstract public function update(string $statement, array $params = []): bool;
+    abstract public function update(string $statement, array $params = []);
 
     /**
      * Execute an INSERT query.
@@ -102,7 +102,7 @@ abstract class BaseSQLServer
      *
      * @return bool Returns true if the INSERT query was successful, false otherwise.
      */
-    abstract public function insert(string $statement, array $params = []): bool;
+    abstract public function insert(string $statement, array $params = []);
 
     /**
      * Execute an INSERT query and return the last inserted ID.
@@ -126,7 +126,7 @@ abstract class BaseSQLServer
      *
      * @return bool Returns true if the DELETE query was successful, false otherwise.
      */
-    abstract public function delete(string $statement, array $params = []): bool;
+    abstract public function delete(string $statement, array $params = []);
 
     /**
      * Execute a stored procedure and return the result.
@@ -150,7 +150,7 @@ abstract class BaseSQLServer
      *
      * @return bool True if the stored procedure was executed successfully, false otherwise.
      */
-    abstract public function executeTransactionalProcedure(string $procedure, array $params = []): bool;
+    abstract public function executeTransactionalProcedure(string $procedure, array $params = []);
 
     /**
      * Return the first element of the response.
@@ -195,5 +195,5 @@ abstract class BaseSQLServer
      *
      * @return int The count of elements in the response.
      */
-    abstract public function count(): int;
+    abstract public function count();
 }
