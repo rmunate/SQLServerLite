@@ -135,7 +135,9 @@ class SQLServer extends BaseSQLServer
             // Bind the parameters if provided
             if (!empty($params)) {
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($statement, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
             }
 
@@ -180,7 +182,9 @@ class SQLServer extends BaseSQLServer
             // Bind the parameters if provided
             if (!empty($params)) {
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($statement, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
             }
 
@@ -218,8 +222,11 @@ class SQLServer extends BaseSQLServer
             if (!empty($params)) {
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
+
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($statement, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
                 $response = $stmt->execute();
 
@@ -262,8 +269,11 @@ class SQLServer extends BaseSQLServer
                 $stmt = $this->PDO->prepare($statement);
 
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($statement, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
+
                 $response = $stmt->execute();
 
                 //Retorna El Ultimo ID
@@ -308,9 +318,13 @@ class SQLServer extends BaseSQLServer
             if (!empty($params)) {
                 // Prepare the statement with parameters
                 $stmt = $this->PDO->prepare($statement);
+
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($statement, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
+
                 $stmt->execute($params);
 
                 return $stmt->rowCount() > 0;
@@ -354,7 +368,9 @@ class SQLServer extends BaseSQLServer
             // Bind the parameters if provided
             if (!empty($params)) {
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($procedure, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
             }
 
@@ -401,7 +417,9 @@ class SQLServer extends BaseSQLServer
             // Bind the parameters if provided
             if (!empty($params)) {
                 foreach ($params as $key => $value) {
-                    $stmt->bindParam($key, $params[$key]);
+                    if (strpos($procedure, $key) !== false) {
+                        $stmt->bindParam($key, $params[$key]);
+                    }
                 }
             }
 
