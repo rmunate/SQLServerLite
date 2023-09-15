@@ -20,18 +20,7 @@ use Throwable;
 
 class SQLServer extends BaseSQLServer
 {
-    /* Dejar abierto el Tiempo de consulta hacia SQL Server */
-    public const TIMEOUT_FREE = 0;
-
-    /* Constantes para excepciones */
-    public const ERRMODE_SILENT = PDO::ERRMODE_SILENT;
-    public const ERRMODE_WARNING = PDO::ERRMODE_WARNING;
-    public const ERRMODE_EXCEPTION = PDO::ERRMODE_EXCEPTION;
-
     use Attributes;
-
-
-
     use AvailableDrivers;
     use CommonFunctions;
     use Transaction;
@@ -357,6 +346,8 @@ class SQLServer extends BaseSQLServer
             // Crear conexión
             $this->connectionPDO();
 
+            $procedure = !empty($this->noCount) ? $this->noCount.$procedure : $procedure;
+
             // Preparar la sentencia
             $stmt = $this->PDO->prepare($procedure);
 
@@ -401,6 +392,8 @@ class SQLServer extends BaseSQLServer
         try {
             // Crear conexión
             $this->connectionPDO();
+
+            $procedure = !empty($this->noCount) ? $this->noCount.$procedure : $procedure;
 
             // Preparar la sentencia
             $stmt = $this->PDO->prepare($procedure);

@@ -4,6 +4,8 @@ namespace Rmunate\SqlServerLite\Support;
 
 trait Deprecated
 {
+    private $noCount; 
+
     /**
      * Enable NOCOUNT mode for the PDO connection.
      *
@@ -12,9 +14,9 @@ trait Deprecated
      *
      * @return $this Returns the current instance of the object.
      */
-    public function noCount()
+    public function noCount($status = "ON")
     {
-        $this->setDirectQuery();
+        $this->noCount = ($status === "ON" ||  $status === true) ? "SET NOCOUNT ON;" : "SET NOCOUNT OFF;";
 
         return $this;
     }
