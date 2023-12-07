@@ -53,8 +53,9 @@ trait Execute
     
     private function execUpdate()
     {
-
         try {
+
+            $this->inactivateCheckConstraint();
             
             $PDO = $this->connection->prepare($this->statement);
 
@@ -72,6 +73,8 @@ trait Execute
 
             $this->response = $response && $PDO->rowCount() > 0;
 
+            $this->activateCheckConstraint();
+
         } catch (\Exception $e) {
 
             throw SQLServerException::create('Error executing SQL Update Query: '.$e->getMessage());
@@ -82,6 +85,8 @@ trait Execute
     private function execInsert()
     {
         try {
+
+            $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
                 
@@ -120,6 +125,9 @@ trait Execute
                 
                 $this->response = $response > 0;
             }
+
+            $this->activateCheckConstraint();
+
         } catch (\Exception $e) {
 
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
@@ -130,6 +138,8 @@ trait Execute
     private function execInsertGetId()
     {
         try {
+
+            $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
                 
@@ -175,6 +185,8 @@ trait Execute
                 $this->response = $response > 0;
             }
 
+            $this->activateCheckConstraint();
+
         } catch (\Exception $e) {
 
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
@@ -186,6 +198,8 @@ trait Execute
     {
 
         try {
+
+            $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
 
@@ -207,6 +221,8 @@ trait Execute
 
                 $this->response = $PDO !== false;
             }
+
+            $this->activateCheckConstraint();
             
         } catch (\Exception $e) {
 
@@ -268,6 +284,24 @@ trait Execute
 
             throw SQLServerException::create('Error executing SQL Transactional Store Procedure Query: '.$e->getMessage());
             
+        }
+    }
+
+    private function inactivateCheckConstraint()
+    {
+        if ($this->constraints) {
+            $nameTable = Utilities::getNameTable($this->statement);
+            $stmt = "ALTER TABLE {$nameTable} NOCHECK CONSTRAINT ALL;";
+            $this->connection->exec($stmt);
+        }
+    }
+
+    private function activateCheckConstraint()
+    {
+        if ($this->constraints) {
+            $nameTable = Utilities::getNameTable($this->statement);
+            $stmt = "ALTER TABLE {$nameTable} CHECK CONSTRAINT ALL;";
+            $this->connection->exec($stmt);
         }
     }
 }

@@ -18,4 +18,11 @@ class Utilities
 
         return false;
     }
+
+    public static function getNameTable(string $statement)
+    {
+        $extractQuery = substr($statement, 6);
+
+        return explode(" ", trim($extractQuery))[0];
+    }
 }
