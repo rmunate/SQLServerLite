@@ -3,14 +3,14 @@
 namespace Rmunate\SqlServerLite\Traits;
 
 use PDO;
-use Rmunate\SqlServerLite\Utilities\Utilities;
 use Rmunate\SqlServerLite\Exceptions\SQLServerException;
+use Rmunate\SqlServerLite\Utilities\Utilities;
 use Rmunate\SqlServerLite\Validator\StatementsValidator;
 
 trait Execute
 {
-    private function execGeneral(){
-
+    private function execGeneral()
+    {
         match ($this->operation) {
             'select'                          => $this->execSelect(),
             'update'                          => $this->execUpdate(),
@@ -25,7 +25,6 @@ trait Execute
     private function execSelect()
     {
         try {
-            
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -44,19 +43,16 @@ trait Execute
             $this->response = $rows;
 
             return $this;
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Select Query: '.$e->getMessage());
         }
     }
-    
+
     private function execUpdate()
     {
         try {
-
             $this->inactivateCheckConstraint();
-            
+
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -74,135 +70,105 @@ trait Execute
             $this->response = $response && $PDO->rowCount() > 0;
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Update Query: '.$e->getMessage());
-
         }
     }
 
     private function execInsert()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-                
                 $PDO = $this->connection->prepare($this->statement);
 
                 if (Utilities::hasSubArrays($this->params)) {
-                    
                     foreach ($this->params as $key => $param) {
-
                         foreach ($param as $key => $value) {
                             if (strpos($this->statement, $key) !== false) {
                                 $PDO->bindParam($key, $param[$key]);
                             }
                         }
-                
+
                         $response = $PDO->execute();
                     }
-
                 } else {
-
                     foreach ($this->params as $key => $value) {
                         if (strpos($this->statement, $key) !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
                         }
                     }
-    
+
                     $response = $PDO->execute();
-    
                 }
 
                 $this->response = $response && $PDO->rowCount() > 0;
-                
             } else {
-                
                 $response = $this->connection->exec($this->statement);
-                
+
                 $this->response = $response > 0;
             }
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
-
         }
     }
 
     private function execInsertGetId()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-                
                 $PDO = $this->connection->prepare($this->statement);
 
                 if (Utilities::hasSubArrays($this->params)) {
-                    
                     $ids = [];
 
                     foreach ($this->params as $key => $param) {
-
                         foreach ($param as $key => $value) {
                             if (strpos($this->statement, $key) !== false) {
                                 $PDO->bindParam($key, $param[$key]);
                             }
                         }
-                
+
                         $response = $PDO->execute();
 
-                        array_push($ids, (($response && $PDO->rowCount() > 0) ? $this->connection->lastInsertId() : null));
+                        array_push($ids, ($response && $PDO->rowCount() > 0) ? $this->connection->lastInsertId() : null);
                     }
 
                     $this->response = $ids;
-
                 } else {
-
                     foreach ($this->params as $key => $value) {
                         if (strpos($this->statement, $key) !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
                         }
                     }
-    
+
                     $response = $PDO->execute();
-    
+
                     $this->response = ($response && $PDO->rowCount() > 0) ? $this->connection->lastInsertId() : null;
                 }
-
-                
             } else {
-                
                 $response = $this->connection->exec($this->statement);
-                
+
                 $this->response = $response > 0;
             }
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
-
         }
     }
 
     private function execDelete()
     {
-
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-
                 $PDO = $this->connection->prepare($this->statement);
 
                 foreach ($this->params as $key => $value) {
@@ -214,18 +180,14 @@ trait Execute
                 $PDO->execute();
 
                 $this->response = $PDO->rowCount() > 0;
-
             } else {
-                
                 $PDO = $this->connection->exec($this->statement);
 
                 $this->response = $PDO !== false;
             }
 
             $this->activateCheckConstraint();
-            
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Delete Query: '.$e->getMessage());
         }
     }
@@ -233,7 +195,6 @@ trait Execute
     private function execProcedure()
     {
         try {
-            
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -252,9 +213,7 @@ trait Execute
             $this->response = $rows;
 
             return $this;
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Store Procedure Query: '.$e->getMessage());
         }
     }
@@ -262,7 +221,6 @@ trait Execute
     private function execTransactionalProcedure()
     {
         try {
-
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -279,11 +237,8 @@ trait Execute
             $PDO->closeCursor();
 
             $this->response = $result;
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Transactional Store Procedure Query: '.$e->getMessage());
-            
         }
     }
 
@@ -305,4 +260,3 @@ trait Execute
         }
     }
 }
-

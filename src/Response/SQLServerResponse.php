@@ -6,8 +6,8 @@ use Illuminate\Support\Collection;
 
 class SQLServerResponse extends Collection
 {
-    function __construct(array $data) {
+    public function __construct(array $data)
+    {
         parent::__construct($data);
     }
-    
 }

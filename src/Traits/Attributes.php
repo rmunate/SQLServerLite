@@ -21,21 +21,20 @@ trait Attributes
             $mode = 'EXCEPTION';
         }
 
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_' . mb_strtoupper($mode)));
+        $this->connection->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.mb_strtoupper($mode)));
 
         return $this;
     }
 
     public function setEncoding(string $case = 'utf8')
     {
-
         $validCases = ['BINARY', 'UTF8', 'SYSTEM', 'DEFAULT'];
 
         if (!in_array(mb_strtoupper($case), $validCases)) {
             $case = 'UTF8';
         }
 
-        $this->connection->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_' . mb_strtoupper($case)));
+        $this->connection->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.mb_strtoupper($case)));
 
         return $this;
     }
@@ -72,7 +71,7 @@ trait Attributes
     public function setAnsiWarnings(string $value = 'ON')
     {
         $value = mb_strtoupper($value);
-        
+
         if ($value === 'ON' || $value === 'OFF') {
             $this->connection->exec("SET ANSI_WARNINGS {$value}");
         }
@@ -90,10 +89,10 @@ trait Attributes
         return $this;
     }
 
-    public function noCount($status = "ON")
+    public function noCount($status = 'ON')
     {
-        $stmt = ($status === "ON" ||  $status === true) ? "SET NOCOUNT ON;" : "SET NOCOUNT OFF;";
-        
+        $stmt = ($status === 'ON' || $status === true) ? 'SET NOCOUNT ON;' : 'SET NOCOUNT OFF;';
+
         $this->connection->exec($stmt);
 
         return $this;

@@ -8,7 +8,8 @@ class SQLServerStatus
     protected $message;
     protected $query;
 
-    public function __construct(array $propierties) {
+    public function __construct(array $propierties)
+    {
         $this->status = $propierties['status'];
         $this->message = $propierties['message'];
         $this->query = $propierties['query'];
@@ -18,7 +19,7 @@ class SQLServerStatus
     {
         return $this->query;
     }
-    
+
     public function isConnected()
     {
         return $this->status;
