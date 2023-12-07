@@ -10,7 +10,4 @@ class SQLServerException extends Exception
     {
         return new self("\Rmunate\SqlServerLite\SQLServer - Exception - {$message}");
     }
-
-    
-    
 }

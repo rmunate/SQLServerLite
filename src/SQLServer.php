@@ -1,19 +1,15 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Rmunate\SqlServerLite;
 
-use PDO;
-use Closure;
+use Rmunate\SqlServerLite\Bases\BaseSQLServer;
+use Rmunate\SqlServerLite\Singleton\SQLServerSingleton;
+use Rmunate\SqlServerLite\Traits\Attributes;
 use Rmunate\SqlServerLite\Traits\Execute;
 use Rmunate\SqlServerLite\Traits\Methods;
-use Rmunate\SqlServerLite\Traits\Attributes;
-use Rmunate\SqlServerLite\Bases\BaseSQLServer;
 use Rmunate\SqlServerLite\Traits\Transactions;
-use Rmunate\SqlServerLite\Response\SQLServerResponse;
-use Rmunate\SqlServerLite\Singleton\SQLServerSingleton;
-use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 use Rmunate\SqlServerLite\Validator\StatementsValidator;
 
 class SQLServer extends BaseSQLServer
@@ -32,7 +28,6 @@ class SQLServer extends BaseSQLServer
     private $direction;
     private $constraints = false;
 
-    
     public function __construct($credentials, string $connection, int $loginTimeout = 0)
     {
         $this->connection = SQLServerSingleton::mount($credentials, $connection, $loginTimeout);
@@ -59,12 +54,12 @@ class SQLServer extends BaseSQLServer
         $this->operation = 'update';
         $this->params = $params;
 
-        if ((strpos($this->statement, ":") === false) || (strpos($this->statement, ":") !== false && !empty($this->params))) {
+        if ((strpos($this->statement, ':') === false) || (strpos($this->statement, ':') !== false && !empty($this->params))) {
             $this->execGeneral();
 
             return $this->response;
         }
-        
+
         return $this;
     }
 
@@ -77,12 +72,12 @@ class SQLServer extends BaseSQLServer
         $this->operation = 'insert';
         $this->params = $params;
 
-        if ((strpos($this->statement, ":") === false) || (strpos($this->statement, ":") !== false && !empty($this->params))) {
+        if ((strpos($this->statement, ':') === false) || (strpos($this->statement, ':') !== false && !empty($this->params))) {
             $this->execGeneral();
 
             return $this->response;
         }
-        
+
         return $this;
     }
 
@@ -95,7 +90,7 @@ class SQLServer extends BaseSQLServer
         $this->operation = 'insert_get_id';
         $this->params = $params;
 
-        if ((strpos($this->statement, ":") === false) || (strpos($this->statement, ":") !== false && !empty($this->params))) {
+        if ((strpos($this->statement, ':') === false) || (strpos($this->statement, ':') !== false && !empty($this->params))) {
             $this->execGeneral();
 
             return $this->response;
@@ -113,7 +108,7 @@ class SQLServer extends BaseSQLServer
         $this->operation = 'delete';
         $this->params = $params;
 
-        if ((strpos($this->statement, ":") === false) || (strpos($this->statement, ":") !== false && !empty($this->params))) {
+        if ((strpos($this->statement, ':') === false) || (strpos($this->statement, ':') !== false && !empty($this->params))) {
             $this->execGeneral();
 
             return $this->response;
@@ -139,16 +134,16 @@ class SQLServer extends BaseSQLServer
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
 
         StatementsValidator::isProcedure($statement);
-        
+
         $this->operation = 'execute_transactional_procedure';
         $this->params = $params;
 
-        if ((strpos($this->statement, ":") === false) || (strpos($this->statement, ":") !== false && !empty($this->params))) {
+        if ((strpos($this->statement, ':') === false) || (strpos($this->statement, ':') !== false && !empty($this->params))) {
             $this->execGeneral();
 
             return $this->response;
         }
-        
+
         return $this;
     }
 
@@ -156,7 +151,7 @@ class SQLServer extends BaseSQLServer
     {
         $this->params = $params;
 
-        if (in_array($this->operation, ["update", "insert", "insert_get_id", "delete", "execute_transactional_procedure"])) {
+        if (in_array($this->operation, ['update', 'insert', 'insert_get_id', 'delete', 'execute_transactional_procedure'])) {
             $this->execGeneral();
 
             return $this->response;
@@ -171,5 +166,4 @@ class SQLServer extends BaseSQLServer
 
         return $this;
     }
-
 }

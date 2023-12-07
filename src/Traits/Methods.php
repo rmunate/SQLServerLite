@@ -4,12 +4,12 @@ namespace Rmunate\SqlServerLite\Traits;
 
 trait Methods
 {
-    public function orderBy(string $column, string $dir = "ASC")
+    public function orderBy(string $column, string $dir = 'ASC')
     {
         $this->oder = $column;
         $this->direction = $dir;
-        
-        return $this;        
+
+        return $this;
     }
 
     public function get()
@@ -41,7 +41,7 @@ trait Methods
     public function last()
     {
         $this->execGeneral();
-        
+
         if (!empty($this->response)) {
             return end($this->response);
         }
@@ -52,7 +52,7 @@ trait Methods
     public function count()
     {
         $this->execGeneral();
-        
+
         if (!empty($this->response)) {
             return count($this->response);
         }
@@ -106,7 +106,7 @@ trait Methods
 
         return (new SQLServerResponse($this->response))->min($column);
     }
-    
+
     public function sum(string $column)
     {
         $this->execGeneral();
@@ -121,5 +121,3 @@ trait Methods
         return (new SQLServerResponse($this->response))->avg($column);
     }
 }
-
-

@@ -9,7 +9,7 @@ class Utilities
         if (!is_array($array)) {
             return false;
         }
-    
+
         foreach ($array as $elemento) {
             if (is_array($elemento)) {
                 return true;
@@ -23,6 +23,6 @@ class Utilities
     {
         $extractQuery = substr($statement, 6);
 
-        return explode(" ", trim($extractQuery))[0];
+        return explode(' ', trim($extractQuery))[0];
     }
 }
