@@ -7,6 +7,12 @@ use Rmunate\SqlServerLite\Utilities\Utilities;
 
 class StatementsValidator
 {
+    /**
+     * verify if the query is a select query
+     * @param string $statement
+     * 
+     * @return Exception if does not a select query
+     */
     public static function isSelect(string $statement)
     {
         $statement = trim($statement);
@@ -16,6 +22,12 @@ class StatementsValidator
         }
     }
 
+    /**
+     * verify if the query is a update query
+     * @param string $statement
+     * 
+     * @return Exception if does not a update query
+     */
     public static function isUpdate(string $statement)
     {
         $statement = trim($statement);
@@ -25,6 +37,12 @@ class StatementsValidator
         }
     }
 
+    /**
+     * verify if the query is a insert query
+     * @param string $statement
+     * 
+     * @return Exception if does not a insert query
+     */
     public static function isInsert(string $statement)
     {
         $statement = trim($statement);
@@ -34,6 +52,12 @@ class StatementsValidator
         }
     }
 
+    /**
+     * verify if the query is a delete query
+     * @param string $statement
+     * 
+     * @return Exception if does not a delete query
+     */
     public static function isDelete(string $statement)
     {
         $statement = trim($statement);
@@ -43,6 +67,12 @@ class StatementsValidator
         }
     }
 
+    /**
+     * verify if the query is a storage procedure query
+     * @param string $statement
+     * 
+     * @return Exception if does not a storage procedure query
+     */
     public static function isProcedure(string $statement)
     {
         $statement = trim($statement);
@@ -52,6 +82,12 @@ class StatementsValidator
         }
     }
 
+    /**
+     * verify if the params is an array with multiples params
+     * @param string $params
+     * 
+     * @return Exception if does not a select query
+     */
     public static function isValidParams(array $params)
     {
         if (Utilities::hasSubArrays($params)) {

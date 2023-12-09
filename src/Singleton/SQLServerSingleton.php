@@ -11,17 +11,25 @@ class SQLServerSingleton
     private static $instance = null;
     private static $beginTransaction = false;
 
+    /**
+     * Establish the database connection.
+     * @param mixed $credentials
+     * @param string $connection
+     * @param int $loginTimeout
+     * 
+     * @return [type]
+     */
     public static function mount($credentials, string $connection, int $loginTimeout)
     {
         if (empty(self::$instance[$connection])) {
             try {
-                //Crear DSN:
+                //create the DSN:
                 $dsn = "sqlsrv:Server={$credentials->host}";
                 $dsn .= (isset($credentials->port) && !empty($credentials->port)) ? ",{$credentials->port}" : ',1433';
                 $dsn .= (isset($credentials->instance) && !empty($credentials->instance)) ? "\\{$credentials->instance}" : '';
                 $dsn .= ";Database={$credentials->database};LoginTimeout={$loginTimeout}";
 
-                //Crear conexion PDO
+                //create the PDO connection
                 $conection = new PDO($dsn, $credentials->username, $credentials->password, [
                     PDO::ATTR_ERRMODE              => PDO::ERRMODE_EXCEPTION,
                     PDO::SQLSRV_ATTR_QUERY_TIMEOUT => 0,
@@ -43,6 +51,10 @@ class SQLServerSingleton
         return self::$instance[$connection];
     }
 
+    /**
+     * set propierty for dont do automatically save change
+     * @return bool
+     */
     public static function beginTransaction()
     {
         if (empty(self::$instance)) {
@@ -54,6 +66,10 @@ class SQLServerSingleton
         }
     }
 
+    /**
+     * Save changes.
+     * @return [type]
+     */
     public static function commit()
     {
         if (!empty(self::$instance)) {
@@ -66,6 +82,10 @@ class SQLServerSingleton
         }
     }
 
+    /**
+     * Not Save changes.
+     * @return [type]
+     */
     public static function rollback()
     {
         if (!empty(self::$instance)) {

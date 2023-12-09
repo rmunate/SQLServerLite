@@ -28,13 +28,27 @@ class SQLServer extends BaseSQLServer
     private $direction;
     private $constraints = false;
 
+    /**
+     * Construct to do the initial connection
+     * @param mixed $credentials
+     * @param string $connection
+     * @param int $loginTimeout
+     */
     public function __construct($credentials, string $connection, int $loginTimeout = 0)
     {
         $this->connection = SQLServerSingleton::mount($credentials, $connection, $loginTimeout);
     }
 
+    /**
+     * Prepare the Select query and return it
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return object
+     */
     public function select(string $statement, array $params = [])
     {
+        /** replace tabs and space from the query */
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
 
         StatementsValidator::isSelect($this->statement);
@@ -45,8 +59,16 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the Update query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return object
+     */
     public function update(string $statement, array $params = [])
     {
+        /** replace tabs and space from the query */
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
 
         StatementsValidator::isUpdate($this->statement);
@@ -63,6 +85,13 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the Insert query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return object
+     */
     public function insert(string $statement, array $params = [])
     {
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
@@ -81,6 +110,13 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the Insert with query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return object
+     */
     public function insertGetId(string $statement, array $params = [])
     {
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
@@ -99,6 +135,13 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the Delete query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return boolean
+     */
     public function delete(string $statement, array $params = [])
     {
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
@@ -117,6 +160,13 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the store procedure query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return object
+     */
     public function executeProcedure(string $statement, array $params = [])
     {
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
@@ -129,6 +179,13 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Prepare the transaction store procedure query and return the result set.
+     * @param string $statement
+     * @param array $params
+     * 
+     * @return boolean
+     */
     public function executeTransactionalProcedure(string $statement, array $params = [])
     {
         $this->statement = trim(str_replace(["\r", "\n", "\t"], '', $statement));
@@ -147,6 +204,12 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * receive the params from the query
+     * @param array $params
+     * 
+     * @return array
+     */
     public function params(array $params)
     {
         $this->params = $params;
@@ -160,6 +223,10 @@ class SQLServer extends BaseSQLServer
         return $this;
     }
 
+    /**
+     * Set propierty constraints for set disable the constraint
+     * @return boolean
+     */
     public function noCheckConstraint()
     {
         $this->constraints = true;
