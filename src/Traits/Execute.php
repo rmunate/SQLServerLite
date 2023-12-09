@@ -9,6 +9,10 @@ use Rmunate\SqlServerLite\Validator\StatementsValidator;
 
 trait Execute
 {
+    /**
+     * verify the query send and execute it
+     * @return method from the query send
+     */
     private function execGeneral()
     {
         match ($this->operation) {
@@ -22,6 +26,10 @@ trait Execute
         };
     }
 
+    /**
+     * execute select query
+     * @return array The result set as an array of associative arrays.
+     */
     private function execSelect()
     {
         try {
@@ -48,6 +56,10 @@ trait Execute
         }
     }
 
+    /**
+     * execute update query
+     * @return bool Returns true if the query is executed successfully, false otherwise.
+     */
     private function execUpdate()
     {
         try {
@@ -75,6 +87,10 @@ trait Execute
         }
     }
 
+    /**
+     * Execute an INSERT query.
+     * @return bool Returns true if the INSERT query was successful, false otherwise.
+     */
     private function execInsert()
     {
         try {
@@ -116,6 +132,10 @@ trait Execute
         }
     }
 
+    /**
+     * Execute an INSERT query.
+     * @return mixed The last inserted ID.
+     */
     private function execInsertGetId()
     {
         try {
@@ -163,6 +183,10 @@ trait Execute
         }
     }
 
+    /**
+     * Execute a DELETE query.
+     * @return bool Returns true if the DELETE query was successful, false otherwise.
+     */
     private function execDelete()
     {
         try {
@@ -192,6 +216,10 @@ trait Execute
         }
     }
 
+    /**
+     * execute store procedure
+     * @return array The result set as an array of associative arrays.
+     */
     private function execProcedure()
     {
         try {
@@ -218,6 +246,10 @@ trait Execute
         }
     }
 
+    /**
+     * execute store procedure
+     * @return bool Returns true if the store procedure was successful, false otherwise.
+     */
     private function execTransactionalProcedure()
     {
         try {
@@ -242,6 +274,10 @@ trait Execute
         }
     }
 
+    /**
+     * Disable constraints for all tables or specified tables.
+     * @return $this The current instance of the object.
+     */
     private function inactivateCheckConstraint()
     {
         if ($this->constraints) {
@@ -251,6 +287,10 @@ trait Execute
         }
     }
 
+    /**
+     * Disable constraints for all tables or specified tables.
+     * @return $this The current instance of the object.
+     */
     private function activateCheckConstraint()
     {
         if ($this->constraints) {
