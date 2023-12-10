@@ -35,7 +35,6 @@ trait Execute
     private function execSelect()
     {
         try {
-
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -52,9 +51,7 @@ trait Execute
             $rows = $PDO->fetchAll(PDO::FETCH_ASSOC);
 
             $this->response = $rows;
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Select Query: '.$e->getMessage());
         }
     }
@@ -67,7 +64,6 @@ trait Execute
     private function execUpdate()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             $PDO = $this->connection->prepare($this->statement);
@@ -87,9 +83,7 @@ trait Execute
             $this->response = $response && $PDO->rowCount() > 0;
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Update Query: '.$e->getMessage());
         }
     }
@@ -102,15 +96,12 @@ trait Execute
     private function execInsert()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-
                 $PDO = $this->connection->prepare($this->statement);
 
                 if (Utilities::hasSubArrays($this->params)) {
-
                     foreach ($this->params as $key => $param) {
                         foreach ($param as $key => $value) {
                             if (strpos($this->statement, $key) !== false) {
@@ -120,9 +111,7 @@ trait Execute
 
                         $response = $PDO->execute();
                     }
-
                 } else {
-
                     foreach ($this->params as $key => $value) {
                         if (strpos($this->statement, $key) !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
@@ -134,18 +123,14 @@ trait Execute
 
                 /** @phpstan-ignore-next-line */
                 $this->response = $response && $PDO->rowCount() > 0;
-
             } else {
-
                 $response = $this->connection->exec($this->statement);
 
                 $this->response = $response > 0;
             }
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
         }
     }
@@ -158,15 +143,12 @@ trait Execute
     private function execInsertGetId()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-
                 $PDO = $this->connection->prepare($this->statement);
 
                 if (Utilities::hasSubArrays($this->params)) {
-
                     $ids = [];
 
                     foreach ($this->params as $key => $param) {
@@ -182,9 +164,7 @@ trait Execute
                     }
 
                     $this->response = $ids;
-
                 } else {
-
                     foreach ($this->params as $key => $value) {
                         if (strpos($this->statement, $key) !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
@@ -195,18 +175,14 @@ trait Execute
 
                     $this->response = ($response && $PDO->rowCount() > 0) ? $this->connection->lastInsertId() : null;
                 }
-
             } else {
-
                 $response = $this->connection->exec($this->statement);
 
                 $this->response = $response > 0;
             }
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Insert Query: '.$e->getMessage());
         }
     }
@@ -219,11 +195,9 @@ trait Execute
     private function execDelete()
     {
         try {
-
             $this->inactivateCheckConstraint();
 
             if (!empty($this->params)) {
-
                 $PDO = $this->connection->prepare($this->statement);
 
                 foreach ($this->params as $key => $value) {
@@ -235,18 +209,14 @@ trait Execute
                 $PDO->execute();
 
                 $this->response = $PDO->rowCount() > 0;
-
             } else {
-
                 $PDO = $this->connection->exec($this->statement);
 
                 $this->response = $PDO !== false;
             }
 
             $this->activateCheckConstraint();
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Delete Query: '.$e->getMessage());
         }
     }
@@ -259,7 +229,6 @@ trait Execute
     private function execProcedure()
     {
         try {
-
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -276,9 +245,7 @@ trait Execute
             $rows = $PDO->fetchAll(PDO::FETCH_ASSOC);
 
             $this->response = $rows;
-            
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Store Procedure Query: '.$e->getMessage());
         }
     }
@@ -291,7 +258,6 @@ trait Execute
     private function execTransactionalProcedure()
     {
         try {
-
             $PDO = $this->connection->prepare($this->statement);
 
             StatementsValidator::isValidParams($this->params);
@@ -308,9 +274,7 @@ trait Execute
             $PDO->closeCursor();
 
             $this->response = $result;
-
         } catch (\Exception $e) {
-
             throw SQLServerException::create('Error executing SQL Transactional Store Procedure Query: '.$e->getMessage());
         }
     }
@@ -323,18 +287,14 @@ trait Execute
     private function inactivateCheckConstraint()
     {
         if ($this->constraints) {
-
             if (!empty($this->constraintsTables)) {
-                
                 foreach ($this->constraintsTables as $key => $table) {
                     $stmt = "ALTER TABLE {$table} NOCHECK CONSTRAINT ALL;";
                     $this->connection->exec($stmt);
                 }
-
             } else {
-
                 $nameTable = Utilities::getNameTable($this->statement);
-    
+
                 if (!empty($nameTable)) {
                     $stmt = "ALTER TABLE {$nameTable} NOCHECK CONSTRAINT ALL;";
                     $this->connection->exec($stmt);
@@ -351,18 +311,14 @@ trait Execute
     private function activateCheckConstraint()
     {
         if ($this->constraints) {
-
             if (!empty($this->constraintsTables)) {
-                
                 foreach ($this->constraintsTables as $key => $table) {
                     $stmt = "ALTER TABLE {$table} CHECK CONSTRAINT ALL;";
                     $this->connection->exec($stmt);
                 }
-
             } else {
-
                 $nameTable = Utilities::getNameTable($this->statement);
-    
+
                 if (!empty($nameTable)) {
                     $stmt = "ALTER TABLE {$nameTable} CHECK CONSTRAINT ALL;";
                     $this->connection->exec($stmt);

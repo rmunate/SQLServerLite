@@ -30,9 +30,7 @@ class SQLServerSingleton
     public static function mount($credentials, string $connection, int $loginTimeout)
     {
         if (empty(self::$instance[$connection])) {
-            
             try {
-                
                 // Create the DSN:
                 $dsn = "sqlsrv:Server={$credentials->host}";
                 $dsn .= (isset($credentials->port) && !empty($credentials->port)) ? ",{$credentials->port}" : ',1433';
@@ -53,7 +51,6 @@ class SQLServerSingleton
                 }
 
                 self::$instance[$connection] = $conection;
-
             } catch (PDOException $e) {
                 throw SQLServerException::create($e->getMessage());
             }
@@ -86,17 +83,13 @@ class SQLServerSingleton
     public static function commit()
     {
         if (!empty(self::$instance)) {
-
             foreach (self::$instance as $key => $instance) {
                 $instance->commit();
             }
 
             self::$beginTransaction = false;
-
         } else {
-
             throw SQLServerException::create('The connection to the database is not initialized.');
-
         }
     }
 
@@ -108,17 +101,13 @@ class SQLServerSingleton
     public static function rollback()
     {
         if (!empty(self::$instance)) {
-
             foreach (self::$instance as $key => $instance) {
                 $instance->rollBack();
             }
 
             self::$beginTransaction = false;
-
         } else {
-
             throw SQLServerException::create('The connection to the database is not initialized.');
-
         }
     }
 }

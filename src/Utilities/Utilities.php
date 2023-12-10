@@ -29,22 +29,21 @@ class Utilities
     }
 
     /**
-     * return the table name for disable constraint
+     * return the table name for disable constraint.
+     *
      * @param string $statement
-     * 
+     *
      * @return string
      */
     public static function getNameTable(string $statement)
     {
-        if (stripos($statement, "UPDATE") === 0 || stripos($statement, "INSERT") === 0 || stripos($statement, "DELETE") === 0) {
-            
+        if (stripos($statement, 'UPDATE') === 0 || stripos($statement, 'INSERT') === 0 || stripos($statement, 'DELETE') === 0) {
             $extractQuery = substr(trim($statement), 6);
-    
+
             return explode(' ', trim($extractQuery))[0];
         }
 
         throw SQLServerException::create('It is not identified which table to disable foreign key checking, consider supplying it directly in the method.');
-    
     }
 
     /**
@@ -65,7 +64,7 @@ class Utilities
      * or it contains named parameters and they are not empty.
      *
      * @param string $statement The SQL statement to be checked.
-     * @param array $params An array of named parameters.
+     * @param array  $params    An array of named parameters.
      *
      * @return bool Returns true if the statement is unprepared, false otherwise.
      */
@@ -73,6 +72,7 @@ class Utilities
     {
         /**
          * Check if the statement does not contain named parameters or it contains named parameters and they are not empty.
+         *
          * @phpstan-ignore-next-line */
         return (strpos($statement, ':') === false) || (strpos($statement, ':') !== false && !empty($params));
     }

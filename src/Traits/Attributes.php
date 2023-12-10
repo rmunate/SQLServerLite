@@ -17,13 +17,9 @@ trait Attributes
     public function setTimeOut(int $seconds = 0)
     {
         try {
-
             $this->connection->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $seconds);
-            
         } catch (\Throwable $th) {
-            
             throw SQLServerException::create($th->getMessage());
-
         }
 
         return $this;
@@ -45,13 +41,9 @@ trait Attributes
         }
 
         try {
-
             $this->connection->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.mb_strtoupper($mode)));
-
         } catch (\Throwable $th) {
-            
             throw SQLServerException::create($th->getMessage());
-
         }
 
         return $this;
@@ -73,13 +65,9 @@ trait Attributes
         }
 
         try {
-
             $this->connection->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.mb_strtoupper($case)));
-
         } catch (\Throwable $th) {
-            
             throw SQLServerException::create($th->getMessage());
-
         }
 
         return $this;
@@ -93,13 +81,9 @@ trait Attributes
     public function setDirectQuery()
     {
         try {
-            
             $this->connection->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY, true);
-
         } catch (\Throwable $th) {
-            
             throw SQLServerException::create($th->getMessage());
-
         }
 
         return $this;

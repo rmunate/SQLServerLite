@@ -6,8 +6,7 @@ use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 use Rmunate\SqlServerLite\Utilities\Utilities;
 
 /**
- * Class StatementsValidator
- * @package Rmunate\SqlServerLite\Validator
+ * Class StatementsValidator.
  */
 class StatementsValidator
 {
@@ -15,6 +14,7 @@ class StatementsValidator
      * Verify if the query is a SELECT query.
      *
      * @param string $statement SQL statement to verify.
+     *
      * @throws SQLServerException Throws an exception if the statement is not a SELECT query.
      */
     public static function isSelect(string $statement)
@@ -30,6 +30,7 @@ class StatementsValidator
      * Verify if the query is an UPDATE query.
      *
      * @param string $statement SQL statement to verify.
+     *
      * @throws SQLServerException Throws an exception if the statement is not an UPDATE query.
      */
     public static function isUpdate(string $statement)
@@ -45,6 +46,7 @@ class StatementsValidator
      * Verify if the query is an INSERT query.
      *
      * @param string $statement SQL statement to verify.
+     *
      * @throws SQLServerException Throws an exception if the statement is not an INSERT query.
      */
     public static function isInsert(string $statement)
@@ -60,6 +62,7 @@ class StatementsValidator
      * Verify if the query is a DELETE query.
      *
      * @param string $statement SQL statement to verify.
+     *
      * @throws SQLServerException Throws an exception if the statement is not a DELETE query.
      */
     public static function isDelete(string $statement)
@@ -75,6 +78,7 @@ class StatementsValidator
      * Verify if the query is a stored procedure query.
      *
      * @param string $statement SQL statement to verify.
+     *
      * @throws SQLServerException Throws an exception if the statement is not a stored procedure query.
      */
     public static function isProcedure(string $statement)
@@ -90,6 +94,7 @@ class StatementsValidator
      * Verify if the parameters are an array with multiple parameters.
      *
      * @param array $params Array of parameters to verify.
+     *
      * @throws SQLServerException Throws an exception if the parameters are not valid.
      */
     public static function isValidParams(array $params)
