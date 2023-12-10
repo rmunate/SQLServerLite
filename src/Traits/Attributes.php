@@ -3,26 +3,37 @@
 namespace Rmunate\SqlServerLite\Traits;
 
 use PDO;
+use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 
 trait Attributes
 {
     /**
-     * Set the query timeout for the sql queries.
-     * @param int $seconds
-     * 
+     * Set the query timeout for the SQL queries.
+     *
+     * @param int $seconds The timeout duration in seconds.
+     *
      * @return $this Returns the current instance of the object.
      */
     public function setTimeOut(int $seconds = 0)
     {
-        $this->connection->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $seconds);
+        try {
+
+            $this->connection->setAttribute(PDO::SQLSRV_ATTR_QUERY_TIMEOUT, $seconds);
+            
+        } catch (\Throwable $th) {
+            
+            throw SQLServerException::create($th->getMessage());
+
+        }
 
         return $this;
     }
 
     /**
      * Set the error mode for the PDO connection.
-     * @param string $mode
-     * 
+     *
+     * @param string $mode The error mode ("SILENT", "WARNING", or "EXCEPTION").
+     *
      * @return $this Returns the current instance of the object.
      */
     public function setErrorMode(string $mode = 'exception')
@@ -33,15 +44,24 @@ trait Attributes
             $mode = 'EXCEPTION';
         }
 
-        $this->connection->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.mb_strtoupper($mode)));
+        try {
+
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, constant('PDO::ERRMODE_'.mb_strtoupper($mode)));
+
+        } catch (\Throwable $th) {
+            
+            throw SQLServerException::create($th->getMessage());
+
+        }
 
         return $this;
     }
 
     /**
      * Set the SQL Server attribute dynamically based on the provided case.
+     *
      * @param string $case The case to set ("binary", "utf8", "system", or "default").
-     * 
+     *
      * @return $this Returns the current instance of the object.
      */
     public function setEncoding(string $case = 'utf8')
@@ -52,7 +72,15 @@ trait Attributes
             $case = 'UTF8';
         }
 
-        $this->connection->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.mb_strtoupper($case)));
+        try {
+
+            $this->connection->setAttribute(PDO::SQLSRV_ATTR_ENCODING, constant('PDO::SQLSRV_ENCODING_'.mb_strtoupper($case)));
+
+        } catch (\Throwable $th) {
+            
+            throw SQLServerException::create($th->getMessage());
+
+        }
 
         return $this;
     }
@@ -64,7 +92,15 @@ trait Attributes
      */
     public function setDirectQuery()
     {
-        $this->connection->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY, true);
+        try {
+            
+            $this->connection->setAttribute(PDO::SQLSRV_ATTR_DIRECT_QUERY, true);
+
+        } catch (\Throwable $th) {
+            
+            throw SQLServerException::create($th->getMessage());
+
+        }
 
         return $this;
     }
@@ -142,6 +178,8 @@ trait Attributes
 
     /**
      * Enable NOCOUNT mode for the PDO connection.
+     *
+     * @param string|bool $status The value to set for the NOCOUNT mode ("ON" or "OFF").
      *
      * @return $this Returns the current instance of the object.
      */

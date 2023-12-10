@@ -8,25 +8,23 @@ use Rmunate\SqlServerLite\Validator\SQLServerValidator;
 
 abstract class BaseSQLServer
 {
-/**
+    /**
      * Handle calls to missing methods on the helper.
      *
      * @param string $method     The name of the method being called.
      * @param array  $parameters The parameters passed to the method.
      *
-     * @throws BadMethodCallException When the method does not exist.
-     *
-     * @return object
+     * @throws SQLServerException When the method does not exist.
      */
     public function __call($method, $parameters)
     {
-        throw SQLServerException::create("El metodo '{$method}' no existe");
+        throw SQLServerException::create("The method '{$method}' does not exist");
     }
 
     /**
      * Create a new instance of the configuration using a connection configuration.
      *
-     * @param array $connection The connection configuration array.
+     * @param string $connection The name of the connection.
      *
      * @return static The new configuration instance.
      */
@@ -41,10 +39,11 @@ abstract class BaseSQLServer
 
     /**
      * Return the connection status.
-     * @param string $connection
-     * @param int $loginTimeout
+     *
+     * @param string $connection The name of the connection.
+     * @param int    $loginTimeout The login timeout duration.
      * 
-     * @return array
+     * @return SQLServerStatus The connection status.
      */
     public static function status(string $connection, int $loginTimeout = 3)
     {

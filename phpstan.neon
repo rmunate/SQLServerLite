@@ -1,0 +1,20 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+
+parameters:
+
+    #Carpeta a Evaluar
+    paths:
+        - src/
+
+    # Level 9 is the highest level
+    level: 5
+
+    #Errores que no se deben contemplar
+    ignoreErrors:
+
+        #Ignora todos los Helpers ya que no reconoce el autoload.
+        - message: '#Function config not found.#'
+        - message: '#Unsafe usage of new static\(\)#'
+        - message: '#Match expression does not handle remaining value: mixed#'
+        - message: '#Strict comparison using === between bool and 0 will always evaluate to false.#'

@@ -2,26 +2,44 @@
 
 namespace Rmunate\SqlServerLite\Response;
 
+/**
+ * Class SQLServerStatus
+ *
+ * @package Rmunate\SqlServerLite\Response
+ */
 class SQLServerStatus
 {
+    /**
+     * @var bool The connection status.
+     */
     protected $status;
+
+    /**
+     * @var string The connection message.
+     */
     protected $message;
+
+    /**
+     * @var mixed The query information.
+     */
     protected $query;
 
     /**
-     * set propierties from status connection
-     * @param array $propierties
+     * Constructor to set properties from the connection status.
+     *
+     * @param array $properties The connection status properties.
      */
-    public function __construct(array $propierties)
+    public function __construct(array $properties)
     {
-        $this->status = $propierties['status'];
-        $this->message = $propierties['message'];
-        $this->query = $propierties['query'];
+        $this->status = $properties['status'];
+        $this->message = $properties['message'];
+        $this->query = $properties['query'];
     }
 
     /**
-     * set the query propierty
-     * @return $this query
+     * Get the query property.
+     *
+     * @return mixed The query information.
      */
     public function query()
     {
@@ -29,11 +47,22 @@ class SQLServerStatus
     }
 
     /**
-     * set the isConnected propierty
-     * @return $this isConnected
+     * Get the isConnected property.
+     *
+     * @return bool The connection status.
      */
     public function isConnected()
     {
         return $this->status;
+    }
+
+    /**
+     * Get the connection message.
+     *
+     * @return string The connection message.
+     */
+    public function getMessage()
+    {
+        return $this->message;
     }
 }

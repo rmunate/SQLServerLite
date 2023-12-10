@@ -7,8 +7,9 @@ use Illuminate\Support\Collection;
 class SQLServerResponse extends Collection
 {
     /**
-     * Construct to do the initial connection
-     * @param array $data
+     * Constructor to initialize the connection.
+     *
+     * @param array $data The data to initialize the collection.
      */
     public function __construct(array $data)
     {

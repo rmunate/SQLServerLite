@@ -7,8 +7,9 @@ use Rmunate\SqlServerLite\Singleton\SQLServerSingleton;
 trait Transactions
 {
     /**
-     * set propierty beginTransaction and can do directly
-     * @return bool
+     * Set property beginTransaction and can be executed directly.
+     *
+     * @return void
      */
     public static function beginTransaction()
     {
@@ -16,8 +17,9 @@ trait Transactions
     }
 
     /**
-     * set propierty commit and can do directly
-     * @return bool
+     * Set property commit and can be executed directly.
+     *
+     * @return void
      */
     public static function commit()
     {
@@ -25,8 +27,9 @@ trait Transactions
     }
 
     /**
-     * set propierty rollback and can do directly
-     * @return bool
+     * Set property rollback and can be executed directly.
+     *
+     * @return void
      */
     public static function rollback()
     {

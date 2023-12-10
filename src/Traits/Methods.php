@@ -2,36 +2,41 @@
 
 namespace Rmunate\SqlServerLite\Traits;
 
+use Closure;
+use Rmunate\SqlServerLite\Response\SQLServerResponse;
+
 trait Methods
 {
     /**
-     * set the order propierty by
-     * @param string $column cloumn to apply the order
-     * @param string $dir [optional] the sorting option
-     * 
-     * @return $this The current instance of the object
+     * Set the ordering properties.
+     *
+     * @param string $column Column to apply the order.
+     * @param string $dir [optional] The sorting option.
+     *
+     * @return $this The current instance of the object.
      */
     public function orderBy(string $column, string $dir = 'ASC')
     {
-        $this->oder = $column;
+        $this->order = $column;
         $this->direction = $dir;
 
         return $this;
     }
 
     /**
-     * exec the query and apply orden propierty
-     * @return $this The current object
+     * Execute the query and apply ordering properties.
+     *
+     * @return object The current object.
      */
     public function get()
     {
         $this->execGeneral();
 
         if (!empty($this->order)) {
-            if ($dir == 'ASC') {
-                return (new SQLServerResponse($this->response))->sortBy($this->column)->values();
+            if ($this->direction == 'ASC') {
+                return (new SQLServerResponse($this->response))->sortBy($this->order)->values();
             } else {
-                return (new SQLServerResponse($this->response))->sortByDesc($this->column)->values();
+                return (new SQLServerResponse($this->response))->sortByDesc($this->order)->values();
             }
         }
 
@@ -39,8 +44,9 @@ trait Methods
     }
 
     /**
-     * apply the filter for return the first object
-     * @return $this The first object
+     * Apply the filter to return the first object.
+     *
+     * @return mixed The first object.
      */
     public function first()
     {
@@ -54,8 +60,9 @@ trait Methods
     }
 
     /**
-     * apply the filter for return the last object
-     * @return $this The last object
+     * Apply the filter to return the last object.
+     *
+     * @return mixed The last object.
      */
     public function last()
     {
@@ -69,23 +76,21 @@ trait Methods
     }
 
     /**
-     * do the count
-     * @return $this The count objects
+     * Perform the count.
+     *
+     * @return int The count of objects.
      */
     public function count()
     {
         $this->execGeneral();
 
-        if (!empty($this->response)) {
-            return count($this->response);
-        }
-
-        return 0;
+        return !empty($this->response) ? count($this->response) : 0;
     }
 
     /**
-     * exec the query
-     * @return $this The current object
+     * Execute the query.
+     *
+     * @return SQLServerResponse The current object.
      */
     public function all()
     {
@@ -93,11 +98,12 @@ trait Methods
     }
 
     /**
-     * do the pluck for column and index in the collect
-     * @param mixed $value column to do the pluck
-     * @param null $index [optional]
-     * 
-     * @return collect
+     * Perform the pluck for a column and index in the collection.
+     *
+     * @param mixed $value Column to perform the pluck.
+     * @param null $index [optional] Index for the pluck.
+     *
+     * @return mixed The result of the pluck operation.
      */
     public function pluck($value, $index = null)
     {
@@ -107,10 +113,11 @@ trait Methods
     }
 
     /**
-     * extract the value selected
-     * @param string $value columnt to select
-     * 
-     * @return collect
+     * Extract the selected value.
+     *
+     * @param string $value Column to select.
+     *
+     * @return SQLServerResponse The result of the value extraction.
      */
     public function value(string $value)
     {
@@ -120,22 +127,25 @@ trait Methods
     }
 
     /**
-     * the chunk method may be used to process large numbers
-     * @param int $amount amount to chunk
-     * @param Closure $callback function to do in the each chunk
-     * 
-     * @return collect
+     * The chunk method may be used to process large numbers.
+     *
+     * @param int $amount Amount to chunk.
+     * @param null|Closure $callback Function to perform on each chunk.
+     *
+     * @return mixed The result of the chunk operation.
      */
-    public function chunk(int $amount, Closure $callback)
+    public function chunk(int $amount, Closure $callback = null)
     {
         $this->execGeneral();
 
+        /** @phpstan-ignore-next-line */
         return (new SQLServerResponse($this->response))->chunk($amount, $callback);
     }
 
     /**
-     * The lazy method works similarly to the chunk
-     * @return collect
+     * The lazy method works similarly to the chunk.
+     *
+     * @return mixed The result of the lazy operation.
      */
     public function lazy()
     {
@@ -145,10 +155,11 @@ trait Methods
     }
 
     /**
-     * return a max value in a column
-     * @param string $column column to filter
-     * 
-     * @return collect with the max value
+     * Return the maximum value in a column.
+     *
+     * @param string $column Column to filter.
+     *
+     * @return SQLServerResponse The result with the maximum value.
      */
     public function max(string $column)
     {
@@ -158,10 +169,11 @@ trait Methods
     }
 
     /**
-     * return a min value in a column
-     * @param string $column column to filter
-     * 
-     * @return collect with the min value
+     * Return the minimum value in a column.
+     *
+     * @param string $column Column to filter.
+     *
+     * @return SQLServerResponse The result with the minimum value.
      */
     public function min(string $column)
     {
@@ -171,10 +183,11 @@ trait Methods
     }
 
     /**
-     * return a sum for a column
-     * @param string $column column to filter
-     * 
-     * @return collect column with sum value
+     * Return the sum for a column.
+     *
+     * @param string $column Column to filter.
+     *
+     * @return SQLServerResponse The result with the sum value.
      */
     public function sum(string $column)
     {
@@ -184,10 +197,11 @@ trait Methods
     }
 
     /**
-     * return a average for a column
-     * @param string $column column to filter
-     * 
-     * @return collect column with average value
+     * Return the average for a column.
+     *
+     * @param string $column Column to filter.
+     *
+     * @return mixed The result with the average value.
      */
     public function avg(string $column)
     {

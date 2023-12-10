@@ -7,13 +7,14 @@ use Exception;
 class SQLServerException extends Exception
 {
     /**
-     * Return a exception personalized message
-     * @param string $message
-     * 
-     * @return Exception
+     * Create a new SQLServerException instance with a personalized message.
+     *
+     * @param string $message The exception message.
+     *
+     * @return SQLServerException
      */
     public static function create(string $message)
     {
-        return new self("\Rmunate\SqlServerLite\SQLServer - Exception - {$message}");
+        return new self("Rmunate\\SqlServerLite\\SQLServer - Exception - {$message}");
     }
 }

@@ -7,12 +7,21 @@ use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 
 class SQLServerValidator
 {
+    /**
+     * @var array $credentials Array of database connection credentials.
+     */
     private $credentials;
 
     /**
-     * set propierties for validate array config
-     * @param array $credentials
-     * @param string $connection
+     * @var string $connection Database connection name.
+     */
+    private $connection;
+
+    /**
+     * SQLServerValidator constructor.
+     *
+     * @param array  $credentials Database connection credentials.
+     * @param string $connection Database connection name.
      */
     public function __construct(array $credentials, string $connection)
     {
@@ -21,8 +30,9 @@ class SQLServerValidator
     }
 
     /**
-     * return Required data for the connection
-     * @return $array
+     * Get the required data for the connection.
+     *
+     * @return array List of required data.
      */
     public function mandatory()
     {
@@ -35,8 +45,9 @@ class SQLServerValidator
     }
 
     /**
-     * return error message for the connection
-     * @return $array
+     * Get error messages for the connection.
+     *
+     * @return array List of error messages.
      */
     public function messages()
     {
@@ -49,18 +60,18 @@ class SQLServerValidator
     }
 
     /**
-     * method to verify the credentials and Required data
-     * @throws Exception Throws an exception if the verify cant do it.
-     * @return bool
+     * Verify the credentials and required data.
+     *
+     * @return bool Returns true if the verification is successful.
      */
     public function verify()
     {
-        /** verify if the array config has the driver */
+        // Verify if the 'sqlsrv' driver is installed in the PHP environment.
         if (!in_array('sqlsrv', PDO::getAvailableDrivers())) {
-            throw SQLServerException::create("The 'sqlsrv' driver is not installed in the PHP environment in use.");
+            throw SQLServerException::create("The 'sqlsrv' driver is not installed in the PHP environment.");
         }
 
-        /** verify if the array config has data */
+        // Verify if the array config has data.
         if (empty($this->credentials)) {
             throw SQLServerException::create("The connection '{$this->connection}' is not configured in config/database.php, within the connections array");
         }
@@ -68,13 +79,15 @@ class SQLServerValidator
         $indexes = array_keys($this->credentials);
 
         $errors = [];
-        /** foreach to verify all required data */
-        foreach ($this->mandatory() as $key => $value) {
+
+        // Iterate to verify all required data.
+        foreach ($this->mandatory() as $value) {
             if (!in_array($value, $indexes) || empty($this->credentials[$value])) {
                 array_push($errors, $this->messages()[$value]);
             }
         }
 
+        // If there are errors, throw an exception.
         if (!empty($errors)) {
             throw SQLServerException::create(implode(', ', $errors));
         }

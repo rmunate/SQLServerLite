@@ -5,13 +5,17 @@ namespace Rmunate\SqlServerLite\Validator;
 use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 use Rmunate\SqlServerLite\Utilities\Utilities;
 
+/**
+ * Class StatementsValidator
+ * @package Rmunate\SqlServerLite\Validator
+ */
 class StatementsValidator
 {
     /**
-     * verify if the query is a select query
-     * @param string $statement
-     * 
-     * @return Exception if does not a select query
+     * Verify if the query is a SELECT query.
+     *
+     * @param string $statement SQL statement to verify.
+     * @throws SQLServerException Throws an exception if the statement is not a SELECT query.
      */
     public static function isSelect(string $statement)
     {
@@ -23,10 +27,10 @@ class StatementsValidator
     }
 
     /**
-     * verify if the query is a update query
-     * @param string $statement
-     * 
-     * @return Exception if does not a update query
+     * Verify if the query is an UPDATE query.
+     *
+     * @param string $statement SQL statement to verify.
+     * @throws SQLServerException Throws an exception if the statement is not an UPDATE query.
      */
     public static function isUpdate(string $statement)
     {
@@ -38,10 +42,10 @@ class StatementsValidator
     }
 
     /**
-     * verify if the query is a insert query
-     * @param string $statement
-     * 
-     * @return Exception if does not a insert query
+     * Verify if the query is an INSERT query.
+     *
+     * @param string $statement SQL statement to verify.
+     * @throws SQLServerException Throws an exception if the statement is not an INSERT query.
      */
     public static function isInsert(string $statement)
     {
@@ -53,10 +57,10 @@ class StatementsValidator
     }
 
     /**
-     * verify if the query is a delete query
-     * @param string $statement
-     * 
-     * @return Exception if does not a delete query
+     * Verify if the query is a DELETE query.
+     *
+     * @param string $statement SQL statement to verify.
+     * @throws SQLServerException Throws an exception if the statement is not a DELETE query.
      */
     public static function isDelete(string $statement)
     {
@@ -68,10 +72,10 @@ class StatementsValidator
     }
 
     /**
-     * verify if the query is a storage procedure query
-     * @param string $statement
-     * 
-     * @return Exception if does not a storage procedure query
+     * Verify if the query is a stored procedure query.
+     *
+     * @param string $statement SQL statement to verify.
+     * @throws SQLServerException Throws an exception if the statement is not a stored procedure query.
      */
     public static function isProcedure(string $statement)
     {
@@ -83,15 +87,15 @@ class StatementsValidator
     }
 
     /**
-     * verify if the params is an array with multiples params
-     * @param string $params
-     * 
-     * @return Exception if does not a select query
+     * Verify if the parameters are an array with multiple parameters.
+     *
+     * @param array $params Array of parameters to verify.
+     * @throws SQLServerException Throws an exception if the parameters are not valid.
      */
     public static function isValidParams(array $params)
     {
         if (Utilities::hasSubArrays($params)) {
-            throw SQLServerException::create('Los arreglos con multiples parametros solo pueden ser usados para procesos de insercion de datos.');
+            throw SQLServerException::create('Arrays with multiple parameters can only be used for data insertion processes.');
         }
     }
 }
