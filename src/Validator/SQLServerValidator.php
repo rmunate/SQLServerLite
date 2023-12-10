@@ -8,12 +8,12 @@ use Rmunate\SqlServerLite\Exceptions\SQLServerException;
 class SQLServerValidator
 {
     /**
-     * @var array $credentials Array of database connection credentials.
+     * @var array Array of database connection credentials.
      */
     private $credentials;
 
     /**
-     * @var string $connection Database connection name.
+     * @var string Database connection name.
      */
     private $connection;
 
@@ -21,7 +21,7 @@ class SQLServerValidator
      * SQLServerValidator constructor.
      *
      * @param array  $credentials Database connection credentials.
-     * @param string $connection Database connection name.
+     * @param string $connection  Database connection name.
      */
     public function __construct(array $credentials, string $connection)
     {

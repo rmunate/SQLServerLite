@@ -40,9 +40,9 @@ abstract class BaseSQLServer
     /**
      * Return the connection status.
      *
-     * @param string $connection The name of the connection.
+     * @param string $connection   The name of the connection.
      * @param int    $loginTimeout The login timeout duration.
-     * 
+     *
      * @return SQLServerStatus The connection status.
      */
     public static function status(string $connection, int $loginTimeout = 3)

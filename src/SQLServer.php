@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Rmunate\SqlServerLite;
 
+use Rmunate\SqlServerLite\Bases\BaseSQLServer;
+use Rmunate\SqlServerLite\Singleton\SQLServerSingleton;
+use Rmunate\SqlServerLite\Traits\Attributes;
 use Rmunate\SqlServerLite\Traits\Execute;
 use Rmunate\SqlServerLite\Traits\Methods;
-use Rmunate\SqlServerLite\Traits\Attributes;
-use Rmunate\SqlServerLite\Bases\BaseSQLServer;
 use Rmunate\SqlServerLite\Traits\Transactions;
 use Rmunate\SqlServerLite\Utilities\Utilities;
-use Rmunate\SqlServerLite\Singleton\SQLServerSingleton;
 use Rmunate\SqlServerLite\Validator\StatementsValidator;
 
 class SQLServer extends BaseSQLServer
@@ -33,9 +33,9 @@ class SQLServer extends BaseSQLServer
     /**
      * Constructor to establish the initial connection.
      *
-     * @param mixed $credentials
+     * @param mixed  $credentials
      * @param string $connection
-     * @param int $loginTimeout
+     * @param int    $loginTimeout
      */
     public function __construct($credentials, string $connection, int $loginTimeout = 0)
     {
@@ -46,7 +46,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the SELECT query and return it.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return static
      */
     public function select(string $statement, array $params = [])
@@ -65,7 +66,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the Update query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return object
      */
     public function update(string $statement, array $params = [])
@@ -90,7 +92,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the Insert query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return object
      */
     public function insert(string $statement, array $params = [])
@@ -115,7 +118,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the Insert with query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return object
      */
     public function insertGetId(string $statement, array $params = [])
@@ -140,7 +144,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the Delete query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return mixed
      */
     public function delete(string $statement, array $params = [])
@@ -165,7 +170,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the store procedure query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return object
      */
     public function executeProcedure(string $statement, array $params = [])
@@ -184,7 +190,8 @@ class SQLServer extends BaseSQLServer
      * Prepare the transaction store procedure query and return the result set.
      *
      * @param string $statement
-     * @param array $params
+     * @param array  $params
+     *
      * @return mixed
      */
     public function executeTransactionalProcedure(string $statement, array $params = [])
@@ -209,6 +216,7 @@ class SQLServer extends BaseSQLServer
      * Receive the params from the query.
      *
      * @param array $params
+     *
      * @return mixed
      */
     public function params(array $params)
@@ -228,6 +236,7 @@ class SQLServer extends BaseSQLServer
      * Set the property to disable constraints.
      *
      * @param mixed ...$tables Tables for which constraints should be disabled.
+     *
      * @return $this Returns the current instance of the object.
      */
     public function noCheckConstraint(...$tables)

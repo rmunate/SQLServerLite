@@ -11,7 +11,7 @@ trait Methods
      * Set the ordering properties.
      *
      * @param string $column Column to apply the order.
-     * @param string $dir [optional] The sorting option.
+     * @param string $dir    [optional] The sorting option.
      *
      * @return $this The current instance of the object.
      */
@@ -101,7 +101,7 @@ trait Methods
      * Perform the pluck for a column and index in the collection.
      *
      * @param mixed $value Column to perform the pluck.
-     * @param null $index [optional] Index for the pluck.
+     * @param null  $index [optional] Index for the pluck.
      *
      * @return mixed The result of the pluck operation.
      */
@@ -129,7 +129,7 @@ trait Methods
     /**
      * The chunk method may be used to process large numbers.
      *
-     * @param int $amount Amount to chunk.
+     * @param int          $amount   Amount to chunk.
      * @param null|Closure $callback Function to perform on each chunk.
      *
      * @return mixed The result of the chunk operation.

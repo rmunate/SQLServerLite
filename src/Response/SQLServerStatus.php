@@ -3,9 +3,7 @@
 namespace Rmunate\SqlServerLite\Response;
 
 /**
- * Class SQLServerStatus
- *
- * @package Rmunate\SqlServerLite\Response
+ * Class SQLServerStatus.
  */
 class SQLServerStatus
 {
