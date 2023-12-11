@@ -3,6 +3,7 @@
 namespace Rmunate\SqlServerLite\Traits;
 
 use Closure;
+use Rmunate\SqlServerLite\Response\SQLServerRow;
 use Rmunate\SqlServerLite\Response\SQLServerResponse;
 
 trait Methods
@@ -53,7 +54,8 @@ trait Methods
         $this->execGeneral();
 
         if (!empty($this->response)) {
-            return (object) reset($this->response);
+            $first = reset($this->response);
+            return new SQLServerRow($first);
         }
 
         return null;
@@ -69,7 +71,8 @@ trait Methods
         $this->execGeneral();
 
         if (!empty($this->response)) {
-            return (object) end($this->response);
+            $first = end($this->response);
+            return new SQLServerRow($first);
         }
 
         return null;
