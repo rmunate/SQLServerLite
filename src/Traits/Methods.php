@@ -53,7 +53,7 @@ trait Methods
         $this->execGeneral();
 
         if (!empty($this->response)) {
-            return reset($this->response);
+            return (object) reset($this->response);
         }
 
         return null;
@@ -69,7 +69,7 @@ trait Methods
         $this->execGeneral();
 
         if (!empty($this->response)) {
-            return end($this->response);
+            return (object) end($this->response);
         }
 
         return null;
