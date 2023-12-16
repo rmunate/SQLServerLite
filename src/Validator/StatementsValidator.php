@@ -10,7 +10,7 @@ use Rmunate\SqlServerLite\Utilities\Utilities;
  */
 class StatementsValidator
 {
-    public function withoutComments(string $statement)
+    public static function withoutComments(string $statement)
     {
         foreach (["/*", "//", "--"] as $match) {
             if (stripos($statement, $match)) {
