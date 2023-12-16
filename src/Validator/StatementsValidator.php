@@ -17,7 +17,6 @@ class StatementsValidator
                 throw SQLServerException::create('The statement you are trying to execute contains comments; please remove them to proceed.');
             }
         }
-        
     }
 
     /**
