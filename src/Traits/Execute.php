@@ -41,7 +41,7 @@ trait Execute
 
             if (!empty($this->params)) {
                 foreach ($this->params as $key => $value) {
-                    if (strpos($this->statement, $key) !== false) {
+                    if (strpos($this->statement, ":$key") !== false) {
                         $PDO->bindParam($key, $this->params[$key]);
                     }
                 }
@@ -72,7 +72,7 @@ trait Execute
 
             if (!empty($this->params)) {
                 foreach ($this->params as $key => $value) {
-                    if (strpos($this->statement, $key) !== false) {
+                    if (strpos($this->statement, ":$key") !== false) {
                         $PDO->bindParam($key, $this->params[$key]);
                     }
                 }
@@ -104,7 +104,7 @@ trait Execute
                 if (Utilities::hasSubArrays($this->params)) {
                     foreach ($this->params as $key => $param) {
                         foreach ($param as $key => $value) {
-                            if (strpos($this->statement, $key) !== false) {
+                            if (strpos($this->statement, ":$key") !== false) {
                                 $PDO->bindParam($key, $param[$key]);
                             }
                         }
@@ -113,7 +113,7 @@ trait Execute
                     }
                 } else {
                     foreach ($this->params as $key => $value) {
-                        if (strpos($this->statement, $key) !== false) {
+                        if (strpos($this->statement, ":$key") !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
                         }
                     }
@@ -153,7 +153,7 @@ trait Execute
 
                     foreach ($this->params as $key => $param) {
                         foreach ($param as $key => $value) {
-                            if (strpos($this->statement, $key) !== false) {
+                            if (strpos($this->statement, ":$key") !== false) {
                                 $PDO->bindParam($key, $param[$key]);
                             }
                         }
@@ -166,7 +166,7 @@ trait Execute
                     $this->response = $ids;
                 } else {
                     foreach ($this->params as $key => $value) {
-                        if (strpos($this->statement, $key) !== false) {
+                        if (strpos($this->statement, ":$key") !== false) {
                             $PDO->bindParam($key, $this->params[$key]);
                         }
                     }
@@ -201,7 +201,7 @@ trait Execute
                 $PDO = $this->connection->prepare($this->statement);
 
                 foreach ($this->params as $key => $value) {
-                    if (strpos($this->statement, $key) !== false) {
+                    if (strpos($this->statement, ":$key") !== false) {
                         $PDO->bindParam($key, $this->params[$key]);
                     }
                 }
@@ -235,7 +235,7 @@ trait Execute
 
             if (!empty($this->params)) {
                 foreach ($this->params as $key => $value) {
-                    if (strpos($this->statement, $key) !== false) {
+                    if (strpos($this->statement, ":$key") !== false) {
                         $PDO->bindParam($key, $this->params[$key]);
                     }
                 }
@@ -264,7 +264,7 @@ trait Execute
 
             if (!empty($this->params)) {
                 foreach ($this->params as $key => $value) {
-                    if (strpos($this->statement, $key) !== false) {
+                    if (strpos($this->statement, ":$key") !== false) {
                         $PDO->bindParam($key, $this->params[$key]);
                     }
                 }
