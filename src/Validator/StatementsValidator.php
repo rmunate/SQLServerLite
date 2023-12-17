@@ -10,14 +10,28 @@ use Rmunate\SqlServerLite\Utilities\Utilities;
  */
 class StatementsValidator
 {
+    /**
+     * Remove comments from a SQL statement to prevent execution issues.
+     *
+     * @param string $statement The SQL statement to remove comments from.
+     *
+     * @throws SQLServerException If the statement contains comments, an exception is thrown.
+     *
+     * @return string The SQL statement without comments.
+     */
     public static function withoutComments(string $statement)
     {
+        // Remove single-line comments (// or --)
         $statement = preg_replace('/(--|\/\/).*$/m', '', $statement);
+
+        // Remove multi-line comments (/* ... */)
         $statement = preg_replace('/\/\*.*?\*\//s', '', $statement);
 
-        foreach (["/*", "*/", "//", "--", "<-", "->"] as $match) {
-            if (stripos($statement, $match)) {
-                throw SQLServerException::create("The statement you are trying to execute contains comments ($match); please remove them to proceed.");
+        // Check for forbidden comment strings
+        $forbiddenCommentPatterns = ["/*", "*/", "//", "--", "<-", "->"];
+        foreach ($forbiddenCommentPatterns as $commentPattern) {
+            if (stripos($statement, $commentPattern)) {
+                throw SQLServerException::create("The statement contains comments ($commentPattern); please remove them to proceed.");
             }
         }
 
