@@ -17,7 +17,7 @@ class StatementsValidator
 
         foreach (["/*", "*/", "//", "--", "<-", "->"] as $match) {
             if (stripos($statement, $match)) {
-                throw SQLServerException::create('The statement you are trying to execute contains comments; please remove them to proceed.');
+                throw SQLServerException::create("The statement you are trying to execute contains comments '$match'; please remove them to proceed.");
             }
         }
 
