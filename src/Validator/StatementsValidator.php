@@ -12,11 +12,16 @@ class StatementsValidator
 {
     public static function withoutComments(string $statement)
     {
-        foreach (["/*", "//", "--"] as $match) {
+        $statement = preg_replace('/(--|\/\/).*$/m', '', $statement);
+        $statement = preg_replace('/\/\*.*?\*\//s', '', $statement);
+
+        foreach (["/*", "*/", "//", "--", "<-", "->"] as $match) {
             if (stripos($statement, $match)) {
                 throw SQLServerException::create('The statement you are trying to execute contains comments; please remove them to proceed.');
             }
         }
+
+        return $statement;
     }
 
     /**
@@ -29,7 +34,7 @@ class StatementsValidator
     public static function isSelect(string $statement)
     {
         $statement = trim($statement);
-        self::withoutComments($statement);
+        $statement = self::withoutComments($statement);
 
         if (!stripos($statement, 'SELECT') === 0) {
             throw SQLServerException::create('Invalid SELECT statement. Please provide a valid SELECT query.');
@@ -46,7 +51,7 @@ class StatementsValidator
     public static function isUpdate(string $statement)
     {
         $statement = trim($statement);
-        self::withoutComments($statement);
+        $statement = self::withoutComments($statement);
 
         if (!stripos($statement, 'UPDATE') === 0) {
             throw SQLServerException::create('Invalid UPDATE statement. Please provide a valid UPDATE query.');
@@ -63,7 +68,7 @@ class StatementsValidator
     public static function isInsert(string $statement)
     {
         $statement = trim($statement);
-        self::withoutComments($statement);
+        $statement = self::withoutComments($statement);
 
         if (!stripos($statement, 'INSERT') === 0) {
             throw SQLServerException::create('Invalid INSERT statement. Please provide a valid INSERT query.');
@@ -80,7 +85,7 @@ class StatementsValidator
     public static function isDelete(string $statement)
     {
         $statement = trim($statement);
-        self::withoutComments($statement);
+        $statement = self::withoutComments($statement);
 
         if (!stripos($statement, 'DELETE') === 0) {
             throw SQLServerException::create('Invalid DELETE statement. Please provide a valid DELETE query.');
@@ -97,7 +102,7 @@ class StatementsValidator
     public static function isProcedure(string $statement)
     {
         $statement = trim($statement);
-        self::withoutComments($statement);
+        $statement = self::withoutComments($statement);
 
         if (!stripos($statement, 'EXEC') === 0) {
             throw SQLServerException::create('Invalid PROCEDURE statement. Please provide a valid PROCEDURE query.');
