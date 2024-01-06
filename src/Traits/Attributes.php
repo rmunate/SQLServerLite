@@ -167,6 +167,22 @@ trait Attributes
      *
      * @return $this Returns the current instance of the object.
      */
+    public function setNoCount($status = 'ON')
+    {
+        $stmt = ($status === 'ON' || $status === true) ? 'SET NOCOUNT ON;' : 'SET NOCOUNT OFF;';
+
+        $this->connection->exec($stmt);
+
+        return $this;
+    }
+
+    /**
+     * Enable NOCOUNT mode for the PDO connection.
+     *
+     * @param string|bool $status The value to set for the NOCOUNT mode ("ON" or "OFF").
+     *
+     * @return $this Returns the current instance of the object.
+     */
     public function noCount($status = 'ON')
     {
         $stmt = ($status === 'ON' || $status === true) ? 'SET NOCOUNT ON;' : 'SET NOCOUNT OFF;';

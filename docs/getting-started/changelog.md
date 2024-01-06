@@ -6,38 +6,20 @@ outline: deep
 
 # Release Notes
 
-## [4.2.0] - 2023-11-20
+## [2.0.0]
 
 ### Added
 
-- **Vietnamese Language Support**: Introduced connectors and replacements for the Vietnamese language.
+- **Singleton**: Starting from version 2.0, it is guaranteed to work with the singleton architecture, ensuring a single instance of a persistent connection.
+
+- **Exception Handling**: The way exceptions are thrown has been rewritten for improved readability and clarity.
+
+- **Params**: The usage of params has been refined through a fluent method.
 
 ### Changed
 
-- **TitleCase to LowerCase**: In response to specific language nuances, output is now in lowercase. Developers have the option to modify the output as needed, keeping in mind the use of the callback function.
+- **Final Methods**: The final methods for returning values have been completely redefined.
 
-To swiftly revert to title-formatted output, simply publish the configuration file:
+### Removed
 
-```bash
-php artisan vendor:publish --provider="Rmunate\\Utilities\\Providers\\SpellNumberProvider" --tag="config"
-```
-
-Then, locate the callback function and adjust the return statement in the configuration file:
-
-```php
-return [
-  //...
-  'callback_output' => function ($data) {
-
-    // Your logic here...
-
-    return \Illuminate\Support\Str::title($data->getWords());
-  }, 
-]
-```
-
-## [4.2.2] - 2023-11-28
-
-### Changed
-
-- **Zero-width spaces:** Characters (\u{AD}, \u{200B}) are removed from the translation outputs.
+- **Wrappers**: Wrappers for pre-existing package methods have been removed, and no support will be provided for previous versions.

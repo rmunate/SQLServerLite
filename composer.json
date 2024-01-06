@@ -22,22 +22,6 @@
             "email": "raulmauriciounate@gmail.com",
             "role": "owner",
             "homepage": "https://github.com/rmunate"
-        },
-        {
-            "name": "Wirmer A. Sanchez Saez",
-            "email": "wilmersaz@hotmail.com",
-            "role": "Developer"
-        },
-        {
-            "name": "John Alejandro Diaz Pinilla",
-            "email": "diazjohn83@gmail.com",
-            "role": "Developer",
-            "homepage": "https://github.com/alejandrodiazpinilla"
-        },
-        {
-            "name": "Jorge Hernan Castañeda",
-            "email": "ds.jorgecastaneda@gmail.com",
-            "role": "Developer"
         }
     ],
     "require": {

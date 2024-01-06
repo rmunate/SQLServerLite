@@ -8,22 +8,16 @@ outline: deep
 
 ## Requirements
 
-For this solution to work correctly, you must have at least PHP 8.0 installed, as the package includes typed data in its core.
+This package requires PHP version 8.0 or higher to function correctly, as well as a Laravel Framework version higher than 9.0.
 
-You must have Laravel Framework version 8 or higher.
+Keep in mind that, depending on your operating system, you must have installed ODBC version 17 or preferably higher, along with the necessary PHP extensions. You can find step-by-step instructions for each operating system in the guide's menu.
 
-Finally, our package relies on the native PHP `INTL` extension, check in your `php.ini` that you have it.
+Once you've fulfilled these requirements, you can install this dependency via Composer.
 
-## Install
+## Composer
 
-### Composer
+To install the dependency using Composer, run the following command:
 
-To install the dependency via Composer, execute the following command:
-
-``` bash
-composer require rmunate/spell-number
+```bash
+composer require rmunate/sql-server-lite
 ```
-
-The package will automatically register itself.
-
-**That's all!**

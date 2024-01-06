@@ -3,30 +3,28 @@ layout: home
 
 hero:
   name: Laravel 
-  text: Spell Number
-  tagline: Effortlessly Convert Numbers to Words in Laravel! 🚀
+  text: SQL Server Lite
+  tagline: A simple, lightweight, and efficient connection! 🚀
   image:
-    src: /img/logo.png
-    alt: SpellNumber
+    src: /img/logo.svg
+    alt: SQLServerLite
   actions:
     - theme: brand
       text: Get Started
       link: /getting-started/introduction
     - theme: alt
       text: View on GitHub 
-      link: https://github.com/rmunate/SpellNumber
-    - theme: alt
-      text: View on Youtube 
-      link: https://www.youtube.com/watch?v=jm7_ypPZbjk&list=PL-SK4hjbvgxLmNUAyDpUa44cCIx4hVTqE
+      link: https://github.com/rmunate/SQLServerLite
 
 features:
-  - icon: 📝
-    title: Convert to Words
-    details: Effortlessly convert numbers to words. Choose whether you want to translate an integer or a floating-point number; we're ready for any scenario.
-  - icon: 💵
-    title: Words in Currency Format
-    details: Represent a currency value in words easily by specifying the currency and its fraction.
-  - icon: 🔢
-    title: Convert to Ordinals
-    details: Planning to use the values for ordering? We've got you covered—easily transform your values into ordinal numbers.
+  - icon: ⚙️
+    title: Simple Configuration
+    details: Streamline your SQL Server usage with minimal setup and efficient processes, ensuring resource optimization.
+  - icon: 🔄
+    title: Version Compatibility
+    details: Enjoy support from SQL Server 2008 onwards, eliminating compatibility concerns.
+  - icon: 1️⃣
+    title: Singleton Architecture
+    details: Utilize a singleton design, managing a single instance per HTTP request, regardless of instantiation frequency.
+
 ---
