@@ -16,7 +16,7 @@ export default defineConfig({
         },
         logo: '/img/favicon.svg',
         nav: [
-            {text: 'v4.2.2', link: '/'},
+            {text: 'v2.0.0', link: '/'},
         ],
         sidebar: [
             {
