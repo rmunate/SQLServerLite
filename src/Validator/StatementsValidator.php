@@ -28,7 +28,7 @@ class StatementsValidator
         $statement = preg_replace('/\/\*.*?\*\//s', '', $statement);
 
         // Check for forbidden comment strings
-        $forbiddenCommentPatterns = ["/*", "*/", "//", "--", "<-", "->"];
+        $forbiddenCommentPatterns = ['/*', '*/', '//', '--', '<-', '->'];
         foreach ($forbiddenCommentPatterns as $commentPattern) {
             if (stripos($statement, $commentPattern)) {
                 throw SQLServerException::create("The statement contains comments ($commentPattern); please remove them to proceed.");
