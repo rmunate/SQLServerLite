@@ -1,0 +1,11 @@
+includes:
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+parameters:
+    paths:
+        - src/
+    level: 5
+    ignoreErrors:
+        - message: '#Function config not found.#'
+        - message: '#Unsafe usage of new static\(\)#'
+        - message: '#Match expression does not handle remaining value: mixed#'
+        - message: '#Strict comparison using === between bool and 0 will always evaluate to false.#'
