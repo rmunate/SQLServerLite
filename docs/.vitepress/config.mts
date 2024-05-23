@@ -9,7 +9,7 @@ export default defineConfig({
     themeConfig: {
         footer: {
             message: 'Released under the MIT License.',
-            copyright: 'Copyright © 2021-2023 Raul Mauricio Uñate'
+            copyright: 'Copyright © 2021-2024 Raul Mauricio Uñate'
         },
         editLink: {
             pattern: 'https://github.com/rmunate/SQLServerLite/tree/main/docs/:path'
