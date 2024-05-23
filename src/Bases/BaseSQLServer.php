@@ -52,7 +52,6 @@ abstract class BaseSQLServer
         (new SQLServerValidator($data, $connection))->verify();
 
         try {
-
             $instance = new static((object) $data, $connection, $loginTimeout);
 
             return new SQLServerStatus([
@@ -60,15 +59,12 @@ abstract class BaseSQLServer
                 'message' => 'Connection Successful',
                 'query'   => $instance,
             ]);
-
         } catch (\Throwable $th) {
-
             return new SQLServerStatus([
                 'status'  => false,
                 'message' => $th->getMessage(),
                 'query'   => null,
             ]);
-
         }
     }
 }

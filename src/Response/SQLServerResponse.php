@@ -5,15 +5,12 @@ namespace Rmunate\SqlServerLite\Response;
 use Illuminate\Support\Collection;
 
 /**
- * Class SQLServerResponse
+ * Class SQLServerResponse.
  *
  * This class represents a response from a SQL Server query.
  * It extends the Illuminate\Support\Collection class to leverage
  * Laravel's powerful collection functionalities.
- *
- * @package Rmunate\SqlServerLite\Response
  */
-
 class SQLServerResponse extends Collection
 {
     /**

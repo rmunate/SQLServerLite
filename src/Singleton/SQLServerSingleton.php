@@ -51,11 +51,8 @@ class SQLServerSingleton
                 }
 
                 self::$instance[$connection] = $conection;
-
             } catch (PDOException $e) {
-
                 throw SQLServerException::create($e->getMessage());
-
             }
         }
 
@@ -86,17 +83,13 @@ class SQLServerSingleton
     public static function commit()
     {
         if (!empty(self::$instance)) {
-
             foreach (self::$instance as $key => $instance) {
                 $instance->commit();
             }
 
             self::$beginTransaction = false;
-
         } else {
-
             throw SQLServerException::create('The connection to the database is not initialized.');
-
         }
     }
 
@@ -108,17 +101,13 @@ class SQLServerSingleton
     public static function rollback()
     {
         if (!empty(self::$instance)) {
-
             foreach (self::$instance as $key => $instance) {
                 $instance->rollBack();
             }
 
             self::$beginTransaction = false;
-
         } else {
-
             throw SQLServerException::create('The connection to the database is not initialized.');
-
         }
     }
 }
