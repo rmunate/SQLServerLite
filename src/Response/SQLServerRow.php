@@ -3,14 +3,11 @@
 namespace Rmunate\SqlServerLite\Response;
 
 /**
- * Class SQLServerRow
+ * Class SQLServerRow.
  *
  * This class represents a single row of data from a SQL Server query.
  * It dynamically assigns properties based on the provided associative array.
- *
- * @package Rmunate\SqlServerLite\Response
  */
-
 class SQLServerRow
 {
     /**
