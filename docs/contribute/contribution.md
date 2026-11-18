@@ -39,6 +39,12 @@ composer test
 
 These tests use an in-memory SQLite database and do not require a SQL Server instance. CI also checks the configuration APIs with the full Laravel 12 and 13 frameworks.
 
+## Publishing the documentation
+
+In the repository's [GitHub Pages settings](https://github.com/rmunate/SQLServerLite/settings/pages), set **Build and deployment → Source** to **GitHub Actions**. Do not select **Deploy from a branch**: GitHub's Jekyll build can overwrite the VitePress site.
+
+The **Deploy VitePress site to Pages** workflow publishes the compiled site on pushes to `master`. After changing the Pages source, run this workflow manually from the **Actions** tab to republish the current version.
+
 ## Contributors
 
 <VPTeamMembers size="small" :members="members" />

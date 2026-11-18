@@ -24,6 +24,15 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
+            -   name: Verify GitHub Pages publishing source
+                env:
+                    GH_TOKEN: ${{ github.token }}
+                run: |
+                    build_type=$(gh api "repos/$GITHUB_REPOSITORY/pages" --jq .build_type)
+                    if [ "$build_type" != "workflow" ]; then
+                        echo "::error::Set Settings > Pages > Build and deployment > Source to GitHub Actions. Publishing from a branch can overwrite the VitePress site."
+                        exit 1
+                    fi
             -   name: Checkout
                 uses: actions/checkout@v6
                 with:
@@ -35,8 +44,6 @@ jobs:
                 with:
                     node-version: 24
                     cache: npm # or pnpm / yarn
-            -   name: Setup Pages
-                uses: actions/configure-pages@v6
             -   name: Install dependencies
                 run: npm ci # or pnpm install / yarn install / bun install
             -   name: Build with VitePress
