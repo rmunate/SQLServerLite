@@ -30,11 +30,7 @@ abstract class BaseSQLServer
      */
     public static function connection(string $connection)
     {
-        $data = config("database.connections.{$connection}");
-
-        (new SQLServerValidator($data, $connection))->verify();
-
-        return new static((object) $data, $connection);
+        return new static(self::connectionCredentials($connection), $connection);
     }
 
     /**
@@ -47,12 +43,10 @@ abstract class BaseSQLServer
      */
     public static function status(string $connection, int $loginTimeout = 3)
     {
-        $data = config("database.connections.{$connection}");
-
-        (new SQLServerValidator($data, $connection))->verify();
+        $credentials = self::connectionCredentials($connection);
 
         try {
-            $instance = new static((object) $data, $connection, $loginTimeout);
+            $instance = new static($credentials, $connection, $loginTimeout);
 
             return new SQLServerStatus([
                 'status'  => true,
@@ -66,5 +60,18 @@ abstract class BaseSQLServer
                 'query'   => null,
             ]);
         }
+    }
+
+    private static function connectionCredentials(string $connection): object
+    {
+        $data = config("database.connections.{$connection}", []);
+
+        if (!is_array($data)) {
+            throw SQLServerException::create("The connection '{$connection}' must be an array in config/database.php.");
+        }
+
+        (new SQLServerValidator($data, $connection))->verify();
+
+        return (object) $data;
     }
 }

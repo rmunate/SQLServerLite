@@ -16,15 +16,31 @@ trait Execute
      */
     private function execGeneral()
     {
-        match ($this->operation) {
-            'select'                          => $this->execSelect(),
-            'update'                          => $this->execUpdate(),
-            'insert'                          => $this->execInsert(),
-            'insert_get_id'                   => $this->execInsertGetId(),
-            'delete'                          => $this->execDelete(),
-            'execute_procedure'               => $this->execProcedure(),
-            'execute_transactional_procedure' => $this->execTransactionalProcedure(),
-        };
+        switch ($this->operation) {
+            case 'select':
+                $this->execSelect();
+                break;
+            case 'update':
+                $this->execUpdate();
+                break;
+            case 'insert':
+                $this->execInsert();
+                break;
+            case 'insert_get_id':
+                $this->execInsertGetId();
+                break;
+            case 'delete':
+                $this->execDelete();
+                break;
+            case 'execute_procedure':
+                $this->execProcedure();
+                break;
+            case 'execute_transactional_procedure':
+                $this->execTransactionalProcedure();
+                break;
+            default:
+                throw SQLServerException::create('No SQL operation has been prepared.');
+        }
     }
 
     /**

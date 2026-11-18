@@ -122,7 +122,7 @@ $data = SQLServer::connection('example')
 
 ## Chunk
 
-The `chunk` method breaks the collection into multiple, smaller collections of a given size:
+The `chunk` method breaks the results into smaller collections of the given size and preserves the original row keys:
 
 ```php
 $data = SQLServer::connection('example')
@@ -131,7 +131,7 @@ $data = SQLServer::connection('example')
 
 ```
 
-Lo anterior parte la consulta en subarrays de a 10 registros.
+You can optionally pass a callback as the second argument. It receives each chunk and its index. Returning `false` stops running the callback; the method still returns the collection of all chunks.
 
 ## Lazy
 

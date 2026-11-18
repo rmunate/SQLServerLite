@@ -14,15 +14,9 @@ use Illuminate\Support\Collection;
 class SQLServerResponse extends Collection
 {
     /**
-     * SQLServerResponse constructor.
-     *
-     * Initializes the SQLServerResponse object with the given data.
-     * This constructor calls the parent constructor to initialize
-     * the collection with the provided array of data.
-     *
-     * @param array $data The data to initialize the collection.
+     * @param \Illuminate\Contracts\Support\Arrayable|iterable|null $data
      */
-    public function __construct(array $data)
+    public function __construct($data = [])
     {
         parent::__construct($data);
     }

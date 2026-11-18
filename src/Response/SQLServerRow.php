@@ -8,6 +8,7 @@ namespace Rmunate\SqlServerLite\Response;
  * This class represents a single row of data from a SQL Server query.
  * It dynamically assigns properties based on the provided associative array.
  */
+#[\AllowDynamicProperties]
 class SQLServerRow
 {
     /**

@@ -27,6 +27,18 @@ const members = [
 
 If you want to add support for a new language or want to develop new features, you can submit your requests to the main branch of the repository.
 
+## Compatibility tests
+
+Run `composer install` from the repository root before indexing the project with Intelephense so it can resolve the Illuminate types used in PHPDoc.
+
+Enable the `pdo_sqlite` PHP extension, then run:
+
+```shell
+composer test
+```
+
+These tests use an in-memory SQLite database and do not require a SQL Server instance. CI also checks the configuration APIs with the full Laravel 12 and 13 frameworks.
+
 ## Contributors
 
 <VPTeamMembers size="small" :members="members" />

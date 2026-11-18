@@ -6,7 +6,7 @@ If you've ever needed to connect your Laravel project with SQL Server, you may h
 
 Furthermore, the lack of support for all SQL Server versions adds to the challenge. To address these issues, this package was developed.
 
-**This library is compatible with PHP +7.4 and Laravel versions 9.0 and higher**
+**SQLServer Lite 3.0 supports Laravel 8.x through 13.x.** Laravel 13 requires PHP 8.3 or later; earlier Laravel versions can use the minimum PHP version listed in the [installation guide](docs/getting-started/installation.md).
 
 ## Documentation
 [![📖📖📖 **FULL DOCUMENTATION** 📖📖📖](https://img.shields.io/badge/FULL%20DOCUMENTATION-Visit%20Here-blue?style=for-the-badge)](https://rmunate.github.io/SQLServerLite/)

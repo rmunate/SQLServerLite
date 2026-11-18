@@ -66,14 +66,14 @@ class SQLServerValidator
      */
     public function verify()
     {
+        // Verify if the array config has data.
+        if (empty($this->credentials)) {
+            throw SQLServerException::create("The connection '{$this->connection}' is not configured in the connections array in config/database.php.");
+        }
+
         // Verify if the 'sqlsrv' driver is installed in the PHP environment.
         if (!in_array('sqlsrv', PDO::getAvailableDrivers())) {
             throw SQLServerException::create("The 'sqlsrv' Driver Is Not Installed In The Php Environment.");
-        }
-
-        // Verify if the array config has data.
-        if (empty($this->credentials)) {
-            throw SQLServerException::create("The Connection '{$this->connection}' Is Not Configured In <config/catabase.php>, Within The Connections Array");
         }
 
         $indexes = array_keys($this->credentials);

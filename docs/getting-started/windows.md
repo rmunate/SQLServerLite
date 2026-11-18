@@ -12,15 +12,14 @@ outline: deep
 
 > [Download ODBC Driver for SQL Server](https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server?view=sql-server-ver16#version-17)
 
-2. Download the PHP drivers and extract them into the `ext` folder of the directory where you have the active PHP version. Use the following link:
+2. Download the PHP drivers and extract them into the `ext` folder of the directory where you have the active PHP version. Choose the DLLs that match your PHP version, architecture, and Thread Safe (TS) or Non Thread Safe (NTS) build.
 
 > [Download PHP Drivers for SQL Server](https://learn.microsoft.com/en-us/sql/connect/php/download-drivers-php-sql-server)
 
-3. Uncomment or add the following extensions in the `php.ini` file in use.
+3. Enable `pdo_sqlsrv` in the active `php.ini`. For example, on PHP 8.3 Thread Safe x64:
 
 ```ini
-extension=php_pdo_sqlsrv_82_ts_x64.dll
-extension=php_sqlsrv_82_ts_x64.dll
+extension=php_pdo_sqlsrv_83_ts_x64.dll
 ```
 
 **Restart your machine, and you're all set!**

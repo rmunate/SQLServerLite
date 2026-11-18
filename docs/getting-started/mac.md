@@ -1,10 +1,12 @@
 ---
-title: Windows Drivers
+title: macOS Drivers
 editLink: true
 outline: deep
 ---
 
 # SQL Server Drivers on macOS
+
+The examples below use PHP 8.2 and ODBC 17. For Laravel 13, use the [current Microsoft installation tutorial](https://learn.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac) to install a `pdo_sqlsrv` driver compatible with your PHP and macOS versions.
 
 To install the Microsoft ODBC 17 driver for SQL Server on macOS, follow these commands:
 

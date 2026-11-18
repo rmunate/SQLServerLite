@@ -10,9 +10,11 @@ outline: deep
 
 Here is the manual for installing SQL Server on Linux Ubuntu 20.04. The manual covers installation for PHP 8.1, but you can adjust it as needed.
 
+For Laravel 13 (PHP 8.3 or later), use the current Microsoft installation tutorial below rather than the legacy commands on this page.
+
 ## Official Microsoft Documentation
 - [Install the Microsoft ODBC driver for SQL Server (Linux)](https://learn.microsoft.com/en-us/sql/connect/odbc/linux-mac/installing-the-microsoft-odbc-driver-for-sql-server?view=sql-server-ver16&tabs=alpine18-install%2Calpine17-install%2Cdebian8-install%2Credhat7-13-install%2Crhel7-offline)
-- [Linux and macOS Installation Tutorial for the Microsoft Drivers for PHP for SQL Server]( https://learn.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac?view=sql-server-ver16)
+- [Linux and macOS Installation Tutorial for the Microsoft Drivers for PHP for SQL Server](https://learn.microsoft.com/en-us/sql/connect/php/installation-tutorial-linux-mac)
 
 ## Installation
 

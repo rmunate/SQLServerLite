@@ -1,0 +1,49 @@
+name: Laravel compatibility
+
+on:
+    push:
+        branches: [master]
+    pull_request:
+
+permissions:
+    contents: read
+
+jobs:
+    test:
+        name: PHP ${{ matrix.php }} / Laravel ${{ matrix.laravel }}
+        runs-on: ubuntu-latest
+        strategy:
+            fail-fast: false
+            matrix:
+                include:
+                    - { php: '7.4', laravel: 8 }
+                    - { php: '8.0', laravel: 9 }
+                    - { php: '8.1', laravel: 10 }
+                    - { php: '8.2', laravel: 11 }
+                    - { php: '8.2', laravel: 12 }
+                    - { php: '8.3', laravel: 13 }
+                    - { php: '8.4', laravel: 13 }
+                    - { php: '8.5', laravel: 13 }
+        steps:
+            - uses: actions/checkout@v6
+            - uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: fileinfo, mbstring, pdo_sqlite
+                  tools: composer:v2
+                  coverage: none
+            - run: composer validate --strict
+            # Test the package's runtime dependency on legacy versions without bypassing Composer advisories.
+            - name: Install Illuminate Support
+              if: matrix.laravel < 12
+              run: composer update --with "illuminate/support:^${{ matrix.laravel }}.0" --no-interaction --prefer-dist --no-progress
+            - name: Install Laravel framework
+              if: matrix.laravel >= 12
+              run: composer require --dev "laravel/framework:^${{ matrix.laravel }}.0" --with-all-dependencies --no-interaction --prefer-dist --no-progress
+            - run: composer test
+            - name: Test Laravel configuration
+              if: matrix.laravel >= 12
+              run: php tests/laravel-config.php
+            - name: Run PHPStan
+              if: matrix.laravel == 11
+              run: php vendor/bin/phpstan analyse --no-progress

@@ -122,13 +122,13 @@ trait Methods
      *
      * @param string $value Column to select.
      *
-     * @return SQLServerResponse The result of the value extraction.
+     * @return mixed The value from the first row, or null if not found.
      */
     public function value(string $value)
     {
         $this->execGeneral();
 
-        return (new SQLServerResponse($this->response))->value($value);
+        return data_get(reset($this->response), $value);
     }
 
     /**
@@ -137,14 +137,15 @@ trait Methods
      * @param int          $amount   Amount to chunk.
      * @param null|Closure $callback Function to perform on each chunk.
      *
-     * @return mixed The result of the chunk operation.
+     * @return SQLServerResponse The resulting chunks.
      */
-    public function chunk(int $amount, Closure $callback = null)
+    public function chunk(int $amount, ?Closure $callback = null)
     {
         $this->execGeneral();
 
-        /** @phpstan-ignore-next-line */
-        return (new SQLServerResponse($this->response))->chunk($amount, $callback);
+        $chunks = (new SQLServerResponse($this->response))->chunk($amount);
+
+        return $callback === null ? $chunks : $chunks->each($callback);
     }
 
     /**
